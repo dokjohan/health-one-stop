@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Health One Stop</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Health One Stop">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1e3a8a">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231e3a8a'/%3E%3Cstop offset='100%25' stop-color='%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Cpath d='M50,74 C50,74 18,56 18,34 C18,24 26,17 36,17 C42,17 47,21 50,27 C53,21 58,17 64,17 C74,17 82,24 82,34 C82,56 50,74 50,74Z' fill='%23ef4444'/%3E%3Cpolyline points='5,50 22,50 28,40 34,60 40,28 46,70 50,50 65,50 70,43 75,50 95,50' fill='none' stroke='white' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231e3a8a'/%3E%3Cstop offset='100%25' stop-color='%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Cpath d='M50,74 C50,74 18,56 18,34 C18,24 26,17 36,17 C42,17 47,21 50,27 C53,21 58,17 64,17 C74,17 82,24 82,34 C82,56 50,74 50,74Z' fill='%23ef4444'/%3E%3Cpolyline points='5,50 22,50 28,40 34,60 40,28 46,70 50,50 65,50 70,43 75,50 95,50' fill='none' stroke='white' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-height:100vh;padding-bottom:calc(72px + env(safe-area-inset-bottom,0px));}
+.app-header{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:white;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(37,99,235,0.35);}
+.app-header-icon{width:40px;height:40px;background:rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.app-header h1{font-size:17px;font-weight:700;}
+.app-header .tagline{font-size:10px;opacity:0.8;}
+.tab-bar{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;border-top:1px solid #e5e7eb;z-index:9999;padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -2px 12px rgba(0,0,0,0.08);}
+.tab-btn{flex:1;padding:8px 2px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:'Poppins',sans-serif;font-size:9px;color:#94a3b8;font-weight:500;min-height:54px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-appearance:none;pointer-events:auto;user-select:none;-webkit-user-select:none;transition:color 0.15s;}
+.tab-btn .ti{font-size:20px;line-height:1;}
+.tab-btn .tl{font-size:9px;font-weight:500;}
+.tab-btn.active{color:#2563eb;}
+.tab-btn.active .ti{transform:scale(1.12);}
+.screen{display:none;padding:16px;}
+.screen.active{display:block;}
+.card{background:white;border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.card-title{font-size:15px;font-weight:700;color:#1e293b;margin-bottom:14px;display:flex;align-items:center;gap:6px;}
+.form-group{margin-bottom:14px;}
+.form-group label{display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.3px;}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;transition:border-color 0.2s;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#2563eb;}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:18px 0 10px;}
+.btn{display:block;width:100%;padding:13px;border:none;border-radius:12px;font-size:14px;font-weight:700;font-family:'Poppins',sans-serif;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:opacity 0.15s;}
+.btn:active{opacity:0.8;}
+.btn-primary{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;}
+.btn-outline{background:white;color:#2563eb;border:1.5px solid #bfdbfe;}
+.btn-red{background:#dc2626;color:white;}
+.btn-green{background:linear-gradient(135deg,#16a34a,#15803d);color:white;}
+.btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);color:white;}
+.btn-row{display:flex;gap:10px;margin-bottom:10px;}
+.btn-row .btn{flex:1;padding:11px 8px;font-size:13px;}
+.tag{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500;margin:3px 3px 3px 0;}
+.tag-red{background:#fee2e2;color:#991b1b;}
+.tag-blue{background:#dbeafe;color:#1e40af;}
+.tag-green{background:#dcfce7;color:#166534;}
+.health-card{background:linear-gradient(135deg,#1e3a8a,#2563eb,#0ea5e9);border-radius:18px;padding:22px;color:white;margin-bottom:14px;position:relative;overflow:hidden;}
+.health-card::before{content:'';position:absolute;top:-30px;right:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,0.07);}
+.card-chip{font-size:24px;margin-bottom:10px;}
+.card-logo{position:absolute;top:18px;right:18px;font-size:10px;font-weight:700;opacity:0.85;text-align:right;line-height:1.3;}
+.card-name{font-size:20px;font-weight:700;margin-bottom:3px;}
+.card-id{font-size:12px;opacity:0.8;margin-bottom:14px;}
+.card-row{display:flex;gap:18px;flex-wrap:wrap;}
+.card-field label{font-size:9px;text-transform:uppercase;opacity:0.7;display:block;}
+.card-field .val{font-size:13px;font-weight:600;}
+.aid-badge{display:inline-block;background:#dcfce7;color:#166534;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:12px;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.info-box{background:#f8faff;border-radius:10px;padding:10px;}
+.info-box .lbl{font-size:10px;color:#94a3b8;text-transform:uppercase;font-weight:600;}
+.info-box .val{font-size:14px;font-weight:700;color:#1e293b;margin-top:2px;}
+.coverage-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9;}
+.coverage-row:last-child{border:none;}
+.cov-icon{font-size:20px;flex-shrink:0;width:28px;text-align:center;}
+.cov-label{flex:1;font-size:13px;color:#1e293b;}
+.cov-label strong{display:block;font-weight:600;}
+.cov-badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;flex-shrink:0;}
+.cov-full{background:#dcfce7;color:#166534;}
+.cov-part{background:#fef3c7;color:#92400e;}
+.cov-none{background:#fee2e2;color:#991b1b;}
+.med-track-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#f8faff;border-radius:10px;margin-bottom:8px;cursor:pointer;border:1.5px solid #e2e8f0;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.med-track-item.taken{background:#f0fdf4;border-color:#86efac;}
+.mt-check{font-size:20px;flex-shrink:0;}
+.mt-name{flex:1;font-size:14px;font-weight:600;}
+.mt-status{font-size:11px;font-weight:700;padding:3px 8px;border-radius:10px;}
+.mt-status.done{background:#dcfce7;color:#166534;}
+.mt-status.todo{background:#f1f5f9;color:#64748b;}
+.qr-container{display:flex;flex-direction:column;align-items:center;padding:16px 0;}
+.qr-label{font-size:12px;color:#94a3b8;margin-top:10px;}
+.service-btn{display:flex;align-items:center;gap:12px;padding:13px;background:#f8faff;border:1.5px solid #e2e8f0;border-radius:12px;text-decoration:none;color:#1e293b;touch-action:manipulation;-webkit-tap-highlight-color:transparent;width:100%;cursor:pointer;font-family:'Poppins',sans-serif;}
+.service-btn:active{background:#eff6ff;border-color:#bfdbfe;}
+.svc-icon{font-size:26px;flex-shrink:0;}
+.svc-text{flex:1;text-align:left;}
+.svc-name{font-size:14px;font-weight:600;}
+.svc-sub{font-size:12px;color:#64748b;margin-top:1px;}
+.svc-arrow{color:#94a3b8;font-size:18px;}
+.location-banner{background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;padding:14px;display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;}
+.loc-icon{font-size:26px;flex-shrink:0;}
+.loc-name{font-size:15px;font-weight:700;color:#166534;}
+.loc-sub{font-size:11px;color:#64748b;margin-top:2px;}
+.loc-status{font-size:11px;color:#166534;font-weight:600;margin-top:4px;}
+.loc-error-box{background:#fef2f2;border:1.5px solid #fca5a5;border-radius:10px;padding:13px;font-size:13px;color:#991b1b;line-height:1.6;}
+.emergency-item{display:flex;align-items:center;gap:12px;padding:12px;background:#fef2f2;border-radius:12px;margin-bottom:8px;}
+.em-icon{font-size:26px;flex-shrink:0;}
+.em-info{flex:1;}
+.em-name{font-size:13px;font-weight:600;color:#1e293b;}
+.em-num{font-size:16px;font-weight:700;color:#dc2626;}
+.em-call-btn{background:#dc2626;color:white;border:none;padding:9px 14px;border-radius:10px;font-size:13px;font-weight:700;font-family:'Poppins',sans-serif;cursor:pointer;text-decoration:none;touch-action:manipulation;flex-shrink:0;}
+.chat-disclaimer{background:#fef3c7;border:1.5px solid #fbbf24;border-radius:10px;padding:10px 13px;font-size:12px;color:#92400e;line-height:1.5;margin-bottom:12px;}
+.chat-chips-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.chat-chips-row::-webkit-scrollbar{display:none;}
+.chat-chip{flex-shrink:0;padding:7px 13px;background:white;border:1.5px solid #e2e8f0;border-radius:20px;font-size:12px;font-weight:600;font-family:'Poppins',sans-serif;cursor:pointer;color:#1e293b;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.chat-chip:active{background:#eff6ff;border-color:#bfdbfe;}
+#chat-messages{min-height:120px;margin-bottom:12px;}
+.chat-bubble{padding:12px 15px;border-radius:18px;font-size:14px;line-height:1.65;margin-bottom:10px;max-width:88%;white-space:pre-wrap;word-wrap:break-word;}
+.chat-ai{background:white;box-shadow:0 2px 10px rgba(0,0,0,0.07);align-self:flex-start;border-bottom-left-radius:5px;}
+.chat-user{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;margin-left:auto;border-bottom-right-radius:5px;}
+.chat-typing{background:white;box-shadow:0 2px 10px rgba(0,0,0,0.07);padding:14px 18px;border-radius:18px;border-bottom-left-radius:5px;display:inline-block;color:#94a3b8;}
+.chat-input-row{display:flex;gap:8px;align-items:flex-end;}
+.chat-input-row input{flex:1;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:22px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:#f0f4ff;outline:none;}
+.chat-input-row input:focus{border-color:#2563eb;background:white;}
+.chat-send-btn,.chat-cam-btn,.chat-mic-btn{width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform 0.1s,opacity 0.15s;text-decoration:none;-webkit-user-select:none;user-select:none;}
+.chat-send-btn:active,.chat-cam-btn:active,.chat-mic-btn:active{transform:scale(0.92);}
+.chat-send-btn{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;box-shadow:0 2px 8px rgba(37,99,235,0.3);}
+.chat-cam-btn{background:#f0fdf4;color:#16a34a;border:1.5px solid #86efac;}
+.chat-mic-btn{background:#f1f5f9;color:#64748b;border:1.5px solid #e2e8f0;}
+.chat-mic-btn.active{background:#eff6ff;color:#2563eb;border-color:#bfdbfe;}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,0.55);z-index:99999;align-items:flex-end;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);}
+.modal-overlay.open{display:flex;}
+.modal-sheet{background:white;border-radius:24px 24px 0 0;width:100%;max-height:88vh;overflow-y:auto;padding:8px 20px calc(20px + env(safe-area-inset-bottom,0px));animation:slideUp 0.28s cubic-bezier(.32,.72,0,1);}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.modal-handle{width:40px;height:4px;background:#e2e8f0;border-radius:2px;margin:10px auto 18px;}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:14px;}
+.ocr-field{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#f8faff;border-radius:10px;margin-bottom:8px;border:1.5px solid #e2e8f0;}
+.ocr-field label{font-size:12px;color:#94a3b8;min-width:100px;font-weight:500;}
+.ocr-field input{flex:1;border:none;background:none;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;outline:none;font-weight:500;}
+.modal-close-btn{width:100%;margin-top:10px;padding:13px;background:#f1f5f9;border:none;border-radius:12px;font-size:14px;font-weight:600;font-family:'Poppins',sans-serif;cursor:pointer;touch-action:manipulation;color:#475569;}
+.ocr-preview{width:100%;border-radius:12px;margin-bottom:14px;max-height:200px;object-fit:cover;}
+.alert{padding:11px 14px;border:1.5px solid #86efac;border-radius:10px;background:#f0fdf4;color:#166534;font-size:13px;margin-bottom:12px;}
+.alert.error{border-color:#fca5a5;background:#fef2f2;color:#991b1b;}
+.no-data{text-align:center;padding:30px 0;color:#94a3b8;font-size:14px;}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.4);border-top-color:white;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:6px;}
+.spinner-dark{display:inline-block;width:18px;height:18px;border:2px solid #e2e8f0;border-top-color:#2563eb;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:8px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.result-card{background:#f8faff;border-radius:14px;padding:14px;margin-bottom:10px;border:1.5px solid #e2e8f0;}
+.result-name{font-size:14px;font-weight:700;color:#1e293b;margin-bottom:4px;}
+.result-dist{font-size:12px;color:#2563eb;font-weight:600;margin-bottom:3px;}
+.result-addr{font-size:12px;color:#64748b;margin-bottom:8px;line-height:1.5;}
+.result-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.result-actions a,.result-actions button{flex:1;min-width:80px;padding:8px 10px;border-radius:10px;font-size:12px;font-weight:600;font-family:'Poppins',sans-serif;cursor:pointer;text-align:center;text-decoration:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent;border:none;}
+.btn-call{background:#dcfce7;color:#166534;}
+.btn-dir{background:#dbeafe;color:#1e40af;}
+.search-loading{text-align:center;padding:40px 0;color:#64748b;font-size:14px;}
+.search-empty{text-align:center;padding:40px 16px;color:#94a3b8;font-size:14px;line-height:1.7;}
+.search-credit{text-align:center;font-size:11px;color:#cbd5e1;margin-top:14px;padding-bottom:4px;}
+.no-loc-box{background:#fef3c7;border:1.5px solid #f59e0b;border-radius:12px;padding:16px;text-align:center;font-size:13px;color:#92400e;line-height:1.7;}
+.radius-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px 12px;background:#f1f5f9;border-radius:10px;}
+.radius-row label{font-size:12px;color:#64748b;font-weight:600;white-space:nowrap;}
+.radius-row select{flex:1;border:1.5px solid #e2e8f0;border-radius:8px;padding:6px 8px;font-size:13px;font-family:'Poppins',sans-serif;background:white;color:#1e293b;}
+.input-row{display:flex;gap:8px;align-items:center;}
+.input-row input,.input-row select{flex:1;}
+.voice-btn{flex-shrink:0;width:42px;height:42px;background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:10px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.voice-btn.listening{background:#fee2e2;border-color:#fca5a5;animation:vbpulse 0.8s ease-in-out infinite;}
+@keyframes vbpulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+.ocr-progress-bar{background:#eff6ff;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:13px;color:#1d4ed8;display:flex;align-items:center;gap:8px;}
+.profile-photo-area{display:flex;flex-direction:column;align-items:center;margin-bottom:18px;}
+.profile-photo-circle{width:90px;height:90px;border-radius:50%;background:#dbeafe;border:3px solid #bfdbfe;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;position:relative;flex-shrink:0;}
+.profile-photo-circle img{width:100%;height:100%;object-fit:cover;}
+.profile-photo-placeholder{font-size:36px;}
+.profile-photo-label{font-size:11px;color:#2563eb;font-weight:600;margin-top:6px;}
+.dep-card{background:#f8faff;border:1.5px solid #e2e8f0;border-radius:12px;padding:12px;margin-bottom:10px;}
+.dep-name{font-size:14px;font-weight:700;color:#1e293b;margin-bottom:3px;}
+.dep-detail{font-size:12px;color:#64748b;margin-bottom:6px;}
+.dep-actions{display:flex;gap:8px;}
+.dep-actions button{flex:1;padding:7px;border-radius:8px;font-size:12px;font-weight:600;font-family:'Poppins',sans-serif;cursor:pointer;border:none;touch-action:manipulation;}
+.dep-edit{background:#dbeafe;color:#1e40af;}
+.dep-del{background:#fee2e2;color:#991b1b;}
+.booklet-photos{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.booklet-thumb{width:64px;height:64px;border-radius:8px;object-fit:cover;border:1.5px solid #e2e8f0;}
+.em-photo-circle{width:80px;height:80px;border-radius:50%;border:3px solid #dc2626;overflow:hidden;flex-shrink:0;background:#fee2e2;display:flex;align-items:center;justify-content:center;font-size:32px;}
+.em-photo-circle img{width:100%;height:100%;object-fit:cover;}
+.cov-result-badge{display:inline-block;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:700;margin-bottom:6px;}
+.cov-r-green{background:#dcfce7;color:#166534;}
+.cov-r-amber{background:#fef3c7;color:#92400e;}
+.cov-table{width:100%;border-collapse:collapse;margin-top:2px;font-size:13px;}
+.cov-table th{text-align:left;padding:7px 8px;background:#f1f5f9;color:#64748b;font-size:10px;text-transform:uppercase;letter-spacing:0.3px;}
+.cov-table td{padding:9px 8px;border-bottom:1px solid #f1f5f9;vertical-align:middle;}
+.cov-table tr:last-child td{border:none;}
+.cov-guide-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.accordion-item{border:1.5px solid #e2e8f0;border-radius:12px;margin-bottom:8px;overflow:hidden;}
+.accordion-header{padding:13px 15px;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;background:white;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;}
+.accordion-header:active{background:#f8faff;}
+.accordion-body{display:none;padding:0 15px 14px;font-size:13px;color:#475569;line-height:1.7;background:white;}
+.accordion-body.open{display:block;}
+.bmi-result{padding:14px;border-radius:12px;text-align:center;margin-top:12px;}
+.bmi-num{font-size:32px;font-weight:700;}
+.bmi-cat{font-size:16px;font-weight:600;margin-top:4px;}
+.bmi-tip{font-size:12px;margin-top:6px;opacity:0.85;}
+.bp-row{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:10px;margin-bottom:6px;font-size:13px;}
+.bp-normal{background:#f0fdf4;border:1.5px solid #86efac;}
+.bp-elevated{background:#fef3c7;border:1.5px solid #fbbf24;}
+.bp-high{background:#fef2f2;border:1.5px solid #fca5a5;}
+.bp-val{font-weight:700;flex:1;}
+.bp-date{font-size:11px;color:#64748b;}
+.vacc-row{display:flex;align-items:center;gap:8px;padding:9px 10px;background:#f8faff;border-radius:10px;margin-bottom:6px;font-size:13px;border:1.5px solid #e2e8f0;}
+.vacc-name{flex:1;font-weight:600;}
+.vacc-date{font-size:11px;color:#64748b;}
+.mh-question{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f1f5f9;}
+.mh-question:last-child{border:none;}
+.mh-q-text{font-size:13px;flex:1;padding-right:8px;line-height:1.4;}
+.mh-score-display{padding:14px;border-radius:12px;text-align:center;margin-top:12px;}
+.record-entry{background:#f8faff;border:1.5px solid #e2e8f0;border-radius:12px;padding:12px;margin-bottom:8px;}
+.record-entry-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;touch-action:manipulation;}
+.record-date{font-size:11px;color:#64748b;}
+.record-title{font-size:14px;font-weight:600;color:#1e293b;}
+.record-body{display:none;margin-top:10px;font-size:13px;color:#475569;line-height:1.6;}
+.record-body.open{display:block;}
+/* ── BACK BUTTON / SUB-SCREEN NAV ── */
+.back-bar{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.back-btn{background:#f1f5f9;border:none;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:600;font-family:'Poppins',sans-serif;cursor:pointer;color:#475569;touch-action:manipulation;display:flex;align-items:center;gap:6px;}
+.back-btn:active{background:#e2e8f0;}
+.sub-title{font-size:17px;font-weight:700;color:#1e293b;}
+/* ── MORE TAB NAV CARDS ── */
+.nav-card{display:flex;align-items:center;gap:14px;padding:14px;background:white;border-radius:14px;margin-bottom:10px;box-shadow:0 2px 10px rgba(0,0,0,0.05);border:1.5px solid #e2e8f0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.nav-card:active{background:#f8faff;}
+.nav-card-icon{font-size:30px;flex-shrink:0;}
+.nav-card-text{flex:1;}
+.nav-card-title{font-size:14px;font-weight:700;color:#1e293b;}
+.nav-card-sub{font-size:12px;color:#64748b;margin-top:2px;}
+.nav-card-arrow{font-size:20px;color:#94a3b8;}
+/* ── PET CARDS ── */
+.pet-card{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1.5px solid #86efac;border-radius:16px;padding:16px;margin-bottom:12px;}
+.pet-card-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.pet-avatar{width:52px;height:52px;border-radius:50%;background:white;border:2px solid #86efac;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.pet-name{font-size:16px;font-weight:700;color:#166534;}
+.pet-species{font-size:12px;color:#64748b;}
+.pet-detail{font-size:12px;color:#475569;margin-bottom:4px;}
+.pet-actions{display:flex;gap:8px;margin-top:10px;}
+.pet-actions button{flex:1;padding:8px;border-radius:10px;font-size:12px;font-weight:600;font-family:'Poppins',sans-serif;cursor:pointer;border:none;touch-action:manipulation;}
+.pet-edit{background:#dbeafe;color:#1e40af;}
+.pet-del{background:#fee2e2;color:#991b1b;}
+.pet-vet{background:#dcfce7;color:#166534;}
+/* ── PRE-OP QUESTIONNAIRE ── */
+.preop-section{background:white;border-radius:14px;padding:16px;margin-bottom:12px;border-left:4px solid #2563eb;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.preop-section-title{font-size:13px;font-weight:700;color:#1e3a8a;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.preop-yesno{display:flex;gap:10px;margin-top:6px;}
+.preop-yesno label{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;border:1.5px solid #e2e8f0;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;color:#475569;touch-action:manipulation;}
+.preop-yesno input[type=radio]{display:none;}
+.preop-yesno input[type=radio]:checked + span{color:#2563eb;}
+.preop-yesno label:has(input:checked){border-color:#2563eb;background:#eff6ff;color:#2563eb;}
+.stopbang-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:13px;}
+.stopbang-item:last-child{border:none;}
+.stopbang-q{flex:1;padding-right:10px;line-height:1.4;}
+.stopbang-toggle{display:flex;gap:6px;}
+.stopbang-toggle label{padding:5px 12px;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;touch-action:manipulation;}
+.stopbang-toggle input{display:none;}
+.stopbang-toggle label:has(input:checked){border-color:#2563eb;background:#eff6ff;color:#2563eb;}
+/* ── SPONSOR BANNER ── */
+.sponsor-banner{background:white;border:2px dashed #bfdbfe;border-radius:14px;padding:18px;text-align:center;margin-bottom:16px;}
+.sponsor-banner-title{font-size:13px;font-weight:700;color:#2563eb;margin-bottom:4px;}
+.sponsor-banner-sub{font-size:11px;color:#94a3b8;line-height:1.6;}
+/* ── MISC ── */
+.preop-autofill-note{background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:10px 13px;font-size:12px;color:#1e40af;margin-bottom:12px;line-height:1.6;}
+</style>
+</head>
+<body ontouchstart="">
+
+<div class="app-header">
+  <div class="app-header-icon">
+    <svg width="26" height="26" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50,74 C50,74 18,56 18,34 C18,24 26,17 36,17 C42,17 47,21 50,27 C53,21 58,17 64,17 C74,17 82,24 82,34 C82,56 50,74 50,74Z" fill="#ef4444"/>
+      <polyline points="5,50 22,50 28,40 34,60 40,28 46,70 50,50 65,50 70,43 75,50 95,50" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div>
+    <h1>Health One Stop</h1>
+    <div class="tagline" id="header-sub">Your personal health assistant</div>
+  </div>
+</div>
+
+<!-- SCREEN 1 — PROFILE -->
+<div class="screen active" id="screen-profile">
+  <div id="profile-alert"></div>
+  <div class="card">
+    <div class="profile-photo-area">
+      <input type="file" id="photo-input" accept="image/*" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px;" onchange="savePhoto(this)">
+      <div class="profile-photo-circle" onclick="document.getElementById('photo-input').click()">
+        <div id="profile-photo-placeholder" class="profile-photo-placeholder">👤</div>
+        <img id="profile-photo-img" src="" alt="Profile photo" style="display:none;">
+      </div>
+      <div class="profile-photo-label" onclick="document.getElementById('photo-input').click()">📷 Tap to add photo</div>
+    </div>
+    <div class="card-title">👤 Personal Details</div>
+    <div class="form-group"><label>Full Name *</label><div class="input-row"><input type="text" id="p-name" placeholder="e.g. Johan Geldenhuys"><button class="voice-btn" id="v-p-name" ontouchstart="" onclick="startVoice('p-name')" title="Speak name">🎤</button></div></div>
+    <div class="form-group"><label>SA ID Number *</label><input type="text" id="p-said" placeholder="13-digit number" maxlength="13" inputmode="numeric"></div>
+    <div class="form-group"><label>Date of Birth</label><input type="date" id="p-dob"></div>
+    <div class="form-group"><label>Cell Number</label><input type="tel" id="p-phone" placeholder="+27 82 000 0000"></div>
+    <div class="form-group"><label>Email Address</label><input type="email" id="p-email" placeholder="you@email.com"></div>
+    <div class="form-group"><label>Home Address</label><input type="text" id="p-address" placeholder="Street, suburb, city"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🩺 Medical Aid</div>
+    <div class="form-group"><label>Medical Aid Scheme</label>
+      <select id="p-aid-scheme">
+        <option value="">— Select Scheme —</option>
+        <option>Discovery Health</option><option>Bonitas</option>
+        <option>Momentum Health</option><option>Medshield</option>
+        <option>GEMS</option><option>Bestmed</option>
+        <option>Fedhealth</option><option>Keyhealth</option>
+        <option>Profmed</option><option>Sizwe</option>
+        <option>None / Uninsured</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Membership Number</label><input type="text" id="p-aid-num" placeholder="e.g. 12345678"></div>
+    <div class="form-group"><label>Plan / Option</label><input type="text" id="p-aid-plan" placeholder="e.g. Comprehensive, Hospital Plan"></div>
+    <p style="font-size:12px;color:#64748b;line-height:1.6;">📷 Tap the camera in AI Chat to photograph your medical aid card — auto-fills your profile.</p>
+  </div>
+  <div class="card">
+    <div class="card-title">🚨 Medical Information</div>
+    <div class="form-group"><label>Allergies</label><div class="input-row"><input type="text" id="p-allergies" placeholder="e.g. Penicillin, Peanuts"><button class="voice-btn" id="v-p-allergies" ontouchstart="" onclick="startVoice('p-allergies')" title="Speak">🎤</button></div></div>
+    <div class="form-group">
+      <label>Chronic Conditions <span style="font-size:11px;color:#94a3b8;font-weight:400;">(type to search)</span></label>
+      <div style="position:relative;">
+        <div class="input-row"><input type="text" id="p-cond-input" placeholder="e.g. Hypertension, Diabetes…" autocomplete="off" oninput="searchConds(this.value)" onkeydown="condKeyDown(event)"><button class="voice-btn" id="v-p-cond-input" ontouchstart="" onclick="startVoice('p-cond-input',addCond)" title="Speak">🎤</button></div>
+        <div id="cond-suggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:white;border:1.5px solid #2563eb;border-top:none;border-radius:0 0 10px 10px;z-index:500;max-height:180px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
+      </div>
+      <div id="cond-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
+      <input type="hidden" id="p-conditions">
+    </div>
+    <div class="form-group">
+      <label>Current Medications <span style="font-size:11px;color:#94a3b8;font-weight:400;">(type to search)</span></label>
+      <div style="position:relative;">
+        <div class="input-row"><input type="text" id="p-meds-input" placeholder="Type medication name…" autocomplete="off" oninput="searchMeds(this.value)" onkeydown="medKeyDown(event)"><button class="voice-btn" id="v-p-meds-input" ontouchstart="" onclick="startVoice('p-meds-input',addMed)" title="Speak">🎤</button></div>
+        <div id="med-suggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:white;border:1.5px solid #2563eb;border-top:none;border-radius:0 0 10px 10px;z-index:500;max-height:180px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
+      </div>
+      <div id="meds-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
+      <input type="hidden" id="p-meds">
+    </div>
+    <div class="form-group"><label>Blood Type</label>
+      <select id="p-blood">
+        <option value="">Unknown</option>
+        <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+        <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+      </select>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">👨‍👩‍👧 Emergency Contact</div>
+    <div class="form-group"><label>Contact Name</label><input type="text" id="p-ec-name" placeholder="e.g. Mary Geldenhuys"></div>
+    <div class="form-group"><label>Relationship</label><input type="text" id="p-ec-rel" placeholder="e.g. Spouse, Mother, Father"></div>
+    <div class="form-group"><label>Contact Number</label><input type="tel" id="p-ec-num" placeholder="+27 82 000 0000"></div>
+    <button class="btn btn-primary" onclick="saveProfile()">💾 Save Profile</button>
+  </div>
+  <div class="card" id="family-card">
+    <div class="card-title">👨‍👩‍👧 My Family / Dependants</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:12px;">Add children or dependants on your medical aid.</p>
+    <div id="dependants-list"></div>
+    <button class="btn btn-outline" onclick="openAddDependant()" style="margin-top:8px;">+ Add Child / Dependant</button>
+  </div>
+</div>
+
+<!-- SCREEN 2 — MY CARD -->
+<div class="screen" id="screen-card">
+  <div id="card-content"><div class="card"><div class="no-data">💳 Fill in your profile first, then your health card appears here.</div></div></div>
+</div>
+
+<!-- SCREEN 3 — FIND CARE -->
+<div class="screen" id="screen-care">
+  <div class="card">
+    <div class="card-title">📍 My Location</div>
+    <div id="location-status">
+      <p style="color:#64748b;font-size:13px;margin-bottom:14px;line-height:1.6;">Tap below to detect your location for accurate provider search.</p>
+      <button class="btn btn-primary" id="detect-btn" onclick="detectLocation()">📡 Detect My Location</button>
+      <p style="font-size:11px;color:#94a3b8;margin-top:8px;text-align:center;">Your location is only used in this app — never sent anywhere.</p>
+    </div>
+    <div id="location-result" style="display:none;">
+      <div class="location-banner"><div class="loc-icon">📍</div><div><div class="loc-name" id="loc-display">Detecting…</div><div class="loc-sub" id="loc-coords"></div><div class="loc-status">✅ Links updated — tap any button below</div></div></div>
+      <button class="btn btn-outline" id="update-btn" onclick="detectLocation()" style="font-size:13px;padding:10px;">🔄 Update Location</button>
+    </div>
+    <div id="location-error" style="display:none;margin-top:10px;"></div>
+  </div>
+
+  <div id="coverage-guide-wrap"></div>
+
+  <div class="card">
+    <div class="card-title">👨‍⚕️ Doctors &amp; Hospitals</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('gp','General Practitioner (GP)','👨‍⚕️')"><div class="svc-icon">👨‍⚕️</div><div class="svc-text"><div class="svc-name">General Practitioner (GP)</div><div class="svc-sub">Family doctors near you</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('hospital','Hospital / Clinic','🏥')"><div class="svc-icon">🏥</div><div class="svc-text"><div class="svc-name">Hospital / Clinic</div><div class="svc-sub">Hospitals and day clinics near you</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('specialist','Specialist Doctor','🩺')"><div class="svc-icon">🩺</div><div class="svc-text"><div class="svc-name">Specialist Doctor</div><div class="svc-sub">Cardiologist, surgeon &amp; more</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('pharmacy','Pharmacy','💊')"><div class="svc-icon">💊</div><div class="svc-text"><div class="svc-name">Pharmacy</div><div class="svc-sub">Clicks, Dis-Chem, independent</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('occ','Occupational Health Doctor','🏭')"><div class="svc-icon">🏭</div><div class="svc-text"><div class="svc-name">Occupational Health Doctor</div><div class="svc-sub">Workplace health &amp; fitness certificates</div></div><div class="svc-arrow">›</div></button>
+      <a href="https://www.hpcsa.co.za/PBRegulation/Verification" target="_blank" class="service-btn"><div class="svc-icon">🔍</div><div class="svc-text"><div class="svc-name">HPCSA Doctor Verification</div><div class="svc-sub">Check a doctor's registration</div></div><div class="svc-arrow">›</div></a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🦺 Allied Health Providers</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('dentist','Dentist','🦷')"><div class="svc-icon">🦷</div><div class="svc-text"><div class="svc-name">Dentist</div><div class="svc-sub">Dental care &amp; oral health</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('physio','Physiotherapist','🏃')"><div class="svc-icon">🏃</div><div class="svc-text"><div class="svc-name">Physiotherapist</div><div class="svc-sub">Physio, rehab &amp; sports injuries</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('speech','Speech Therapist','🗣️')"><div class="svc-icon">🗣️</div><div class="svc-text"><div class="svc-name">Speech Therapist</div><div class="svc-sub">Speech, language &amp; swallowing</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('ot','Occupational Therapist (OT)','🙌')"><div class="svc-icon">🙌</div><div class="svc-text"><div class="svc-name">Occupational Therapist (OT)</div><div class="svc-sub">Daily living &amp; rehabilitation</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('optom','Optometrist','👁️')"><div class="svc-icon">👁️</div><div class="svc-text"><div class="svc-name">Optometrist</div><div class="svc-sub">Eye tests &amp; glasses</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('dietician','Dietician / Nutritionist','🥗')"><div class="svc-icon">🥗</div><div class="svc-text"><div class="svc-name">Dietician / Nutritionist</div><div class="svc-sub">Dietary advice &amp; nutrition</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('psych','Psychologist / Counsellor','🧠')"><div class="svc-icon">🧠</div><div class="svc-text"><div class="svc-name">Psychologist / Counsellor</div><div class="svc-sub">Mental health support</div></div><div class="svc-arrow">›</div></button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧪 Get My Test Results</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <a href="https://www.pathcare.co.za" target="_blank" class="service-btn"><div class="svc-icon">🔬</div><div class="svc-text"><div class="svc-name">PathCare</div><div class="svc-sub">Blood tests &amp; lab results online</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://www.ampath.co.za" target="_blank" class="service-btn"><div class="svc-icon">🧬</div><div class="svc-text"><div class="svc-name">Lancet / Ampath</div><div class="svc-sub">View your lab results online</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://www.scpradiology.co.za" target="_blank" class="service-btn"><div class="svc-icon">📡</div><div class="svc-text"><div class="svc-name">SCP Radiology</div><div class="svc-sub">X-ray, MRI &amp; scan reports</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://www.mediclinic.co.za" target="_blank" class="service-btn"><div class="svc-icon">🏥</div><div class="svc-text"><div class="svc-name">Mediclinic</div><div class="svc-sub">Hospital patient results portal</div></div><div class="svc-arrow">›</div></a>
+    </div>
+  </div>
+
+  <!-- SPONSOR PLACEHOLDER -->
+  <div class="sponsor-banner">
+    <div class="sponsor-banner-title">📢 Featured Healthcare Partners</div>
+    <div class="sponsor-banner-sub">This space is reserved for pharmacies, medical aids, and healthcare providers who want to reach patients on Health One Stop.<br><br>Contact Dr JA Geldenhuys to advertise here.</div>
+  </div>
+
+  <div class="card" style="border-left:4px solid #dc2626;">
+    <div class="card-title" style="color:#dc2626;">🚨 Quick Emergency Call</div>
+    <div class="emergency-item"><div class="em-icon">🚑</div><div class="em-info"><div class="em-name">Ambulance / Emergency</div><div class="em-num">10177</div></div><a href="tel:10177" class="em-call-btn" onclick="handleEmergencyCall('10177',event)">📞 Call</a></div>
+    <div class="emergency-item"><div class="em-icon">☎️</div><div class="em-info"><div class="em-name">ER24</div><div class="em-num">084 124</div></div><a href="tel:084124" class="em-call-btn" onclick="handleEmergencyCall('084124',event)">📞 Call</a></div>
+    <div id="call-fallback" style="display:none;margin-top:10px;background:#fef3c7;border:1.5px solid #fbbf24;border-radius:10px;padding:11px;font-size:13px;color:#92400e;">⚠️ <strong>Can't auto-dial?</strong> Dial <span id="call-fallback-num" style="font-weight:700;font-size:15px;"></span> manually.</div>
+  </div>
+</div>
+
+<!-- SCREEN 4 — AI CHAT -->
+<div class="screen" id="screen-chat">
+  <div class="chat-disclaimer">⚠️ <strong>Not medical advice.</strong> General health information only. Always consult a qualified healthcare professional for diagnosis and treatment.</div>
+  <div class="chat-chips-row">
+    <button class="chat-chip" onclick="sendSuggestion('Cold and flu remedies')">🤧 Cold &amp; Flu</button>
+    <button class="chat-chip" onclick="sendSuggestion('I have a fever')">🌡️ Fever</button>
+    <button class="chat-chip" onclick="sendSuggestion('Headache remedies')">🤕 Headache</button>
+    <button class="chat-chip" onclick="sendSuggestion('Stomach pain and diarrhoea')">🤢 Stomach</button>
+    <button class="chat-chip" onclick="sendSuggestion('Blood pressure tips')">❤️ Blood Pressure</button>
+    <button class="chat-chip" onclick="sendSuggestion('Diabetes management')">💉 Diabetes</button>
+    <button class="chat-chip" onclick="sendSuggestion('Emergency warning signs')">🚨 Emergencies</button>
+    <button class="chat-chip" onclick="sendSuggestion('Mental health and stress')">🧠 Mental Health</button>
+    <button class="chat-chip" onclick="sendSuggestion('HIV and ARV treatment')">🎗️ HIV &amp; ARVs</button>
+    <button class="chat-chip" onclick="sendSuggestion('TB tuberculosis symptoms')">🫁 TB</button>
+    <button class="chat-chip" onclick="sendSuggestion('Medical aid coverage South Africa')">💚 Med Aid Cover</button>
+    <button class="chat-chip" onclick="sendSuggestion('Medication tips')">💊 Medication</button>
+    <button class="chat-chip" onclick="sendSuggestion('Sleep and fatigue')">😴 Fatigue</button>
+    <button class="chat-chip" onclick="sendSuggestion('Wound and cut care')">🩹 Wounds</button>
+  </div>
+  <div id="chat-messages"></div>
+  <input type="file" id="cam-input" accept="image/*" capture="environment" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px;" onchange="scanCard(this)">
+  <div class="chat-input-row">
+    <label for="cam-input" class="chat-cam-btn" title="Scan ID or medical aid card">📷</label>
+    <input type="text" id="chat-input" placeholder="Ask me anything…" onkeydown="chatKeyDown(event)">
+    <button class="chat-mic-btn" id="mic-btn" onclick="toggleVoice()" title="Voice guide">🎤</button>
+    <button class="chat-send-btn" onclick="sendChat()" title="Send">➤</button>
+  </div>
+</div>
+
+<!-- SCREEN 5 — SOS -->
+<div class="screen" id="screen-emergency">
+  <div style="background:#fef2f2;border:2px solid #dc2626;border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:#991b1b;line-height:1.6;font-weight:600;">
+    📱 Show this screen to paramedics or emergency responders — no password needed
+  </div>
+  <div class="card" style="border-left:4px solid #dc2626;">
+    <div class="card-title" style="color:#dc2626;">🚨 My Emergency Info</div>
+    <div id="emergency-content"><div class="no-data">Save your profile to see your personal emergency info here.</div></div>
+  </div>
+  <div class="card" id="family-emergency-card" style="display:none;">
+    <div class="card-title">👨‍👩‍👧 Family Emergency Info</div>
+    <div id="family-emergency-content"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📞 SA Emergency Numbers</div>
+    <div class="emergency-item"><div class="em-icon">🚑</div><div class="em-info"><div class="em-name">Ambulance / Emergency</div><div class="em-num">10177</div></div><a href="tel:10177" class="em-call-btn" onclick="handleEmergencyCall('10177',event)">📞 Call</a></div>
+    <div class="emergency-item"><div class="em-icon">🚔</div><div class="em-info"><div class="em-name">Police</div><div class="em-num">10111</div></div><a href="tel:10111" class="em-call-btn" onclick="handleEmergencyCall('10111',event)">📞 Call</a></div>
+    <div class="emergency-item"><div class="em-icon">🔥</div><div class="em-info"><div class="em-name">Fire Department</div><div class="em-num">10177</div></div><a href="tel:10177" class="em-call-btn" onclick="handleEmergencyCall('10177',event)">📞 Call</a></div>
+    <div class="emergency-item"><div class="em-icon">☎️</div><div class="em-info"><div class="em-name">ER24</div><div class="em-num">084 124</div></div><a href="tel:084124" class="em-call-btn" onclick="handleEmergencyCall('084124',event)">📞 Call</a></div>
+    <div class="emergency-item"><div class="em-icon">🏥</div><div class="em-info"><div class="em-name">Netcare 911</div><div class="em-num">082 911</div></div><a href="tel:082911" class="em-call-btn" onclick="handleEmergencyCall('082911',event)">📞 Call</a></div>
+    <div class="emergency-item"><div class="em-icon">🧠</div><div class="em-info"><div class="em-name">SADAG Mental Health</div><div class="em-num">0800 456 789</div></div><a href="tel:0800456789" class="em-call-btn" onclick="handleEmergencyCall('0800456789',event)">📞 Call</a></div>
+    <div class="emergency-item"><div class="em-icon">🎗️</div><div class="em-info"><div class="em-name">TAC HIV Helpline</div><div class="em-num">0800 212 506</div></div><a href="tel:0800212506" class="em-call-btn" onclick="handleEmergencyCall('0800212506',event)">📞 Call</a></div>
+    <div class="emergency-item"><div class="em-icon">💙</div><div class="em-info"><div class="em-name">Suicide Crisis Line</div><div class="em-num">0800 567 567</div></div><a href="tel:0800567567" class="em-call-btn" onclick="handleEmergencyCall('0800567567',event)">📞 Call</a></div>
+    <div id="em-call-fallback" style="display:none;margin-top:10px;background:#fef3c7;border:1.5px solid #fbbf24;border-radius:10px;padding:11px;font-size:13px;color:#92400e;">⚠️ <strong>Can't auto-dial?</strong> Dial <span id="em-fallback-num" style="font-weight:700;font-size:15px;"></span> manually.</div>
+  </div>
+</div>
+
+<!-- SCREEN 6 — MORE -->
+<div class="screen" id="screen-more">
+  <!-- Navigation to sub-screens -->
+  <div class="nav-card" onclick="showSubScreen('preop')" ontouchstart="">
+    <div class="nav-card-icon">📋</div>
+    <div class="nav-card-text">
+      <div class="nav-card-title">Pre-Op Questionnaire</div>
+      <div class="nav-card-sub">Fill in before surgery — send to surgeon &amp; anaesthetist via WhatsApp or email</div>
+    </div>
+    <div class="nav-card-arrow">›</div>
+  </div>
+  <div class="nav-card" onclick="showSubScreen('pets')" ontouchstart="">
+    <div class="nav-card-icon">🐾</div>
+    <div class="nav-card-text">
+      <div class="nav-card-title">My Pets</div>
+      <div class="nav-card-sub">Pet health cards, vet finder, vaccinations &amp; insurance</div>
+    </div>
+    <div class="nav-card-arrow">›</div>
+  </div>
+
+  <!-- BMI Calculator -->
+  <div class="card">
+    <div class="card-title">⚖️ BMI Calculator</div>
+    <div class="form-group"><label>Height (cm)</label><input type="number" id="bmi-height" placeholder="e.g. 170" inputmode="decimal" min="50" max="250"></div>
+    <div class="form-group"><label>Weight (kg)</label><input type="number" id="bmi-weight" placeholder="e.g. 75" inputmode="decimal" min="10" max="300"></div>
+    <button class="btn btn-primary" onclick="calculateBMI()">📊 Calculate BMI</button>
+    <div id="bmi-result"></div>
+  </div>
+
+  <!-- Blood Pressure Log -->
+  <div class="card">
+    <div class="card-title">❤️ Blood Pressure Log</div>
+    <div class="form-group"><label>Systolic (top number)</label><input type="number" id="bp-systolic" placeholder="e.g. 120" inputmode="numeric" min="60" max="250"></div>
+    <div class="form-group"><label>Diastolic (bottom number)</label><input type="number" id="bp-diastolic" placeholder="e.g. 80" inputmode="numeric" min="30" max="150"></div>
+    <div class="form-group"><label>Date</label><input type="date" id="bp-date"></div>
+    <button class="btn btn-primary" onclick="saveBP()">💾 Save Reading</button>
+    <div id="bp-alert"></div>
+    <div id="bp-list" style="margin-top:12px;"></div>
+  </div>
+
+  <!-- Vaccination Record -->
+  <div class="card">
+    <div class="card-title">💉 Vaccination Record</div>
+    <div class="form-group"><label>Vaccine Name</label><input type="text" id="vacc-name" placeholder="e.g. COVID-19, Flu, Tetanus"></div>
+    <div class="form-group"><label>Date Given</label><input type="date" id="vacc-date-given"></div>
+    <div class="form-group"><label>Next Due Date (optional)</label><input type="date" id="vacc-next-due"></div>
+    <button class="btn btn-primary" onclick="saveVaccine()">💾 Add Vaccine</button>
+    <div id="vacc-alert"></div>
+    <div id="vacc-list" style="margin-top:12px;"></div>
+  </div>
+
+  <!-- Health Info -->
+  <div class="card">
+    <div class="card-title">📖 Health Conditions Guide</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6;">Plain-language info. Visit your nearest clinic — applies to all patients including those without medical aid.</p>
+    <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><span>❤️ Hypertension (High Blood Pressure)</span><span>▼</span></div><div class="accordion-body">High blood pressure means your heart works too hard. You usually have NO symptoms — called the "silent killer."<br><br><strong>⚠️ Emergency:</strong> Severe headache, blurred vision, chest pain → go immediately.<br><br>Get BP checked free at any pharmacy. Never stop medication without your doctor.</div></div>
+    <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><span>🍬 Diabetes Type 2</span><span>▼</span></div><div class="accordion-body">Blood sugar builds up and damages the body if not treated.<br><br><strong>⚠️ Warning:</strong> Very thirsty, urinating a lot, blurred vision, slow-healing wounds, tingling feet.<br><br>Never stop medication without your doctor. Wound that won't heal → go to clinic immediately.</div></div>
+    <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><span>💨 Asthma</span><span>▼</span></div><div class="accordion-body">Airways narrow, making it hard to breathe — especially with exercise, cold air, dust, smoke.<br><br><strong>🚨 Emergency:</strong> Reliever inhaler (blue pump) not helping after 10 minutes → call 10177.</div></div>
+    <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><span>🎗️ HIV / ARTs</span><span>▼</span></div><div class="accordion-body">ARTs (antiretroviral treatment) control the virus. ARTs are FREE at all SA public clinics.<br><br>Take every day at the same time. Never miss doses. Undetectable viral load = cannot pass HIV to others (U=U).</div></div>
+    <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><span>🫁 Tuberculosis (TB)</span><span>▼</span></div><div class="accordion-body">TB is curable with 6 months of treatment. Never stop early.<br><br><strong>⚠️ Symptoms:</strong> Cough 2+ weeks, coughing blood, night sweats, weight loss, fatigue → go to clinic immediately. Testing is FREE.</div></div>
+  </div>
+
+  <!-- Mental Health Check-in -->
+  <div class="card">
+    <div class="card-title">🧠 Mental Health Check-in</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:14px;line-height:1.6;">Rate each 1 (poor) to 5 (great) — just for you.</p>
+    <div class="mh-question"><span class="mh-q-text">😊 How is your mood today?</span><select id="mh-1" style="width:70px;border:1.5px solid #e2e8f0;border-radius:8px;padding:6px;font-family:'Poppins',sans-serif;font-size:13px;"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>
+    <div class="mh-question"><span class="mh-q-text">😴 How well are you sleeping?</span><select id="mh-2" style="width:70px;border:1.5px solid #e2e8f0;border-radius:8px;padding:6px;font-family:'Poppins',sans-serif;font-size:13px;"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>
+    <div class="mh-question"><span class="mh-q-text">😰 Do you feel anxious or worried?</span><select id="mh-3" style="width:70px;border:1.5px solid #e2e8f0;border-radius:8px;padding:6px;font-family:'Poppins',sans-serif;font-size:13px;"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>
+    <div class="mh-question"><span class="mh-q-text">🤝 Do you feel supported by others?</span><select id="mh-4" style="width:70px;border:1.5px solid #e2e8f0;border-radius:8px;padding:6px;font-family:'Poppins',sans-serif;font-size:13px;"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>
+    <div class="mh-question"><span class="mh-q-text">🌟 Do you feel hopeful about the future?</span><select id="mh-5" style="width:70px;border:1.5px solid #e2e8f0;border-radius:8px;padding:6px;font-family:'Poppins',sans-serif;font-size:13px;"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>
+    <button class="btn btn-primary" style="margin-top:14px;" onclick="mentalHealthCheck()">✅ Check My Score</button>
+    <div id="mh-result"></div>
+    <div style="margin-top:14px;padding:12px 14px;background:#fef3c7;border:1.5px solid #fbbf24;border-radius:10px;font-size:13px;color:#92400e;line-height:1.6;">💛 <strong>Need to talk?</strong> SADAG: <a href="tel:0800567567" style="color:#92400e;font-weight:700;">0800 567 567</a> — free, 24 hours.</div>
+  </div>
+
+  <!-- Health Records -->
+  <div class="card">
+    <div class="card-title">📁 My Health Records</div>
+    <div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:10px;">🧪 Lab Results</div>
+    <button class="btn btn-outline" style="margin-bottom:12px;" onclick="openModal('modal-lab')">+ Add Lab Result</button>
+    <div id="lab-list"></div>
+    <div style="height:1px;background:#e2e8f0;margin:16px 0;"></div>
+    <div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:10px;">📡 Radiology Reports</div>
+    <button class="btn btn-outline" style="margin-bottom:12px;" onclick="openModal('modal-radio')">+ Add Radiology Report</button>
+    <div id="radio-list"></div>
+  </div>
+</div>
+
+<!-- SCREEN 7 — PETS -->
+<div class="screen" id="screen-pets">
+  <div class="back-bar">
+    <button class="back-btn" onclick="backToMore()">← Back</button>
+    <span class="sub-title">🐾 My Pets</span>
+  </div>
+  <div class="card" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:none;">
+    <p style="font-size:13px;color:#166534;line-height:1.7;">Add your pets here. Each pet gets their own health card with vet details, vaccinations, and a QR code. Tap <strong>Find Nearest Vet</strong> on any pet card to locate a vet near you.</p>
+  </div>
+  <div id="pet-list"></div>
+  <button class="btn btn-green" onclick="openAddPet()">🐾 Add a Pet</button>
+</div>
+
+<!-- SCREEN 8 — PRE-OP QUESTIONNAIRE -->
+<div class="screen" id="screen-preop">
+  <div class="back-bar">
+    <button class="back-btn" onclick="backToMore()">← Back</button>
+    <span class="sub-title">📋 Pre-Op Questionnaire</span>
+  </div>
+  <div class="preop-autofill-note">ℹ️ Your name, allergies, and medications are auto-filled from your Profile. Check and correct if needed before sending.</div>
+
+  <!-- Section 1: Procedure -->
+  <div class="preop-section">
+    <div class="preop-section-title">🏥 1. Procedure Details</div>
+    <div class="form-group"><label>Procedure / Operation Name</label><input type="text" id="po-procedure" placeholder="e.g. Laparoscopic cholecystectomy, Hip replacement"></div>
+    <div class="form-group"><label>Date of Procedure</label><input type="date" id="po-date"></div>
+    <div class="form-group"><label>Hospital / Facility</label><input type="text" id="po-hospital" placeholder="e.g. Netcare Panorama, Mediclinic Vredendal"></div>
+    <div class="form-group"><label>Surgeon Name</label><input type="text" id="po-surgeon" placeholder="e.g. Dr Smith"></div>
+    <div class="form-group"><label>Surgeon WhatsApp / Cell</label><input type="tel" id="po-surgeon-wa" placeholder="+27 82 000 0000"></div>
+    <div class="form-group"><label>Surgeon Email</label><input type="email" id="po-surgeon-email" placeholder="surgeon@email.com"></div>
+    <div class="form-group"><label>Anaesthetist Name</label><input type="text" id="po-anaest" placeholder="e.g. Dr Jones"></div>
+    <div class="form-group"><label>Anaesthetist WhatsApp / Cell</label><input type="tel" id="po-anaest-wa" placeholder="+27 82 000 0000"></div>
+    <div class="form-group"><label>Anaesthetist Email</label><input type="email" id="po-anaest-email" placeholder="anaest@email.com"></div>
+  </div>
+
+  <!-- Section 2: Patient -->
+  <div class="preop-section">
+    <div class="preop-section-title">👤 2. Patient Details</div>
+    <div class="form-group"><label>Full Name</label><input type="text" id="po-name" placeholder="Auto-filled from profile"></div>
+    <div class="form-group"><label>SA ID Number</label><input type="text" id="po-id" placeholder="Auto-filled from profile"></div>
+    <div class="form-group"><label>Date of Birth</label><input type="date" id="po-dob"></div>
+    <div class="form-group"><label>Weight (kg)</label><input type="number" id="po-weight" placeholder="e.g. 75" inputmode="decimal"></div>
+    <div class="form-group"><label>Height (cm)</label><input type="number" id="po-height" placeholder="e.g. 170" inputmode="decimal"></div>
+    <div class="form-group"><label>Blood Type</label>
+      <select id="po-blood">
+        <option value="">Unknown</option>
+        <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+        <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Section 3: Allergies -->
+  <div class="preop-section">
+    <div class="preop-section-title">🚫 3. Allergies</div>
+    <div class="form-group"><label>Drug Allergies &amp; Reaction Type</label><input type="text" id="po-allergies" placeholder="e.g. Penicillin — rash; Aspirin — anaphylaxis"></div>
+    <div class="form-group"><label>Latex Allergy?</label>
+      <select id="po-latex"><option value="No">No</option><option value="Yes">Yes</option><option value="Unknown">Unknown</option></select>
+    </div>
+    <div class="form-group"><label>Food Allergies</label><input type="text" id="po-food-allergy" placeholder="e.g. Peanuts, Shellfish — or None"></div>
+  </div>
+
+  <!-- Section 4: Medications -->
+  <div class="preop-section">
+    <div class="preop-section-title">💊 4. Current Medications</div>
+    <div class="form-group"><label>All Current Medications</label><textarea id="po-meds" rows="4" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:13px;font-family:'Poppins',sans-serif;resize:vertical;" placeholder="Auto-filled from profile — list name and dose of each"></textarea></div>
+    <div class="form-group"><label>Anticoagulants / Blood Thinners?</label>
+      <select id="po-anticoag"><option value="No">No</option><option value="Yes — Warfarin">Yes — Warfarin</option><option value="Yes — Xarelto (rivaroxaban)">Yes — Xarelto</option><option value="Yes — Eliquis (apixaban)">Yes — Eliquis</option><option value="Yes — Aspirin">Yes — Aspirin (daily)</option><option value="Yes — Clopidogrel">Yes — Clopidogrel</option><option value="Yes — other">Yes — other</option></select>
+    </div>
+    <div class="form-group"><label>On Insulin or Diabetic Medication?</label>
+      <select id="po-insulin"><option value="No">No</option><option value="Yes — insulin">Yes — insulin</option><option value="Yes — metformin">Yes — metformin</option><option value="Yes — other oral">Yes — other oral</option></select>
+    </div>
+    <div class="form-group"><label>On Steroids / Prednisone?</label>
+      <select id="po-steroids"><option value="No">No</option><option value="Yes">Yes</option></select>
+    </div>
+    <div class="form-group"><label>Herbal Supplements / Traditional Medicines?</label><input type="text" id="po-herbal" placeholder="e.g. Rooibos extract, Buchu — or None"></div>
+  </div>
+
+  <!-- Section 5: Medical History -->
+  <div class="preop-section">
+    <div class="preop-section-title">🏥 5. Medical History</div>
+    <div class="form-group"><label>Chronic Conditions</label><textarea id="po-conditions" rows="3" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:13px;font-family:'Poppins',sans-serif;resize:vertical;" placeholder="Auto-filled from profile"></textarea></div>
+    <div class="form-group"><label>Previous Operations / Surgery</label><textarea id="po-prev-surg" rows="2" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:13px;font-family:'Poppins',sans-serif;resize:vertical;" placeholder="e.g. Appendix removed 2015 — no complications; or None"></textarea></div>
+    <div class="form-group"><label>Previous Anaesthetic — Any Problems?</label>
+      <select id="po-prev-anaest"><option value="No previous anaesthetic">No previous anaesthetic</option><option value="Yes — no problems">Yes — no problems</option><option value="Yes — nausea/vomiting">Yes — nausea/vomiting</option><option value="Yes — difficult airway/intubation">Yes — difficult airway/intubation</option><option value="Yes — awareness under anaesthesia">Yes — awareness under anaesthetic</option><option value="Yes — other complication">Yes — other complication</option></select>
+    </div>
+    <div class="form-group"><label>Family History of Anaesthetic Problems?</label>
+      <select id="po-family-anaest"><option value="No">No</option><option value="Yes — malignant hyperthermia">Yes — malignant hyperthermia</option><option value="Yes — other">Yes — other</option><option value="Unknown">Unknown</option></select>
+    </div>
+  </div>
+
+  <!-- Section 6: Cardiovascular / STOP-BANG -->
+  <div class="preop-section">
+    <div class="preop-section-title">❤️ 6. Heart, Lungs &amp; Sleep (STOP-BANG)</div>
+    <div class="form-group"><label>Can you climb one flight of stairs without stopping?</label>
+      <select id="po-stairs"><option value="Yes">Yes</option><option value="No — stops halfway">No — stops halfway</option><option value="No — cannot climb">No — cannot climb</option></select>
+    </div>
+    <div class="form-group"><label>Chest pain or palpitations?</label>
+      <select id="po-chest"><option value="No">No</option><option value="Yes — chest pain">Yes — chest pain</option><option value="Yes — palpitations">Yes — palpitations</option><option value="Yes — both">Yes — both</option></select>
+    </div>
+    <div class="form-group"><label>Shortness of breath at rest or minimal exertion?</label>
+      <select id="po-sob"><option value="No">No</option><option value="Yes — at rest">Yes — at rest</option><option value="Yes — with mild activity">Yes — with mild activity</option></select>
+    </div>
+    <p style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin:10px 0 6px;">STOP-BANG Sleep Apnoea Screening</p>
+    <div class="stopbang-item"><div class="stopbang-q"><strong>S</strong> — Do you Snore loudly?</div><div class="stopbang-toggle"><label><input type="radio" name="sb-s" value="No" checked><span>No</span></label><label><input type="radio" name="sb-s" value="Yes"><span>Yes</span></label></div></div>
+    <div class="stopbang-item"><div class="stopbang-q"><strong>T</strong> — Do you often feel Tired or sleepy during the day?</div><div class="stopbang-toggle"><label><input type="radio" name="sb-t" value="No" checked><span>No</span></label><label><input type="radio" name="sb-t" value="Yes"><span>Yes</span></label></div></div>
+    <div class="stopbang-item"><div class="stopbang-q"><strong>O</strong> — Has anyone Observed you stop breathing while sleeping?</div><div class="stopbang-toggle"><label><input type="radio" name="sb-o" value="No" checked><span>No</span></label><label><input type="radio" name="sb-o" value="Yes"><span>Yes</span></label></div></div>
+    <div class="stopbang-item"><div class="stopbang-q"><strong>P</strong> — Do you have high blood Pressure or take BP medication?</div><div class="stopbang-toggle"><label><input type="radio" name="sb-p" value="No" checked><span>No</span></label><label><input type="radio" name="sb-p" value="Yes"><span>Yes</span></label></div></div>
+    <div class="stopbang-item"><div class="stopbang-q"><strong>B</strong> — BMI greater than 35?</div><div class="stopbang-toggle"><label><input type="radio" name="sb-b" value="No" checked><span>No</span></label><label><input type="radio" name="sb-b" value="Yes"><span>Yes</span></label></div></div>
+    <div class="stopbang-item"><div class="stopbang-q"><strong>A</strong> — Age older than 50?</div><div class="stopbang-toggle"><label><input type="radio" name="sb-a" value="No" checked><span>No</span></label><label><input type="radio" name="sb-a" value="Yes"><span>Yes</span></label></div></div>
+    <div class="stopbang-item"><div class="stopbang-q"><strong>N</strong> — Neck circumference greater than 40cm?</div><div class="stopbang-toggle"><label><input type="radio" name="sb-n" value="No" checked><span>No</span></label><label><input type="radio" name="sb-n" value="Yes"><span>Yes</span></label></div></div>
+    <div class="stopbang-item"><div class="stopbang-q"><strong>G</strong> — Gender: Male?</div><div class="stopbang-toggle"><label><input type="radio" name="sb-g" value="No" checked><span>No</span></label><label><input type="radio" name="sb-g" value="Yes"><span>Yes</span></label></div></div>
+    <div class="form-group" style="margin-top:12px;"><label>Use CPAP machine for sleep apnoea?</label>
+      <select id="po-cpap"><option value="No">No</option><option value="Yes">Yes — bring CPAP to hospital</option></select>
+    </div>
+    <div class="form-group"><label>Smoking</label>
+      <select id="po-smoking"><option value="Never smoked">Never smoked</option><option value="Ex-smoker">Ex-smoker (stopped)</option><option value="Current smoker — less than 10/day">Current — less than 10/day</option><option value="Current smoker — 10-20/day">Current — 10–20/day</option><option value="Current smoker — more than 20/day">Current — more than 20/day</option></select>
+    </div>
+  </div>
+
+  <!-- Section 7: Airway -->
+  <div class="preop-section">
+    <div class="preop-section-title">😮 7. Airway Assessment</div>
+    <div class="form-group"><label>Neck movement problems?</label><select id="po-neck"><option value="No">No</option><option value="Yes — limited movement">Yes — limited movement</option></select></div>
+    <div class="form-group"><label>Difficulty opening mouth wide?</label><select id="po-mouth"><option value="No">No</option><option value="Yes">Yes</option></select></div>
+    <div class="form-group"><label>Loose, capped, crowned, or false teeth / dentures?</label><input type="text" id="po-teeth" placeholder="e.g. Upper denture, 2 crowned molars — or None"></div>
+  </div>
+
+  <!-- Section 8: Fasting -->
+  <div class="preop-section">
+    <div class="preop-section-title">🍽️ 8. Fasting Status (fill on day of procedure)</div>
+    <div class="form-group"><label>Last solid food — time</label><input type="time" id="po-last-food"></div>
+    <div class="form-group"><label>Last clear fluids (water, black tea) — time</label><input type="time" id="po-last-fluids"></div>
+  </div>
+
+  <!-- Section 9: Social History -->
+  <div class="preop-section">
+    <div class="preop-section-title">🧾 9. Social History</div>
+    <div class="form-group"><label>Alcohol use</label>
+      <select id="po-alcohol"><option value="None">None</option><option value="Occasional (social)">Occasional (social)</option><option value="Moderate (1-14 units/week)">Moderate (1–14 units/week)</option><option value="Heavy (more than 14 units/week)">Heavy (more than 14 units/week)</option></select>
+    </div>
+    <div class="form-group"><label>Recreational drug use</label>
+      <select id="po-drugs"><option value="No">No</option><option value="Yes — cannabis">Yes — cannabis</option><option value="Yes — other">Yes — other</option></select>
+    </div>
+    <div class="form-group"><label>Pregnancy / Breastfeeding</label>
+      <select id="po-pregnancy"><option value="Not applicable">Not applicable</option><option value="Not pregnant">Not pregnant</option><option value="Pregnant">Pregnant</option><option value="Breastfeeding">Breastfeeding</option></select>
+    </div>
+  </div>
+
+  <!-- Section 10: Declaration -->
+  <div class="preop-section">
+    <div class="preop-section-title">✅ 10. Declaration</div>
+    <p style="font-size:13px;color:#475569;margin-bottom:12px;line-height:1.6;">I confirm that the information above is true and accurate to the best of my knowledge.</p>
+    <div class="form-group"><label>Your Name (as signature)</label><input type="text" id="po-signature" placeholder="Type your full name"></div>
+    <div class="form-group"><label>Date Completed</label><input type="date" id="po-sign-date"></div>
+  </div>
+
+  <!-- Send buttons -->
+  <div class="card">
+    <div class="card-title">📤 Send Questionnaire</div>
+    <p style="font-size:13px;color:#64748b;margin-bottom:14px;line-height:1.6;">Send your completed questionnaire to your surgeon and anaesthetist before the procedure. Make sure you have filled in their contact details in Section 1.</p>
+    <button class="btn btn-whatsapp" style="margin-bottom:10px;" onclick="sendPreopWhatsApp('surgeon')">📱 WhatsApp to Surgeon</button>
+    <button class="btn btn-whatsapp" style="margin-bottom:10px;" onclick="sendPreopWhatsApp('anaest')">📱 WhatsApp to Anaesthetist</button>
+    <button class="btn btn-primary" style="margin-bottom:10px;" onclick="sendPreopEmail('surgeon')">📧 Email to Surgeon</button>
+    <button class="btn btn-primary" style="margin-bottom:10px;" onclick="sendPreopEmail('anaest')">📧 Email to Anaesthetist</button>
+    <button class="btn btn-outline" onclick="printPreop()">🖨️ Print / Save as PDF</button>
+  </div>
+  <div style="height:20px;"></div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar" id="main-tab-bar">
+  <button class="tab-btn active" data-tab="profile" onclick="switchTab('profile',this)" type="button"><span class="ti">👤</span><span class="tl">Profile</span></button>
+  <button class="tab-btn" data-tab="card" onclick="switchTab('card',this)" type="button"><span class="ti">💳</span><span class="tl">My Card</span></button>
+  <button class="tab-btn" data-tab="care" onclick="switchTab('care',this)" type="button"><span class="ti">🏥</span><span class="tl">Find Care</span></button>
+  <button class="tab-btn" data-tab="chat" onclick="switchTab('chat',this)" type="button"><span class="ti">💬</span><span class="tl">AI Chat</span></button>
+  <button class="tab-btn" data-tab="emergency" onclick="switchTab('emergency',this)" type="button"><span class="ti">🚨</span><span class="tl">SOS</span></button>
+  <button class="tab-btn" data-tab="more" onclick="switchTab('more',this)" type="button"><span class="ti">📋</span><span class="tl">More</span></button>
+</div>
+
+<!-- SEARCH RESULTS MODAL -->
+<div class="modal-overlay" id="modal-search" onclick="if(event.target===this)closeModal('modal-search')">
+  <div class="modal-sheet" style="max-height:92vh;">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+      <div class="modal-title" id="search-modal-title">Finding…</div>
+      <button ontouchstart="" onclick="closeModal('modal-search')" style="background:none;border:none;font-size:26px;color:#94a3b8;cursor:pointer;padding:4px 0 4px 12px;touch-action:manipulation;">✕</button>
+    </div>
+    <div id="search-modal-body"></div>
+  </div>
+</div>
+
+<!-- SCAN MODAL -->
+<div class="modal-overlay" id="modal-scan" onclick="if(event.target===this)closeModal('modal-scan')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📷 Scan Your Card</div>
+    <div id="scan-body"></div>
+  </div>
+</div>
+
+<!-- DEPENDANT MODAL -->
+<div class="modal-overlay" id="modal-dependant" onclick="if(event.target===this)closeModal('modal-dependant')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="dep-modal-title">👶 Add Dependant</div>
+    <input type="hidden" id="dep-edit-id">
+    <div class="form-group"><label>Full Name *</label><input type="text" id="dep-name" placeholder="e.g. Emma Geldenhuys"></div>
+    <div class="form-group"><label>Sex</label><select id="dep-sex"><option value="">— Select —</option><option>Boy</option><option>Girl</option><option>Other</option></select></div>
+    <div class="form-group"><label>Date of Birth</label><input type="date" id="dep-dob"></div>
+    <div class="form-group"><label>Blood Type</label><select id="dep-blood"><option value="">Unknown</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select></div>
+    <div class="form-group"><label>Allergies</label><input type="text" id="dep-allergies" placeholder="e.g. Penicillin, Peanuts, Latex"></div>
+    <div class="form-group"><label>Chronic Conditions</label><input type="text" id="dep-conditions" placeholder="e.g. Asthma, Epilepsy"></div>
+    <div class="form-group"><label>Current Medications</label><input type="text" id="dep-meds" placeholder="e.g. Salbutamol inhaler"></div>
+    <div class="form-group"><label>Birth Complications</label><textarea id="dep-birth" rows="3" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;resize:vertical;" placeholder="e.g. Premature birth (32 weeks), NICU stay, jaundice"></textarea></div>
+    <div class="form-group"><label>Medical Aid Membership No.</label><input type="text" id="dep-aidnum" placeholder="If on parent's scheme"></div>
+    <div class="form-group"><label>Notes</label><textarea id="dep-notes" rows="2" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;resize:vertical;" placeholder="Any other important info"></textarea></div>
+    <div class="form-group">
+      <label>Road to Health Booklet Photos</label>
+      <p style="font-size:11px;color:#94a3b8;margin-bottom:8px;">Photograph the weight/immunisation pages from the green booklet.</p>
+      <input type="file" id="booklet-input" accept="image/*" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px;" onchange="addBookletPhoto(this)">
+      <button class="btn btn-outline" style="margin-bottom:8px;" onclick="document.getElementById('booklet-input').click()">📷 Add Booklet Photo</button>
+      <div class="booklet-photos" id="dep-booklet-photos"></div>
+    </div>
+    <button class="btn btn-primary" style="margin-top:6px;" onclick="saveDependant()">💾 Save</button>
+    <button class="modal-close-btn" onclick="closeModal('modal-dependant')">Cancel</button>
+  </div>
+</div>
+
+<!-- LAB RESULT MODAL -->
+<div class="modal-overlay" id="modal-lab" onclick="if(event.target===this)closeModal('modal-lab')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🧪 Add Lab Result</div>
+    <div class="form-group"><label>Date</label><input type="date" id="lab-date"></div>
+    <div class="form-group"><label>Laboratory</label><select id="lab-provider" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;"><option>PathCare</option><option>Lancet / Ampath</option><option>Other</option></select></div>
+    <div class="form-group"><label>Test Name *</label><input type="text" id="lab-test" placeholder="e.g. Full Blood Count, HbA1c, Cholesterol"></div>
+    <div class="form-group"><label>Results / Notes</label><textarea id="lab-notes" rows="3" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;resize:vertical;" placeholder="e.g. HbA1c: 7.2% — good control."></textarea></div>
+    <div class="form-group"><label>Photo of Report (optional)</label><input type="file" id="lab-photo" accept="image/*" capture="environment" style="font-size:13px;font-family:'Poppins',sans-serif;width:100%;"></div>
+    <button class="btn btn-primary" style="margin-top:6px;" onclick="saveLabResult()">💾 Save</button>
+    <button class="modal-close-btn" onclick="closeModal('modal-lab')">Cancel</button>
+  </div>
+</div>
+
+<!-- RADIOLOGY MODAL -->
+<div class="modal-overlay" id="modal-radio" onclick="if(event.target===this)closeModal('modal-radio')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📡 Add Radiology Report</div>
+    <div class="form-group"><label>Date</label><input type="date" id="radio-date"></div>
+    <div class="form-group"><label>Provider / Facility</label><input type="text" id="radio-provider" placeholder="e.g. SCP Radiology, Mediclinic, Netcare"></div>
+    <div class="form-group"><label>Type of Scan</label><select id="radio-type" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;"><option>X-ray</option><option>CT Scan</option><option>MRI</option><option>Ultrasound</option><option>Other</option></select></div>
+    <div class="form-group"><label>Findings / Notes</label><textarea id="radio-notes" rows="3" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;resize:vertical;" placeholder="e.g. Chest X-ray — no consolidation."></textarea></div>
+    <div class="form-group"><label>Photo of Report (optional)</label><input type="file" id="radio-photo" accept="image/*" capture="environment" style="font-size:13px;font-family:'Poppins',sans-serif;width:100%;"></div>
+    <button class="btn btn-primary" style="margin-top:6px;" onclick="saveRadiology()">💾 Save</button>
+    <button class="modal-close-btn" onclick="closeModal('modal-radio')">Cancel</button>
+  </div>
+</div>
+
+<!-- ADD PET MODAL -->
+<div class="modal-overlay" id="modal-addpet" onclick="if(event.target===this)closeModal('modal-addpet')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="pet-modal-title">🐾 Add a Pet</div>
+    <input type="hidden" id="pet-edit-id">
+    <div class="form-group"><label>Pet Name *</label><input type="text" id="pet-name" placeholder="e.g. Bella, Max, Whiskers"></div>
+    <div class="form-group"><label>Species</label>
+      <select id="pet-species">
+        <option value="Dog">🐕 Dog</option><option value="Cat">🐈 Cat</option>
+        <option value="Bird">🦜 Bird</option><option value="Rabbit">🐇 Rabbit</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Breed</label><input type="text" id="pet-breed" placeholder="e.g. Labrador, Persian, Budgie"></div>
+    <div class="form-group"><label>Date of Birth / Age</label><input type="text" id="pet-dob" placeholder="e.g. 2021-03-15 or 3 years old"></div>
+    <div class="form-group"><label>Microchip Number</label><input type="text" id="pet-chip" placeholder="e.g. 953010123456789"></div>
+    <div class="form-group"><label>Chronic Conditions / Allergies</label><input type="text" id="pet-conditions" placeholder="e.g. Hip dysplasia, Allergic to chicken — or None"></div>
+    <div class="form-group"><label>Current Medications</label><input type="text" id="pet-meds" placeholder="e.g. Simparica (monthly tick), Proin 50mg — or None"></div>
+    <div class="form-group"><label>Vaccinations</label><input type="text" id="pet-vaccs" placeholder="e.g. Rabies (2025-04), Parvo/Distemper annual"></div>
+    <div class="form-group"><label>Pet Insurance</label>
+      <select id="pet-insurance">
+        <option value="None">None</option><option value="MediPet">MediPet</option>
+        <option value="Dotsure">Dotsure</option><option value="Petwise">Petwise</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Vet Name</label><input type="text" id="pet-vet-name" placeholder="e.g. Dr Van der Merwe"></div>
+    <div class="form-group"><label>Vet Clinic</label><input type="text" id="pet-vet-clinic" placeholder="e.g. Vredendal Animal Clinic"></div>
+    <div class="form-group"><label>Vet Phone</label><input type="tel" id="pet-vet-phone" placeholder="+27 27 000 0000"></div>
+    <div class="form-group"><label>Notes</label><textarea id="pet-notes" rows="2" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;resize:vertical;" placeholder="Any other important info"></textarea></div>
+    <button class="btn btn-green" style="margin-top:6px;" onclick="savePet()">💾 Save Pet</button>
+    <button class="modal-close-btn" onclick="closeModal('modal-addpet')">Cancel</button>
+  </div>
+</div>
+
+<script>
+// ─── Safe Storage ──────────────────────────────────────────────────
+const Store=(()=>{let _m={},_ok=false;try{localStorage.setItem('_t','1');localStorage.removeItem('_t');_ok=true;}catch(e){}return{get(k){if(_ok){try{return localStorage.getItem(k);}catch(e){}}return _m[k]??null;},set(k,v){if(_ok){try{localStorage.setItem(k,v);return;}catch(e){}} _m[k]=v;},isLocal(){return !_ok;}};})();
+
+// ─── Tab Navigation ────────────────────────────────────────────────
+window.switchTab=function(name,btn){
+  try{
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    const scr=document.getElementById('screen-'+name);
+    if(!scr)return;
+    scr.classList.add('active');
+    if(btn)btn.classList.add('active');
+    window.scrollTo(0,0);
+    if(name==='card'){try{renderHealthCard();}catch(e){}}
+    if(name==='emergency'){try{renderEmergency();}catch(e){}}
+    if(name==='care'){try{renderCoverageGuide();}catch(e){}}
+    if(name==='more'){try{renderBP();}catch(e){}try{renderVaccines();}catch(e){}try{renderLabResults();}catch(e){}try{renderRadiology();}catch(e){}}
+  }catch(e){}
+};
+
+// ─── Sub-screen navigation ─────────────────────────────────────────
+function showSubScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('[data-tab="more"]').classList.add('active');
+  const scr=document.getElementById('screen-'+name);
+  if(scr)scr.classList.add('active');
+  window.scrollTo(0,0);
+  if(name==='preop')autoFillPreop();
+  if(name==='pets')renderPets();
+}
+function backToMore(){
+  switchTab('more',document.querySelector('[data-tab="more"]'));
+}
+
+// ─── Profile Save / Load ───────────────────────────────────────────
+function saveProfile(){
+  const profile={
+    name:document.getElementById('p-name').value.trim(),
+    said:document.getElementById('p-said').value.trim(),
+    dob:document.getElementById('p-dob').value,
+    phone:document.getElementById('p-phone').value.trim(),
+    email:document.getElementById('p-email').value.trim(),
+    address:document.getElementById('p-address').value.trim(),
+    aidScheme:document.getElementById('p-aid-scheme').value,
+    aidNum:document.getElementById('p-aid-num').value.trim(),
+    aidPlan:document.getElementById('p-aid-plan').value.trim(),
+    allergies:document.getElementById('p-allergies').value.trim(),
+    conditions:document.getElementById('p-conditions').value.trim(),
+    meds:document.getElementById('p-meds').value.trim(),
+    blood:document.getElementById('p-blood').value,
+    ecName:document.getElementById('p-ec-name').value.trim(),
+    ecRel:document.getElementById('p-ec-rel').value.trim(),
+    ecNum:document.getElementById('p-ec-num').value.trim(),
+  };
+  if(!profile.name){showAlert('profile-alert','⚠️ Please enter your full name.','error');return;}
+  Store.set('hos_profile',JSON.stringify(profile));
+  showAlert('profile-alert','✅ Profile saved successfully!');
+  refreshHeader();
+}
+function loadProfile(){
+  const raw=Store.get('hos_profile');
+  if(!raw)return;
+  const p=JSON.parse(raw);
+  document.getElementById('p-name').value=p.name||'';
+  document.getElementById('p-said').value=p.said||'';
+  document.getElementById('p-dob').value=p.dob||'';
+  document.getElementById('p-phone').value=p.phone||'';
+  document.getElementById('p-email').value=p.email||'';
+  document.getElementById('p-address').value=p.address||'';
+  document.getElementById('p-aid-scheme').value=p.aidScheme||'';
+  document.getElementById('p-aid-num').value=p.aidNum||'';
+  document.getElementById('p-aid-plan').value=p.aidPlan||'';
+  document.getElementById('p-allergies').value=p.allergies||'';
+  condItems=p.conditions?p.conditions.split(',').map(c=>c.trim()).filter(Boolean):[];
+  renderCondTags();
+  document.getElementById('p-meds').value=p.meds||'';
+  if(p.meds){medItems=p.meds.split(',').map(m=>m.trim()).filter(Boolean);renderMedTags();}
+  document.getElementById('p-blood').value=p.blood||'';
+  document.getElementById('p-ec-name').value=p.ecName||'';
+  document.getElementById('p-ec-rel').value=p.ecRel||'';
+  document.getElementById('p-ec-num').value=p.ecNum||'';
+  refreshHeader();
+  if(p.lastLat&&p.lastLon)updateNearbyLinks(p.lastLat,p.lastLon,p.lastLocName||'');
+}
+function refreshHeader(){
+  const raw=Store.get('hos_profile');if(!raw)return;
+  const p=JSON.parse(raw);
+  if(p.name)document.getElementById('header-sub').textContent='Hi '+p.name.split(' ')[0]+'! How can I help?';
+}
+
+// ─── Health Card ───────────────────────────────────────────────────
+function renderHealthCard(){
+  const raw=Store.get('hos_profile');
+  const container=document.getElementById('card-content');
+  if(!raw){container.innerHTML='<div class="card"><div class="no-data">💳 Fill in your profile first.</div></div>';return;}
+  const p=JSON.parse(raw);
+  const dobFmt=p.dob?new Date(p.dob).toLocaleDateString('en-ZA'):'Not set';
+  const allergyHtml=p.allergies?p.allergies.split(',').map(a=>'<span class="tag tag-red">'+a.trim()+'</span>').join(''):'<span style="color:#94a3b8;font-size:13px">None recorded</span>';
+  const condHtml=p.conditions?p.conditions.split(',').map(c=>'<span class="tag tag-blue">'+c.trim()+'</span>').join(''):'<span style="color:#94a3b8;font-size:13px">None recorded</span>';
+  let trackerHtml='';
+  if(p.meds){
+    const today=new Date().toDateString();
+    const taken=JSON.parse(Store.get('meds_taken_'+today)||'[]');
+    const medList=p.meds.split(',').map(m=>m.trim()).filter(Boolean);
+    const rows=medList.map(m=>{const t=taken.includes(m);const s=m.replace(/'/g,"\\'");return '<div class="med-track-item '+(t?'taken':'')+'" onclick="toggleMedTaken(\''+s+'\')">'+'<div class="mt-check">'+(t?'✅':'⬜')+'</div><div class="mt-name">'+m+'</div><div class="mt-status '+(t?'done':'todo')+'">'+(t?'Taken today':'Not yet')+'</div></div>';}).join('');
+    trackerHtml='<div class="card"><div class="card-title">💊 Today\'s Medication Tracker</div><p style="font-size:13px;color:#64748b;margin-bottom:14px;">Tap each to mark as taken. Resets daily at midnight.</p><div style="background:#eff6ff;border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;"><span style="font-size:22px;">📋</span><span style="font-size:14px;font-weight:600;color:#1e40af;">'+taken.length+' of '+medList.length+' taken today</span></div>'+rows+'</div>';
+  }
+  let coverageHtml='';
+  if(p.aidScheme&&p.aidScheme!=='None / Uninsured'){
+    const data=getMedAidCoverage(p.aidScheme,p.aidPlan);
+    const rows=data.map(r=>'<div class="coverage-row"><div class="cov-icon">'+r.icon+'</div><div class="cov-label"><strong>'+r.service+'</strong>'+r.detail+'</div><div class="cov-badge '+r.level+'">'+r.label+'</div></div>').join('');
+    coverageHtml='<div class="card"><div class="card-title">💚 Medical Aid Coverage</div><div class="aid-badge">✅ '+p.aidScheme+(p.aidPlan?' — '+p.aidPlan:'')+'</div><div class="info-grid"><div class="info-box"><div class="lbl">Membership No.</div><div class="val">'+(p.aidNum||'—')+'</div></div><div class="info-box"><div class="lbl">Plan / Option</div><div class="val">'+(p.aidPlan||'—')+'</div></div></div><p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.5;">General guide. Log in to your scheme for exact benefits.</p>'+rows+'<a href="'+getSchemeWebsite(p.aidScheme)+'" target="_blank" class="btn btn-outline" style="margin-top:14px;font-size:13px;padding:11px;display:block;text-align:center;text-decoration:none;">🔍 View My '+p.aidScheme+' Benefits</a></div>';
+  }
+  const photoB64=Store.get('hos_photo')||'';
+  const photoOnCard=photoB64?'<div style="position:absolute;top:14px;right:14px;width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,0.7);overflow:hidden;flex-shrink:0;"><img src="'+photoB64+'" style="width:100%;height:100%;object-fit:cover;"></div>':'<div class="card-logo">Health<br>One Stop</div>';
+  container.innerHTML='<div class="health-card">'+photoOnCard+'<div class="card-chip">💳</div><div class="card-name">'+(p.name||'—')+'</div><div class="card-id">SA ID: '+(p.said||'—')+'</div><div class="card-row"><div class="card-field"><label>DATE OF BIRTH</label><div class="val">'+dobFmt+'</div></div><div class="card-field"><label>BLOOD TYPE</label><div class="val">'+(p.blood||'?')+'</div></div>'+(p.aidScheme?'<div class="card-field"><label>MEDICAL AID</label><div class="val">'+p.aidScheme+'</div></div>':'')+'</div></div>'+trackerHtml+coverageHtml+'<div class="card"><div class="card-title">🚨 Medical Alerts</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:0 0 8px;">Allergies</div><div>'+allergyHtml+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Chronic Conditions</div><div>'+condHtml+'</div>'+(p.meds?'<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Medications</div><p style="font-size:13px;color:#444;">'+p.meds+'</p>':'')+'</div><div class="card"><div class="card-title">📱 My QR Code</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Healthcare providers can scan this for your key medical info.</p><div class="qr-container"><div id="qrcode"></div><div class="qr-label">Scan to view patient info</div></div></div>';
+  const qrData=JSON.stringify({name:p.name,said:p.said,dob:p.dob,blood:p.blood,allergies:p.allergies,conditions:p.conditions,aid:p.aidScheme,aidNum:p.aidNum,ec:p.ecName+' '+p.ecNum});
+  setTimeout(()=>{const el=document.getElementById('qrcode');if(el&&typeof QRCode!=='undefined'){el.innerHTML='';new QRCode(el,{text:qrData,width:200,height:200,colorDark:'#1e3a8a',colorLight:'#ffffff'});}},200);
+}
+function toggleMedTaken(med){
+  const today=new Date().toDateString();const key='meds_taken_'+today;
+  let taken=JSON.parse(Store.get(key)||'[]');
+  if(taken.includes(med)){taken=taken.filter(m=>m!==med);}else{taken.push(med);}
+  Store.set(key,JSON.stringify(taken));renderHealthCard();
+}
+
+// ─── Medical Aid Coverage ──────────────────────────────────────────
+function getMedAidCoverage(scheme,plan){
+  const pl=(plan||'').toLowerCase();
+  const isHospOnly=pl.includes('hospital')||pl.includes('keycare')||pl.includes('core')||pl.includes('primary');
+  const isComp=pl.includes('comprehen')||pl.includes('exec')||pl.includes('priority')||pl.includes('plus');
+  const base=[{icon:'🏥',service:'Emergency Treatment',detail:'All schemes must cover life-threatening emergencies',level:'cov-full',label:'Full Cover'},{icon:'💊',service:'Chronic Medication (PMB)',detail:'270 PMB conditions — covered by law',level:'cov-full',label:'Full Cover'},{icon:'🚑',service:'Ambulance',detail:'Emergency evacuation to nearest facility',level:'cov-full',label:'Full Cover'}];
+  if(isHospOnly)return[...base,{icon:'👨‍⚕️',service:'GP Visits',detail:'Not included on hospital plan',level:'cov-none',label:'Not Covered'},{icon:'🩺',service:'Specialist',detail:'Only if admitted',level:'cov-part',label:'In-hospital'},{icon:'💊',service:'Day-to-day Meds',detail:'Pay from pocket',level:'cov-none',label:'Not Covered'}];
+  if(isComp)return[...base,{icon:'👨‍⚕️',service:'GP Visits',detail:'Fully covered at DSPs',level:'cov-full',label:'Full Cover'},{icon:'🩺',service:'Specialist',detail:'Covered with GP referral',level:'cov-full',label:'Full Cover'},{icon:'🦷',service:'Dentist',detail:'Annual dental limit',level:'cov-part',label:'Annual Limit'},{icon:'👁️',service:'Optometrist',detail:'Eye test and frames',level:'cov-part',label:'Annual Limit'},{icon:'💊',service:'Day-to-day Meds',detail:'From medical savings account',level:'cov-part',label:'Via MSA'}];
+  return[...base,{icon:'👨‍⚕️',service:'GP Visits',detail:'Covered at network GPs',level:'cov-part',label:'Network Only'},{icon:'🩺',service:'Specialist',detail:'Requires GP referral',level:'cov-part',label:'With Referral'},{icon:'🦷',service:'Dentist',detail:'Basic dentistry',level:'cov-part',label:'Partial'},{icon:'💊',service:'Day-to-day Meds',detail:'Via savings or self-payment',level:'cov-part',label:'Partial'}];
+}
+function getSchemeWebsite(scheme){
+  const s={'Discovery Health':'https://www.discovery.co.za/medical-aid/benefits','Bonitas':'https://www.bonitas.co.za/members/benefits','Momentum Health':'https://www.momentumhealth.co.za/benefits','Medshield':'https://www.medshield.co.za/benefits','GEMS':'https://www.gems.gov.za/members/benefits','Bestmed':'https://www.bestmed.co.za/members/benefits','Fedhealth':'https://www.fedhealth.co.za/members/benefits','Keyhealth':'https://www.keyhealth.co.za/members/benefits','Profmed':'https://www.profmed.co.za/members/benefits','Sizwe':'https://www.sizwe.co.za/members'};
+  return s[scheme]||'https://www.medicalaidcomparison.co.za';
+}
+
+// ─── Emergency ─────────────────────────────────────────────────────
+function renderEmergency(){
+  const raw=Store.get('hos_profile');const c=document.getElementById('emergency-content');
+  if(!raw){c.innerHTML='<div class="no-data">Save your profile to see your emergency info here.</div>';return;}
+  const p=JSON.parse(raw);
+  const photoB64=Store.get('hos_photo')||'';
+  const photoHtml=photoB64?'<div style="display:flex;justify-content:center;margin-bottom:14px;"><div class="em-photo-circle"><img src="'+photoB64+'" alt="Patient photo"></div></div>':'';
+  c.innerHTML=photoHtml+'<div class="info-grid"><div class="info-box"><div class="lbl">Patient Name</div><div class="val">'+(p.name||'—')+'</div></div><div class="info-box"><div class="lbl">Blood Type</div><div class="val" style="color:#dc2626;font-size:18px;">'+(p.blood||'?')+'</div></div></div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;margin:10px 0 6px;">🚫 Allergies</div><div>'+(p.allergies?p.allergies.split(',').map(a=>'<span class="tag tag-red">'+a.trim()+'</span>').join(''):'<span style="color:#94a3b8;font-size:13px">None</span>')+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;margin:14px 0 6px;">💊 Medications</div><p style="font-size:13px;color:#444;">'+(p.meds||'None recorded')+'</p>'+(p.ecName?'<div class="emergency-item" style="margin-top:12px;"><div class="em-icon">👤</div><div class="em-info"><div class="em-name">'+p.ecName+(p.ecRel?' ('+p.ecRel+')':'')+'</div><div class="em-num">'+(p.ecNum||'No number')+'</div></div>'+(p.ecNum?'<a href="tel:'+p.ecNum.replace(/\s/g,'')+'" class="em-call-btn" onclick="handleEmergencyCall(\''+p.ecNum.replace(/\s/g,'')+'\',event)">📞 Call</a>':'')+'</div>':'');
+  const famRaw=Store.get('hos_family');const family=famRaw?JSON.parse(famRaw):[];
+  const famCard=document.getElementById('family-emergency-card');const famContent=document.getElementById('family-emergency-content');
+  if(family.length&&famCard&&famContent){famCard.style.display='block';famContent.innerHTML=family.map(dep=>{const age=dep.dob?calcAge(dep.dob):'';return '<div class="dep-card"><div class="dep-name">'+escHtml(dep.name||'—')+(dep.sex?' ('+dep.sex+')':'')+(age?' · Age '+age:'')+'</div><div class="dep-detail">🩸 Blood: '+(dep.blood||'?')+(dep.allergies?' · 🚫 Allergies: '+escHtml(dep.allergies):'')+'</div>'+(dep.conditions?'<div class="dep-detail">🏥 Conditions: '+escHtml(dep.conditions)+'</div>':'')+(dep.meds?'<div class="dep-detail">💊 Meds: '+escHtml(dep.meds)+'</div>':'')+'</div>';}).join('');}
+  else if(famCard){famCard.style.display='none';}
+}
+
+function handleEmergencyCall(number,event){
+  const isDesktop=!/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+  if(isDesktop){event.preventDefault();['call-fallback','em-call-fallback'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='block';});['call-fallback-num','em-fallback-num'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=number;});setTimeout(()=>{['call-fallback','em-call-fallback'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});},7000);}
+}
+
+// ─── Location ──────────────────────────────────────────────────────
+function detectLocation(){
+  const statusEl=document.getElementById('location-status'),resultEl=document.getElementById('location-result'),errorEl=document.getElementById('location-error'),detectBtn=document.getElementById('detect-btn'),updateBtn=document.getElementById('update-btn');
+  errorEl.style.display='none';errorEl.innerHTML='';
+  if(detectBtn){detectBtn.innerHTML='<span class="spinner"></span>Detecting…';detectBtn.disabled=true;}
+  if(updateBtn){updateBtn.innerHTML='<span class="spinner"></span>Updating…';updateBtn.disabled=true;}
+  if(!navigator.geolocation){errorEl.innerHTML='<div class="loc-error-box">⚠️ Location not supported. Open in Safari or Chrome on your phone.</div>';errorEl.style.display='block';if(detectBtn){detectBtn.innerHTML='📡 Detect My Location';detectBtn.disabled=false;}return;}
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    const lat=pos.coords.latitude.toFixed(5),lon=pos.coords.longitude.toFixed(5);
+    window._userLat=parseFloat(lat);window._userLon=parseFloat(lon);
+    document.getElementById('loc-coords').textContent=lat+', '+lon;
+    document.getElementById('loc-display').textContent='Finding your address…';
+    updateNearbyLinks(lat,lon,'');
+    let locationName='';
+    try{const res=await fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lon+'&format=json',{headers:{'Accept-Language':'en'}});const data=await res.json();const addr=data.address||{};const suburb=addr.suburb||addr.neighbourhood||addr.town||addr.village||'';const city=addr.city||addr.municipality||addr.county||'';const province=addr.state||'';locationName=[suburb||city,province].filter(Boolean).join(', ')||city||'';document.getElementById('loc-display').textContent=[suburb,city,province].filter(Boolean).join(', ')||'Location found';document.getElementById('loc-coords').textContent=(addr.country?addr.country+' · ':'')+lat+', '+lon;updateNearbyLinks(lat,lon,locationName);const raw=Store.get('hos_profile');if(raw){const p=JSON.parse(raw);p.lastLat=lat;p.lastLon=lon;p.lastLocName=locationName;Store.set('hos_profile',JSON.stringify(p));}}catch(e){document.getElementById('loc-display').textContent='Location detected';}
+    statusEl.style.display='none';resultEl.style.display='block';
+    if(detectBtn){detectBtn.innerHTML='📡 Detect My Location';detectBtn.disabled=false;}
+    if(updateBtn){updateBtn.innerHTML='🔄 Update Location';updateBtn.disabled=false;}
+  },err=>{
+    const msg=err.code===1?'⚠️ Location permission denied.\n\nGo to Settings → Safari → Location → Allow.':err.code===2?'⚠️ Location unavailable. Make sure GPS is on.':'⚠️ Location timed out. Try again.';
+    errorEl.innerHTML='<div class="loc-error-box">'+msg.replace(/\n/g,'<br>')+'</div>';errorEl.style.display='block';
+    if(detectBtn){detectBtn.innerHTML='📡 Try Again';detectBtn.disabled=false;}
+    if(updateBtn){updateBtn.innerHTML='🔄 Try Again';updateBtn.disabled=false;}
+  },{enableHighAccuracy:true,timeout:15000});
+}
+function updateNearbyLinks(lat,lon,locationName){
+  const loc='/@'+lat+','+lon+',13z';const base='https://www.google.com/maps/search/';const near=locationName?'+near+'+encodeURIComponent(locationName):'';
+  const searches={'link-gp':'GP+doctor','link-hospital':'hospital+clinic','link-specialist':'specialist+doctor','link-pharmacy':'pharmacy','link-dentist':'dentist','link-physio':'physiotherapist','link-speech':'speech+therapist','link-ot':'occupational+therapist','link-optom':'optometrist','link-dietician':'dietician','link-psych':'psychologist'};
+  for(const[id,q]of Object.entries(searches)){const el=document.getElementById(id);if(el)el.href=base+q+near+loc;}
+}
+
+// ─── Coverage Guide ────────────────────────────────────────────────
+const COV_DB={'Discovery Health':{_default:{gp:'covered',hospital:'covered',specialist:'partial',pharmacy:'covered',dentist:'partial',optom:'partial',physio:'partial',psych:'partial',ot:'partial',speech:'partial',dietician:'partial'},'comprehensive':{gp:'covered',hospital:'covered',specialist:'covered',pharmacy:'covered',dentist:'covered',optom:'covered',physio:'covered',psych:'covered',ot:'covered',speech:'covered',dietician:'covered'},'executive':{gp:'covered',hospital:'covered',specialist:'covered',pharmacy:'covered',dentist:'covered',optom:'covered',physio:'covered',psych:'covered',ot:'covered',speech:'covered',dietician:'covered'}},'Bonitas':{_default:{gp:'partial',hospital:'covered',specialist:'partial',pharmacy:'partial',dentist:'partial',optom:'partial',physio:'partial',psych:'partial',ot:'partial',speech:'partial',dietician:'partial'}},'Momentum Health':{_default:{gp:'partial',hospital:'covered',specialist:'partial',pharmacy:'partial',dentist:'partial',optom:'partial',physio:'partial',psych:'partial',ot:'partial',speech:'partial',dietician:'partial'},'summit':{gp:'covered',hospital:'covered',specialist:'covered',pharmacy:'covered',dentist:'covered',optom:'covered',physio:'covered',psych:'covered',ot:'covered',speech:'covered',dietician:'covered'}},'Medshield':{_default:{gp:'covered',hospital:'covered',specialist:'partial',pharmacy:'covered',dentist:'partial',optom:'partial',physio:'partial',psych:'partial',ot:'partial',speech:'partial',dietician:'partial'}},'GEMS':{_default:{gp:'covered',hospital:'covered',specialist:'covered',pharmacy:'covered',dentist:'covered',optom:'covered',physio:'covered',psych:'covered',ot:'covered',speech:'covered',dietician:'covered'}},'Fedhealth':{_default:{gp:'covered',hospital:'covered',specialist:'partial',pharmacy:'covered',dentist:'partial',optom:'partial',physio:'partial',psych:'partial',ot:'partial',speech:'partial',dietician:'partial'}},'Bestmed':{_default:{gp:'covered',hospital:'covered',specialist:'partial',pharmacy:'covered',dentist:'partial',optom:'partial',physio:'partial',psych:'partial',ot:'partial',speech:'partial',dietician:'partial'}},'Profmed':{_default:{gp:'covered',hospital:'covered',specialist:'covered',pharmacy:'covered',dentist:'partial',optom:'partial',physio:'covered',psych:'covered',ot:'partial',speech:'partial',dietician:'partial'}},'Sizwe':{_default:{gp:'covered',hospital:'covered',specialist:'partial',pharmacy:'covered',dentist:'partial',optom:'partial',physio:'partial',psych:'partial',ot:'partial',speech:'partial',dietician:'partial'}},'Keyhealth':{_default:{gp:'covered',hospital:'covered',specialist:'partial',pharmacy:'covered',dentist:'partial',optom:'partial',physio:'partial',psych:'partial',ot:'partial',speech:'partial',dietician:'partial'}}};
+const COV_LABELS={gp:'GP Visit',hospital:'Hospital',specialist:'Specialist',pharmacy:'Pharmacy',dentist:'Dentist',optom:'Optometrist',physio:'Physiotherapist',psych:'Psychologist',ot:'Occupational Therapist',speech:'Speech Therapist',dietician:'Dietician'};
+const COV_ICONS={gp:'👨‍⚕️',hospital:'🏥',specialist:'🩺',pharmacy:'💊',dentist:'🦷',optom:'👁️',physio:'🏃',psych:'🧠',ot:'🙌',speech:'🗣️',dietician:'🥗'};
+function getCovStatus(scheme,plan,type){if(!scheme||scheme==='None / Uninsured')return null;const sData=COV_DB[scheme];if(!sData)return'partial';const planKey=plan?plan.toLowerCase().trim():'';let planData=null;if(planKey){for(const k of Object.keys(sData)){if(k!=='_default'&&planKey.includes(k)){planData=sData[k];break;}}}const data=planData||sData._default||null;return data?(data[type]||'partial'):null;}
+function covBadgeHtml(status){if(!status)return'';if(status==='covered')return'<span class="cov-result-badge cov-r-green">✓ Likely covered</span>';return'<span class="cov-result-badge cov-r-amber">⚠️ Check benefits</span>';}
+function renderCoverageGuide(){
+  const wrap=document.getElementById('coverage-guide-wrap');if(!wrap)return;
+  const raw=Store.get('hos_profile');const p=raw?JSON.parse(raw):{};const scheme=p.aidScheme||'';const plan=p.aidPlan||'';
+  if(!scheme||scheme==='None / Uninsured'){wrap.innerHTML='<div class="card" style="border-left:4px solid #2563eb;padding:14px 18px;"><div style="font-size:13px;color:#64748b;line-height:1.7;">🛡️ <strong>Coverage guide:</strong> Save your medical aid scheme in <strong>Profile</strong> to see coverage here.</div></div>';return;}
+  const types=['gp','specialist','hospital','pharmacy','dentist','optom','physio','psych','dietician'];
+  const rows=types.map(t=>{const st=getCovStatus(scheme,plan,t);let badge='<span class="cov-result-badge" style="background:#f1f5f9;color:#64748b;">— Unknown</span>';if(st==='covered')badge='<span class="cov-result-badge cov-r-green">✓ Covered</span>';else if(st==='partial'||st==='check')badge='<span class="cov-result-badge cov-r-amber">⚠️ Check benefits</span>';return'<tr><td>'+COV_ICONS[t]+' '+COV_LABELS[t]+'</td><td>'+badge+'</td></tr>';}).join('');
+  const planTxt=plan?'<div style="font-size:12px;color:#64748b;margin-bottom:8px;">Plan: <strong style="color:#1e293b;">'+escHtml(plan)+'</strong></div>':'';
+  wrap.innerHTML='<div class="card"><div class="cov-guide-header" onclick="toggleCovGuide(this)"><div class="card-title" style="margin-bottom:0;">🛡️ Coverage Guide</div><span style="font-size:11px;color:#2563eb;font-weight:600;">Show ▼</span></div><div id="cov-guide-body" style="display:none;margin-top:12px;"><div style="font-size:12px;color:#64748b;margin-bottom:6px;">Scheme: <strong style="color:#1e293b;">'+escHtml(scheme)+'</strong></div>'+planTxt+'<p style="font-size:11px;color:#94a3b8;margin-bottom:8px;">General guide — confirm with your scheme.</p><table class="cov-table"><thead><tr><th>Provider Type</th><th>Typical Cover</th></tr></thead><tbody>'+rows+'</tbody></table><div style="margin-top:14px;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:11px 13px;font-size:12px;color:#1e40af;line-height:1.7;">ℹ️ <strong>PMBs:</strong> By law, ALL schemes must fully cover 270 serious conditions including emergencies. Council for Medical Schemes: <strong>0861 123 267</strong>.</div><div style="margin-top:14px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:13px;font-size:13px;color:#166534;line-height:1.75;"><strong>🛡️ Gap Cover</strong> pays the difference when specialists charge above scheme rates.<br><strong>SA providers:</strong> Zestlife · Turnberry · Sirago · Guardrisk<br><strong>Dispute:</strong> Council for Medical Schemes: <a href="tel:0861123267" style="color:#166534;font-weight:700;">0861 123 267</a></div></div></div>';
+}
+function toggleCovGuide(el){const body=document.getElementById('cov-guide-body');const toggle=el.querySelector('span:last-child');if(!body)return;const open=body.style.display!=='none';body.style.display=open?'none':'block';if(toggle)toggle.textContent=open?'Show ▼':'Hide ▲';}
+
+// ─── Provider Search ───────────────────────────────────────────────
+const CARE_QUERIES={gp:['"amenity"="doctors"','"healthcare"="doctor"','"amenity"="clinic"','"healthcare"="clinic"','"amenity"="health_centre"','"healthcare"="centre"','"office"="medical"'],hospital:['"amenity"="hospital"','"healthcare"="hospital"','"amenity"="clinic"','"healthcare"="clinic"'],specialist:['"amenity"="doctors"','"healthcare"="doctor"','"healthcare"="specialist"','"office"="medical"'],pharmacy:['"amenity"="pharmacy"','"healthcare"="pharmacy"','"shop"="chemist"'],dentist:['"amenity"="dentist"','"healthcare"="dentist"'],physio:['"healthcare"="physiotherapist"','"healthcare:speciality"="physiotherapy"'],speech:['"healthcare"="speech_therapist"'],ot:['"healthcare"="occupational_therapist"'],optom:['"healthcare"="optometrist"','"shop"="optician"'],dietician:['"healthcare"="dietitian"','"healthcare"="nutritionist"'],psych:['"healthcare"="psychotherapist"','"healthcare"="psychologist"','"healthcare"="mental_health"'],occ:['"healthcare"="occupational_health"','"amenity"="doctors"','"healthcare"="doctor"'],vet:['"amenity"="veterinary"','"healthcare"="veterinary"','"shop"="pet;veterinary"']};
+const GMAPS_TERMS={gp:'GP doctor',hospital:'hospital clinic',specialist:'specialist doctor',pharmacy:'pharmacy',dentist:'dentist',physio:'physiotherapist',speech:'speech therapist',ot:'occupational therapist',optom:'optometrist',dietician:'dietician',psych:'psychologist',occ:'occupational health doctor',vet:'veterinarian vet clinic'};
+function calcDistance(lat1,lon1,lat2,lon2){const R=6371,dLat=(lat2-lat1)*Math.PI/180,dLon=(lon2-lon1)*Math.PI/180;const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+function searchNearby(type,label,icon){
+  document.getElementById('search-modal-title').textContent=icon+' '+label;
+  const body=document.getElementById('search-modal-body');
+  const gmTerm=GMAPS_TERMS[type]||label;
+  const gmUrl='https://www.google.com/maps/search/'+encodeURIComponent(gmTerm+' near me');
+  const gmBtn='<a href="'+gmUrl+'" target="_blank" style="display:block;text-align:center;margin:14px 0 4px;padding:12px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;color:#166534;font-weight:700;font-size:13px;text-decoration:none;">🗺️ Not finding what you need? Search Google Maps →</a>';
+  if(!window._userLat||!window._userLon){body.innerHTML='<div class="no-loc-box">📍 <strong>Location not detected yet.</strong><br><br>Go to Find Care and tap <b>"Detect My Location"</b> first.</div>'+gmBtn;openModal('modal-search');return;}
+  const lat=window._userLat,lon=window._userLon;
+  const selEl=document.getElementById('search-radius');const radius=selEl?parseInt(selEl.value)||30000:30000;
+  body.innerHTML='<div class="search-loading"><span class="spinner-dark"></span>Searching within '+(radius/1000)+'km…<br><small style="color:#94a3b8;font-size:11px;margin-top:6px;display:block;">Using OpenStreetMap data</small></div>';
+  openModal('modal-search');
+  const queries=CARE_QUERIES[type]||['"amenity"="doctors"'];
+  const parts=queries.map(q=>'node['+q+'](around:'+radius+','+lat+','+lon+');way['+q+'](around:'+radius+','+lat+','+lon+');').join('');
+  const query='[out:json][timeout:25];('+parts+');out center tags;';
+  fetch('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(query)).then(r=>r.json()).then(data=>{
+    const seen=new Set();
+    const results=data.elements.map(el=>{const elLat=el.lat||(el.center&&el.center.lat);const elLon=el.lon||(el.center&&el.center.lon);const t=el.tags||{};const name=t.name||t['name:en']||t['operator']||'';if(!elLat||!elLon||!name)return null;const key=name.toLowerCase().trim();if(seen.has(key))return null;seen.add(key);return{name,elLat,elLon,dist:calcDistance(lat,lon,elLat,elLon),phone:t.phone||t['contact:phone']||t['contact:mobile']||'',addr:[t['addr:housenumber'],t['addr:street'],t['addr:suburb']||t['addr:city']].filter(Boolean).join(' '),hours:t.opening_hours||''};}).filter(Boolean).sort((a,b)=>a.dist-b.dist).slice(0,30);
+    const radSel='<div class="radius-row"><label>Radius:</label><select id="search-radius" onchange="searchNearby(\''+type+'\',\''+label+'\',\''+icon+'\')"><option value="5000"'+(radius===5000?' selected':'')+'>5 km</option><option value="10000"'+(radius===10000?' selected':'')+'>10 km</option><option value="30000"'+(radius===30000?' selected':'')+'>30 km</option><option value="50000"'+(radius===50000?' selected':'')+'>50 km</option><option value="100000"'+(radius===100000?' selected':'')+'>100 km</option></select></div>';
+    if(!results.length){body.innerHTML=radSel+'<div class="search-empty">😔 No results within '+(radius/1000)+'km in OpenStreetMap. Try a larger radius or Google Maps below.</div>'+gmBtn+'<div class="search-credit">Data © OpenStreetMap contributors</div>';return;}
+    const rawP=Store.get('hos_profile');const pObj=rawP?JSON.parse(rawP):{};const covStatus=getCovStatus(pObj.aidScheme||'',pObj.aidPlan||'',type);const covBadge=covBadgeHtml(covStatus);
+    let html=radSel+'<p style="font-size:12px;color:#64748b;margin-bottom:12px;">Found <strong>'+results.length+'</strong> result(s) within '+(radius/1000)+'km</p>';
+    results.forEach(r=>{const distStr=r.dist<1?(r.dist*1000).toFixed(0)+'m':r.dist.toFixed(1)+'km';const appleUrl='https://maps.apple.com/?daddr='+r.elLat+','+r.elLon+'&dirflg=d';const gDirUrl='https://www.google.com/maps/dir/?api=1&destination='+r.elLat+','+r.elLon;html+='<div class="result-card"><div class="result-name">'+icon+' '+escHtml(r.name)+'</div>'+(covBadge?'<div>'+covBadge+'</div>':'')+'<div class="result-dist">📍 '+distStr+' away</div>'+(r.addr?'<div class="result-addr">'+escHtml(r.addr)+'</div>':'')+(r.hours?'<div class="result-addr">🕐 '+escHtml(r.hours)+'</div>':'')+'<div class="result-actions">'+(r.phone?'<a href="tel:'+r.phone.replace(/[\s\-()]/g,'')+'" class="result-actions btn-call">📞 Call</a>':'')+'<a href="'+appleUrl+'" target="_blank" class="result-actions btn-dir">🍎 Maps</a><a href="'+gDirUrl+'" target="_blank" class="result-actions btn-dir" style="background:#fef9c3;color:#713f12;">📍 Google</a></div></div>';});
+    html+=gmBtn+'<div class="search-credit">Data © OpenStreetMap contributors</div>';body.innerHTML=html;
+  }).catch(()=>{body.innerHTML='<div class="search-empty">⚠️ Search timed out. Try again.</div>'+gmBtn;});
+}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function showAlert(id,msg,type='success'){const el=document.getElementById(id);if(!el)return;el.innerHTML='<div class="alert'+(type==='error'?' error':'')+'">'+msg+'</div>';setTimeout(()=>{el.innerHTML='';},3500);}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+</script>
+<script>
+// ─── Medication Autocomplete ───────────────────────────────────────
+const MED_LIST=['Metformin','Metformin XR','Glipizide','Gliclazide','Glibenclamide','Sitagliptin','Empagliflozin','Dapagliflozin','Insulin Glargine','Insulin Aspart','Insulin NPH','Atorvastatin','Rosuvastatin','Simvastatin','Amlodipine','Nifedipine','Felodipine','Enalapril','Ramipril','Lisinopril','Perindopril','Losartan','Valsartan','Bisoprolol','Carvedilol','Atenolol','Hydrochlorothiazide','Furosemide','Indapamide','Spironolactone','Warfarin','Aspirin','Clopidogrel','Rivaroxaban','Apixaban','Allopurinol','Colchicine','Methotrexate','Prednisone','Prednisolone','Methylprednisolone','Salbutamol inhaler','Budesonide inhaler','Fluticasone inhaler','Tiotropium','Montelukast','Cetirizine','Loratadine','Fexofenadine','Omeprazole','Esomeprazole','Pantoprazole','Ranitidine','Domperidone','Metoclopramide','Lactulose','Bisacodyl','Levothyroxine','Carbimazole','Ferrous sulphate','Folic acid','Vitamin B12','Vitamin D3','Calcium carbonate','Multivitamin','Amoxicillin','Amoxicillin-clavulanate','Azithromycin','Doxycycline','Ciprofloxacin','Metronidazole','Fluconazole','Acyclovir','Tenofovir','Emtricitabine','Efavirenz','Lopinavir/ritonavir','Cotrimoxazole','Isoniazid','Rifampicin','Pyrazinamide','Ethambutol','Amitriptyline','Imipramine','Fluoxetine','Sertraline','Escitalopram','Citalopram','Venlafaxine','Duloxetine','Mirtazapine','Haloperidol','Risperidone','Olanzapine','Quetiapine','Clonazepam','Diazepam','Lorazepam','Alprazolam','Zolpidem','Phenytoin','Carbamazepine','Valproate','Levetiracetam','Lamotrigine','Tramadol','Morphine','Codeine','Ibuprofen','Naproxen','Diclofenac','Paracetamol','Meloxicam','Celecoxib','Gabapentin','Pregabalin','Baclofen','Cyclobenzaprine','Sildenafil','Tadalafil','Tamsulosin','Finasteride','Medroxyprogesterone','Norethisterone','Ethinylestradiol','Clomiphene','Progesterone'];
+let _meds=[];
+function searchMeds(){const q=document.getElementById('med-search').value.trim().toLowerCase();const box=document.getElementById('med-suggestions');if(q.length<2){box.innerHTML='';return;}const m=MED_LIST.filter(x=>x.toLowerCase().includes(q)).slice(0,8);box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="addMed(\''+escHtml(x)+'\')">'+escHtml(x)+'</div>').join('');}
+function addMed(name){if(!_meds.includes(name))_meds.push(name);document.getElementById('med-search').value='';document.getElementById('med-suggestions').innerHTML='';renderMedTags();}
+function removeMed(name){_meds=_meds.filter(m=>m!==name);renderMedTags();}
+function renderMedTags(){const el=document.getElementById('med-tags');if(!el)return;el.innerHTML=_meds.map(m=>'<span class="tag">'+escHtml(m)+' <button onclick="removeMed(\''+escHtml(m)+'\')">×</button></span>').join('');}
+
+// ─── Conditions Autocomplete ───────────────────────────────────────
+const COND_LIST=['Type 1 Diabetes','Type 2 Diabetes','Hypertension','Hyperlipidaemia','Hypothyroidism','Hyperthyroidism','Asthma','COPD','Chronic Bronchitis','Emphysema','Heart Failure','Ischaemic Heart Disease','Atrial Fibrillation','Previous MI','Stroke / CVA','TIA','Epilepsy','Parkinson\'s Disease','Multiple Sclerosis','Rheumatoid Arthritis','Osteoarthritis','Gout','Osteoporosis','Chronic Kidney Disease','Nephrotic Syndrome','Liver Cirrhosis','NAFLD','Hepatitis B','Hepatitis C','HIV / AIDS','Tuberculosis','Malaria (recent)','Anaemia','Sickle Cell Disease','Depression','Anxiety Disorder','Bipolar Disorder','Schizophrenia','ADHD','Autism Spectrum','Dementia','Alzheimer\'s Disease','Crohn\'s Disease','Ulcerative Colitis','IBS','GERD / Reflux','Peptic Ulcer','Coeliac Disease','Migraine','Chronic Back Pain','Fibromyalgia','Lupus (SLE)','Psoriasis','Eczema','Cancer (specify)','Previous Cancer','Obesity','Metabolic Syndrome','Sleep Apnoea','Anxiety','PTSD','Eating Disorder'];
+let _conds=[];
+function searchConds(){const q=document.getElementById('cond-search').value.trim().toLowerCase();const box=document.getElementById('cond-suggestions');if(q.length<2){box.innerHTML='';return;}const m=COND_LIST.filter(x=>x.toLowerCase().includes(q)).slice(0,8);box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="addCond(\''+escHtml(x.replace(/'/g,"\\\'"))+'\')">'+escHtml(x)+'</div>').join('');}
+function addCond(name){if(!_conds.includes(name))_conds.push(name);document.getElementById('cond-search').value='';document.getElementById('cond-suggestions').innerHTML='';renderCondTags();}
+function removeCond(name){_conds=_conds.filter(c=>c!==name);renderCondTags();}
+function renderCondTags(){const el=document.getElementById('cond-tags');if(!el)return;el.innerHTML=_conds.map(c=>'<span class="tag">'+escHtml(c)+' <button onclick="removeCond(\''+escHtml(c.replace(/'/g,"\\\'"))+'\')">×</button></span>').join('');}
+
+// ─── Allergies Autocomplete ────────────────────────────────────────
+const ALLERGY_LIST=['Penicillin','Amoxicillin','Ampicillin','Cephalosporins','Sulphonamides','Cotrimoxazole','Metronidazole','Ciprofloxacin','Aspirin','Ibuprofen','Naproxen','Diclofenac','NSAIDs','Codeine','Morphine','Tramadol','Contrast dye','Latex','Peanuts','Tree nuts','Shellfish','Fish','Eggs','Milk / Dairy','Wheat / Gluten','Soya','Bee sting','Wasp sting','Penicillin (pen allergy)','Sulfa drugs','Metformin','Statins'];
+let _allergies=[];
+function searchAllergies(){const q=document.getElementById('allergy-search')?document.getElementById('allergy-search').value.trim().toLowerCase():'';const box=document.getElementById('allergy-suggestions');if(!box)return;if(q.length<2){box.innerHTML='';return;}const m=ALLERGY_LIST.filter(x=>x.toLowerCase().includes(q)).slice(0,8);box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="addAllergy(\''+escHtml(x)+'\')">'+escHtml(x)+'</div>').join('');}
+function addAllergy(name){if(!_allergies.includes(name))_allergies.push(name);const el=document.getElementById('allergy-search');if(el)el.value='';const box=document.getElementById('allergy-suggestions');if(box)box.innerHTML='';renderAllergyTags();}
+function removeAllergy(name){_allergies=_allergies.filter(a=>a!==name);renderAllergyTags();}
+function renderAllergyTags(){const el=document.getElementById('allergy-tags');if(!el)return;el.innerHTML=_allergies.map(a=>'<span class="tag">'+escHtml(a)+' <button onclick="removeAllergy(\''+escHtml(a)+'\')">×</button></span>').join('');}
+
+// ─── Voice Input ──────────────────────────────────────────────────
+let _voiceTarget=null;
+function startVoice(targetId){
+  if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){showAlert('profile-alert','❌ Voice input not supported on this browser. Try Chrome.','error');return;}
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const r=new SR();r.lang='en-ZA';r.interimResults=false;r.maxAlternatives=1;
+  r.onresult=e=>{const txt=e.results[0][0].transcript;const el=document.getElementById(targetId);if(el){el.value+=(el.value?' ':'')+txt;}};
+  r.onerror=()=>showAlert('profile-alert','⚠️ Voice capture failed. Check microphone permissions.','error');
+  r.start();
+}
+
+// ─── AI Chat ──────────────────────────────────────────────────────
+const AI_RULES=[
+  {k:['emergency','chest pain','can\'t breathe','unconscious','not breathing','stroke','overdose','bleeding heavily'],r:'🚨 This sounds like a medical emergency. Please call <strong>10177</strong> (ambulance) or <strong>112</strong> immediately. Do not wait.'},
+  {k:['cold','runny nose','flu','sore throat','cough','blocked nose'],r:'For a mild cold or flu: rest, drink plenty of fluids, paracetamol or ibuprofen for fever/pain. See a doctor if fever >38.5°C lasts more than 3 days, breathing is difficult, or you feel very unwell.'},
+  {k:['headache','head pain'],r:'For a common headache: hydrate, rest in a quiet dark room, paracetamol or ibuprofen. See a doctor urgently if the headache is sudden and very severe ("thunderclap"), comes with neck stiffness, vision changes, or weakness.'},
+  {k:['fever','high temperature'],r:'Fever (>37.5°C): paracetamol or ibuprofen, stay cool, drink fluids. See a doctor if fever >39°C, lasts >3 days, or comes with neck stiffness, rash, difficulty breathing, or severe pain.'},
+  {k:['diarrhoea','diarrhea','loose stool','upset stomach'],r:'For diarrhoea: stay well hydrated — oral rehydration sachets (Rehidrat) or water + salt + sugar. Avoid dairy temporarily. See a doctor if there is blood in the stool, fever, or it lasts more than 2 days.'},
+  {k:['nausea','vomiting','throwing up'],r:'Sip clear fluids slowly. Try dry crackers. Avoid solid food until nausea settles. See a doctor if you cannot keep any fluids down for more than 6 hours, or there is blood in the vomit.'},
+  {k:['rash','skin rash','hives','itchy skin'],r:'A localised rash: cool compress, antihistamine (cetirizine or loratadine). Avoid known triggers. See a doctor if the rash is spreading rapidly, you have breathing difficulty, or your face/throat is swelling (anaphylaxis — call 112).'},
+  {k:['burn','burned','scalded'],r:'For a minor burn: cool under running water for 20 minutes. Do not apply butter or toothpaste. Cover loosely with cling wrap or a clean cloth. See a doctor for burns larger than the palm, on the face/hands/genitals, or deep burns.'},
+  {k:['wound','cut','bleeding','laceration'],r:'Apply firm pressure with a clean cloth for 10–15 minutes. Elevate if possible. See a doctor if bleeding does not stop, the cut is deep or gaping, or there is risk of infection (animal bite, dirty wound).'},
+  {k:['bite','animal bite','snake bite','dog bite'],r:'For snake bite: keep calm and still, immobilise the limb, go to the nearest emergency room immediately. Do not cut or suck the bite. For dog/cat bites: wash well with soap and water, see a doctor — you may need antibiotics or rabies prophylaxis.'},
+  {k:['eye','eye pain','red eye','discharge'],r:'For a red or irritated eye: rinse with clean water. Avoid rubbing. Sunglasses if light-sensitive. See a doctor if there is severe pain, vision change, chemical splash, or pus.'},
+  {k:['blood pressure','hypertension','bp'],r:'Normal BP is below 120/80 mmHg. High BP (>140/90) should be managed with medication, low-salt diet, exercise, and no smoking. Log your BP readings in the <strong>My Card</strong> tab. See your doctor if BP >180/110 or you have headache/vision changes.'},
+  {k:['diabetes','blood sugar','glucose'],r:'Manage diabetes with prescribed medication, a low-sugar diet, and regular checks. Signs of low blood sugar (hypoglycaemia): shakiness, sweating, confusion — eat 15g fast sugar (glucose tablets, juice). See a doctor if blood sugar is very high (>15 mmol/L) or you feel very unwell.'},
+  {k:['medication','medicine','tablets','pill','dose','dosage'],r:'I can give general information but cannot prescribe. Your medication details are in your health card. Always take medications as prescribed. Contact your doctor or pharmacist for dosage questions.'},
+  {k:['pregnant','pregnancy'],r:'During pregnancy: attend all antenatal visits, take folic acid 5mg daily, avoid alcohol and smoking. Any vaginal bleeding, severe headache, or reduced fetal movement needs urgent medical attention.'},
+  {k:['covid','coronavirus'],r:'COVID-19 symptoms: fever, cough, sore throat, fatigue, loss of smell/taste. Isolate if positive. Drink fluids, rest, paracetamol for fever. See a doctor or go to the ER if breathing difficulty develops.'},
+  {k:['mental health','depressed','depression','anxiety','suicidal','want to die'],r:'I\'m sorry you\'re feeling this way. You are not alone. Please reach out:\n• SADAG: <strong>0800 456 789</strong> (free, 24/7)\n• Lifeline: <strong>0861 322 322</strong>\n• SMS: 31393\nIf you are in immediate danger, call <strong>10177</strong> or go to your nearest emergency room.'},
+  {k:['back pain','backache','lower back'],r:'For mild back pain: gentle movement, warm pack, ibuprofen or paracetamol. Avoid prolonged bed rest. See a doctor if pain radiates down the leg, causes numbness/weakness, or follows an injury.'},
+  {k:['chest pain','heart attack','chest tightness'],r:'🚨 Chest pain can be serious. If the pain is crushing, radiates to the arm or jaw, comes with sweating or shortness of breath — call <strong>10177</strong> immediately. Chew 300mg aspirin if not allergic while waiting for help.'},
+];
+let _chatVoice=false;
+function processChat(msg){
+  const lc=msg.toLowerCase();
+  for(const rule of AI_RULES){if(rule.k.some(k=>lc.includes(k)))return rule.r;}
+  if(lc.includes('who are you')||lc.includes('what are you'))return'I am the Health One-Stop AI assistant — here to give you basic health guidance. I am not a substitute for a real doctor. For anything serious, please see a healthcare provider.';
+  if(lc.includes('thank'))return'You\'re welcome! Stay healthy. 🌿';
+  return'I\'m not sure about that specific question. For personalised medical advice, please consult your GP or pharmacist. You can use the <strong>Find Care</strong> tab to locate a provider near you.';
+}
+function addChatBubble(text,who){
+  const wrap=document.getElementById('chat-messages');
+  const div=document.createElement('div');
+  div.className='chat-bubble '+(who==='user'?'chat-user':'chat-ai');
+  div.innerHTML=text;
+  wrap.appendChild(div);
+  wrap.scrollTop=wrap.scrollHeight;
+}
+function sendChat(){
+  const inp=document.getElementById('chat-input');
+  const msg=inp?inp.value.trim():'';
+  if(!msg)return;
+  addChatBubble(escHtml(msg),'user');
+  inp.value='';
+  setTimeout(()=>{const reply=processChat(msg);addChatBubble(reply,'ai');},400);
+}
+function toggleVoice(){
+  _chatVoice=!_chatVoice;
+  const btn=document.getElementById('voice-chat-btn');
+  if(!_chatVoice){if(btn)btn.textContent='🎙️';return;}
+  if(btn)btn.textContent='🔴';
+  if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){showAlert('chat-alert','Voice not supported','error');_chatVoice=false;if(btn)btn.textContent='🎙️';return;}
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const r=new SR();r.lang='en-ZA';r.continuous=true;r.interimResults=false;
+  r.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal){const t=e.results[i][0].transcript.trim();addChatBubble(escHtml(t),'user');setTimeout(()=>addChatBubble(processChat(t),'ai'),400);}}};
+  r.onend=()=>{if(_chatVoice)r.start();};
+  r.start();
+  window._chatRecognizer=r;
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.activeElement&&document.activeElement.id==='chat-input')sendChat();});
+</script>
+<script>
+// ─── Camera / OCR ─────────────────────────────────────────────────
+function scanCard(){
+  const input=document.createElement('input');input.type='file';input.accept='image/*';input.capture='environment';
+  input.onchange=async e=>{
+    const file=e.target.files[0];if(!file)return;
+    const reader=new FileReader();
+    reader.onload=async ev=>{
+      const img=document.getElementById('scan-preview');
+      if(img){img.src=ev.target.result;img.style.display='block';}
+      document.getElementById('scan-status').textContent='🔍 Reading card…';
+      openModal('modal-scan');
+      await runOCR(ev.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+}
+async function runOCR(dataUrl){
+  try{
+    if(!window.Tesseract)await new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});
+    const {data:{text}}=await Tesseract.recognize(dataUrl,'eng');
+    document.getElementById('scan-status').textContent='✅ Text detected — review below:';
+    const parsed=parseCardText(text);
+    document.getElementById('scan-name').value=parsed.name||'';
+    document.getElementById('scan-id').value=parsed.id||'';
+    document.getElementById('scan-scheme').value=parsed.scheme||'';
+    document.getElementById('scan-member').value=parsed.member||'';
+  }catch(err){document.getElementById('scan-status').textContent='⚠️ Could not read card — fill in manually.';}
+}
+function parseCardText(text){
+  const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
+  const result={};
+  const idMatch=text.match(/\b(\d{13})\b/);if(idMatch)result.id=idMatch[1];
+  const memMatch=text.match(/\b(\d{7,12})\b/);if(memMatch&&!result.id)result.member=memMatch[1];
+  const schemes=['Discovery','Bonitas','Momentum','Medshield','GEMS','Fedhealth','Bestmed','Profmed','Sizwe','Keyhealth','Medihelp'];
+  for(const s of schemes){if(text.toLowerCase().includes(s.toLowerCase())){result.scheme=s;break;}}
+  if(lines.length>0)result.name=lines[0];
+  return result;
+}
+function confirmCardEntry(){
+  const name=document.getElementById('scan-name').value.trim();
+  const id=document.getElementById('scan-id').value.trim();
+  const scheme=document.getElementById('scan-scheme').value.trim();
+  const member=document.getElementById('scan-member').value.trim();
+  if(name){const el=document.getElementById('prof-name');if(el)el.value=name;}
+  if(id){const el=document.getElementById('prof-id');if(el)el.value=id;}
+  if(scheme){const el=document.getElementById('prof-aid-scheme');if(el)el.value=scheme;}
+  if(member){const el=document.getElementById('prof-aid-number');if(el)el.value=member;}
+  closeModal('modal-scan');
+  showAlert('profile-alert','✅ Card details imported — save your profile to confirm.');
+}
+
+// ─── Profile Photo ────────────────────────────────────────────────
+function savePhoto(input){
+  if(!input.files||!input.files[0])return;
+  const reader=new FileReader();
+  reader.onload=e=>{Store.set('hos_photo',e.target.result);loadPhoto();};
+  reader.readAsDataURL(input.files[0]);
+}
+function loadPhoto(){
+  const data=Store.get('hos_photo');
+  ['prof-photo','card-photo'].forEach(id=>{const el=document.getElementById(id);if(el&&data){el.src=data;el.style.display='block';}});
+}
+
+// ─── BMI Calculator ───────────────────────────────────────────────
+function calculateBMI(){
+  const h=parseFloat(document.getElementById('prof-height')&&document.getElementById('prof-height').value)||0;
+  const w=parseFloat(document.getElementById('prof-weight')&&document.getElementById('prof-weight').value)||0;
+  const el=document.getElementById('bmi-result');if(!el)return;
+  if(!h||!w){el.textContent='';return;}
+  const bmi=(w/((h/100)**2)).toFixed(1);
+  let cat='';if(bmi<18.5)cat='Underweight';else if(bmi<25)cat='Healthy';else if(bmi<30)cat='Overweight';else cat='Obese';
+  el.innerHTML='BMI: <strong>'+bmi+'</strong> — '+cat;
+}
+
+// ─── Blood Pressure Log ───────────────────────────────────────────
+function saveBP(){
+  const sys=document.getElementById('bp-sys').value;const dia=document.getElementById('bp-dia').value;const pulse=document.getElementById('bp-pulse').value;
+  if(!sys||!dia)return;
+  const log=JSON.parse(Store.get('hos_bp')||'[]');
+  log.unshift({sys,dia,pulse,date:new Date().toLocaleString('en-ZA')});
+  if(log.length>20)log.length=20;
+  Store.set('hos_bp',JSON.stringify(log));
+  document.getElementById('bp-sys').value='';document.getElementById('bp-dia').value='';document.getElementById('bp-pulse').value='';
+  renderBP();
+}
+function deleteBP(i){const log=JSON.parse(Store.get('hos_bp')||'[]');log.splice(i,1);Store.set('hos_bp',JSON.stringify(log));renderBP();}
+function renderBP(){
+  const el=document.getElementById('bp-log');if(!el)return;
+  const log=JSON.parse(Store.get('hos_bp')||'[]');
+  if(!log.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No readings yet.</p>';return;}
+  el.innerHTML=log.map((r,i)=>{
+    let cat='';const s=parseInt(r.sys),d=parseInt(r.dia);
+    if(s<120&&d<80)cat='<span style="color:#16a34a">✓ Normal</span>';
+    else if(s<130&&d<80)cat='<span style="color:#ca8a04">⚠ Elevated</span>';
+    else if(s<140||d<90)cat='<span style="color:#ea580c">⬆ Stage 1</span>';
+    else cat='<span style="color:#dc2626">🔴 Stage 2</span>';
+    return'<div class="bp-row"><span><strong>'+r.sys+'/'+r.dia+'</strong>'+(r.pulse?' · '+r.pulse+'bpm':'')+' '+cat+'</span><span style="color:#94a3b8;font-size:11px;">'+r.date+'</span><button class="icon-btn" onclick="deleteBP('+i+')">🗑️</button></div>';
+  }).join('');
+}
+
+// ─── Vaccination Record ───────────────────────────────────────────
+function saveVaccine(){
+  const name=document.getElementById('vacc-name').value.trim();const date=document.getElementById('vacc-date').value;const due=document.getElementById('vacc-due').value;
+  if(!name)return;
+  const list=JSON.parse(Store.get('hos_vaccines')||'[]');
+  list.push({name,date,due});
+  Store.set('hos_vaccines',JSON.stringify(list));
+  document.getElementById('vacc-name').value='';document.getElementById('vacc-date').value='';document.getElementById('vacc-due').value='';
+  renderVaccines();
+}
+function deleteVaccine(i){const list=JSON.parse(Store.get('hos_vaccines')||'[]');list.splice(i,1);Store.set('hos_vaccines',JSON.stringify(list));renderVaccines();}
+function renderVaccines(){
+  const el=document.getElementById('vaccine-list');if(!el)return;
+  const list=JSON.parse(Store.get('hos_vaccines')||'[]');
+  if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No vaccinations recorded.</p>';return;}
+  el.innerHTML=list.map((v,i)=>'<div class="vaccine-row"><span>💉 <strong>'+escHtml(v.name)+'</strong>'+(v.date?' — Given: '+v.date:'')+(v.due?' — Next: '+v.due:'')+'</span><button class="icon-btn" onclick="deleteVaccine('+i+')">🗑️</button></div>').join('');
+}
+
+// ─── Accordion ────────────────────────────────────────────────────
+function toggleAccordion(el){
+  const body=el.nextElementSibling;if(!body)return;
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  el.querySelector('.acc-arrow').textContent=open?'▼':'▲';
+}
+
+// ─── Mental Health Check-in ───────────────────────────────────────
+function mentalHealthCheck(){
+  const mood=document.getElementById('mood-select')?document.getElementById('mood-select').value:'';
+  const el=document.getElementById('mood-advice');if(!el)return;
+  const advice={
+    great:'🌟 Wonderful! Keep doing what\'s working — sleep, exercise, social connection, and purpose are the pillars of good mental health.',
+    good:'😊 Good to hear. Small daily habits keep the balance — short walks, good sleep, and connecting with someone you trust.',
+    okay:'🤔 Just okay is perfectly valid. Check in on your sleep and stress levels. A short walk or talking to someone can help shift things.',
+    low:'💙 Sorry to hear you\'re feeling low. Be gentle with yourself. Talk to someone you trust. If this persists more than two weeks, please see your GP.',
+    bad:'❤️ When things feel bad, reaching out matters. SADAG helpline: <strong>0800 456 789</strong> (free, 24/7). You don\'t have to face this alone.'
+  };
+  el.innerHTML='<div class="alert" style="margin-top:10px;">'+(advice[mood]||'')+'</div>';
+}
+</script>
+<script>
+// ─── Lab Results ──────────────────────────────────────────────────
+function saveLabResult(){
+  const name=document.getElementById('lab-name').value.trim();
+  const val=document.getElementById('lab-value').value.trim();
+  const ref=document.getElementById('lab-ref').value.trim();
+  const date=document.getElementById('lab-date').value;
+  if(!name||!val)return;
+  const list=JSON.parse(Store.get('hos_labs')||'[]');
+  list.unshift({name,val,ref,date,id:Date.now()});
+  Store.set('hos_labs',JSON.stringify(list));
+  closeModal('modal-lab');
+  document.getElementById('lab-name').value='';document.getElementById('lab-value').value='';document.getElementById('lab-ref').value='';document.getElementById('lab-date').value='';
+  renderLabResults();
+}
+function deleteLabResult(id){const list=JSON.parse(Store.get('hos_labs')||'[]').filter(r=>r.id!==id);Store.set('hos_labs',JSON.stringify(list));renderLabResults();}
+function renderLabResults(){
+  const el=document.getElementById('lab-results-list');if(!el)return;
+  const list=JSON.parse(Store.get('hos_labs')||'[]');
+  if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No lab results saved.</p>';return;}
+  el.innerHTML=list.map(r=>'<div class="record-card"><div class="record-header"><strong>🧪 '+escHtml(r.name)+'</strong><span style="color:#94a3b8;font-size:11px;">'+(r.date||'')+'</span></div><div style="font-size:13px;color:#1e293b;">Result: <strong>'+escHtml(r.val)+'</strong>'+(r.ref?' (Ref: '+escHtml(r.ref)+')':'')+'</div><button class="icon-btn" style="margin-top:6px;" onclick="deleteLabResult('+r.id+')">🗑️ Delete</button></div>').join('');
+}
+
+// ─── Radiology Records ────────────────────────────────────────────
+function saveRadiology(){
+  const type=document.getElementById('rad-type').value.trim();
+  const body=document.getElementById('rad-body').value.trim();
+  const findings=document.getElementById('rad-findings').value.trim();
+  const date=document.getElementById('rad-date').value;
+  if(!type)return;
+  const list=JSON.parse(Store.get('hos_radiology')||'[]');
+  list.unshift({type,body,findings,date,id:Date.now(),show:false});
+  Store.set('hos_radiology',JSON.stringify(list));
+  closeModal('modal-radiology');
+  document.getElementById('rad-type').value='';document.getElementById('rad-body').value='';document.getElementById('rad-findings').value='';document.getElementById('rad-date').value='';
+  renderRadiology();
+}
+function deleteRadiology(id){const list=JSON.parse(Store.get('hos_radiology')||'[]').filter(r=>r.id!==id);Store.set('hos_radiology',JSON.stringify(list));renderRadiology();}
+function toggleRecord(id){const list=JSON.parse(Store.get('hos_radiology')||'[]');const r=list.find(x=>x.id===id);if(r)r.show=!r.show;Store.set('hos_radiology',JSON.stringify(list));renderRadiology();}
+function renderRadiology(){
+  const el=document.getElementById('radiology-list');if(!el)return;
+  const list=JSON.parse(Store.get('hos_radiology')||'[]');
+  if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No radiology reports saved.</p>';return;}
+  el.innerHTML=list.map(r=>'<div class="record-card"><div class="record-header" onclick="toggleRecord('+r.id+')"><strong>🩻 '+escHtml(r.type)+(r.body?' — '+escHtml(r.body):'')+'</strong><span style="color:#94a3b8;font-size:11px;">'+(r.date||'')+'</span></div>'+(r.show&&r.findings?'<div style="margin-top:8px;font-size:13px;color:#374151;line-height:1.6;">'+escHtml(r.findings)+'</div>':'')+'<button class="icon-btn" style="margin-top:6px;" onclick="deleteRadiology('+r.id+')">🗑️ Delete</button></div>').join('');
+}
+
+// ─── Family / Dependants ──────────────────────────────────────────
+function calcAge(dob){if(!dob)return '';const d=new Date(dob),now=new Date();let age=now.getFullYear()-d.getFullYear();if(now<new Date(now.getFullYear(),d.getMonth(),d.getDate()))age--;return age+' yrs';}
+function openAddDependant(){openModal('modal-dependant');}
+function saveDependant(){
+  const name=document.getElementById('dep-name').value.trim();if(!name)return;
+  const dep={id:Date.now(),name,rel:document.getElementById('dep-rel').value.trim(),dob:document.getElementById('dep-dob').value,id_no:document.getElementById('dep-id').value.trim(),blood:document.getElementById('dep-blood').value,scheme:document.getElementById('dep-scheme').value.trim(),member:document.getElementById('dep-member').value.trim(),conditions:document.getElementById('dep-conditions').value.trim(),meds:document.getElementById('dep-meds').value.trim(),photo:''};
+  const list=JSON.parse(Store.get('hos_dependants')||'[]');list.push(dep);Store.set('hos_dependants',JSON.stringify(list));
+  closeModal('modal-dependant');
+  ['dep-name','dep-rel','dep-dob','dep-id','dep-blood','dep-scheme','dep-member','dep-conditions','dep-meds'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  renderDependants();
+}
+function deleteDependant(id){const list=JSON.parse(Store.get('hos_dependants')||'[]').filter(d=>d.id!==id);Store.set('hos_dependants',JSON.stringify(list));renderDependants();}
+function addBookletPhoto(id,input){
+  if(!input.files||!input.files[0])return;
+  const reader=new FileReader();
+  reader.onload=e=>{const list=JSON.parse(Store.get('hos_dependants')||'[]');const d=list.find(x=>x.id===id);if(d){d.photo=e.target.result;Store.set('hos_dependants',JSON.stringify(list));renderDependants();}};
+  reader.readAsDataURL(input.files[0]);
+}
+function renderDependants(){
+  const el=document.getElementById('dependants-list');if(!el)return;
+  const list=JSON.parse(Store.get('hos_dependants')||'[]');
+  if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No dependants added yet.</p>';return;}
+  el.innerHTML=list.map(d=>'<div class="dependant-card"><div class="dep-header">'+(d.photo?'<img src="'+d.photo+'" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #e2e8f0;">':'<div style="width:44px;height:44px;border-radius:50%;background:#e0e7ff;display:flex;align-items:center;justify-content:center;font-size:20px;">👤</div>')+'<div><div style="font-weight:700;color:#1e293b;">'+escHtml(d.name)+'</div><div style="font-size:12px;color:#64748b;">'+(d.rel?escHtml(d.rel)+' · ':'')+calcAge(d.dob)+'</div></div></div>'+(d.conditions?'<div style="font-size:12px;color:#374151;margin-top:6px;">⚕️ '+escHtml(d.conditions)+'</div>':'')+(d.meds?'<div style="font-size:12px;color:#374151;">💊 '+escHtml(d.meds)+'</div>':'')+(d.scheme?'<div style="font-size:12px;color:#374151;">🛡️ '+escHtml(d.scheme)+(d.member?' #'+escHtml(d.member):'')+'</div>':'')+'<div style="display:flex;gap:8px;margin-top:8px;"><label class="btn" style="font-size:11px;padding:6px 10px;cursor:pointer;">📷 Photo<input type="file" accept="image/*" style="display:none;" onchange="addBookletPhoto('+d.id+',this)"></label><button class="btn" style="font-size:11px;padding:6px 10px;background:#fee2e2;color:#dc2626;border:none;" onclick="deleteDependant('+d.id+')">🗑️</button></div></div>').join('');
+}
+
+// ─── Pet Module ───────────────────────────────────────────────────
+function openAddPet(){openModal('modal-add-pet');}
+function savePet(){
+  const name=document.getElementById('pet-name').value.trim();if(!name)return;
+  const pet={id:Date.now(),name,species:document.getElementById('pet-species').value.trim(),breed:document.getElementById('pet-breed').value.trim(),dob:document.getElementById('pet-dob').value,microchip:document.getElementById('pet-microchip').value.trim(),vet:document.getElementById('pet-vet').value.trim(),vetPhone:document.getElementById('pet-vet-phone').value.trim(),insurance:document.getElementById('pet-insurance').value.trim(),conditions:document.getElementById('pet-conditions').value.trim(),meds:document.getElementById('pet-meds').value.trim(),vaccines:document.getElementById('pet-vaccines').value.trim()};
+  const list=JSON.parse(Store.get('hos_pets')||'[]');list.push(pet);Store.set('hos_pets',JSON.stringify(list));
+  closeModal('modal-add-pet');
+  ['pet-name','pet-species','pet-breed','pet-dob','pet-microchip','pet-vet','pet-vet-phone','pet-insurance','pet-conditions','pet-meds','pet-vaccines'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  renderPets();
+}
+function deletePet(id){const list=JSON.parse(Store.get('hos_pets')||'[]').filter(p=>p.id!==id);Store.set('hos_pets',JSON.stringify(list));renderPets();}
+function findNearestVet(){searchNearby('vet','Vet / Animal Clinic','🐾');}
+function renderPets(){
+  const el=document.getElementById('pet-list');if(!el)return;
+  const list=JSON.parse(Store.get('hos_pets')||'[]');
+  if(!list.length){el.innerHTML='<div style="text-align:center;color:#94a3b8;font-size:13px;padding:24px;">No pets added yet.<br>Tap <strong>+ Add Pet</strong> to get started.</div>';return;}
+  el.innerHTML=list.map(p=>{
+    const qrId='pet-qr-'+p.id;
+    const info=[p.species&&p.breed?p.species+' · '+p.breed:'',p.dob?'DOB: '+p.dob:'',p.microchip?'Microchip: '+p.microchip:'',p.vet?'Vet: '+p.vet+(p.vetPhone?' ('+p.vetPhone+')':''):'',p.conditions?'Conditions: '+p.conditions:'',p.meds?'Meds: '+p.meds:'',p.vaccines?'Vaccines: '+p.vaccines:'',p.insurance?'Insurance: '+p.insurance:''].filter(Boolean).join('\n');
+    return '<div class="pet-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div><div style="font-size:16px;font-weight:700;color:#1e293b;">🐾 '+escHtml(p.name)+'</div><div style="font-size:12px;color:#64748b;margin-top:2px;">'+(p.species?escHtml(p.species):'')+(p.breed?' · '+escHtml(p.breed):'')+'</div></div><button onclick="deletePet('+p.id+')" style="background:#fee2e2;border:none;border-radius:8px;padding:4px 10px;color:#dc2626;font-size:12px;cursor:pointer;">🗑️</button></div>'+(p.microchip?'<div style="font-size:12px;color:#374151;margin-top:6px;">📡 Microchip: <strong>'+escHtml(p.microchip)+'</strong></div>':'')+(p.vet?'<div style="font-size:12px;color:#374151;">🏥 Vet: <strong>'+escHtml(p.vet)+'</strong>'+(p.vetPhone?' — <a href="tel:'+escHtml(p.vetPhone)+'">'+escHtml(p.vetPhone)+'</a>':'')+'</div>':'')+(p.conditions?'<div style="font-size:12px;color:#374151;">⚕️ '+escHtml(p.conditions)+'</div>':'')+(p.meds?'<div style="font-size:12px;color:#374151;">💊 '+escHtml(p.meds)+'</div>':'')+(p.vaccines?'<div style="font-size:12px;color:#374151;">💉 '+escHtml(p.vaccines)+'</div>':'')+(p.insurance?'<div style="font-size:12px;color:#374151;">🛡️ '+escHtml(p.insurance)+'</div>':'')+'<div id="'+qrId+'" style="margin-top:10px;"></div></div>';
+  }).join('');
+  // Generate QR codes for each pet
+  list.forEach(p=>{
+    const info='PET HEALTH CARD\nName: '+p.name+'\n'+(p.species?'Species: '+p.species+'\n':'')+(p.breed?'Breed: '+p.breed+'\n':'')+(p.microchip?'Microchip: '+p.microchip+'\n':'')+(p.vet?'Vet: '+p.vet+(p.vetPhone?' '+p.vetPhone:'')+'  \n':'')+(p.conditions?'Conditions: '+p.conditions+'\n':'')+(p.meds?'Meds: '+p.meds+'\n':'');
+    const el=document.getElementById('pet-qr-'+p.id);
+    if(el&&window.QRCode){try{el.innerHTML='';new QRCode(el,{text:info,width:100,height:100});}catch(e){}}
+  });
+}
+</script>
+<script>
+// ─── Pre-Op Questionnaire ─────────────────────────────────────────
+function autoFillPreop(){
+  const raw=Store.get('hos_profile');const p=raw?JSON.parse(raw):{};
+  const set=(id,val)=>{const el=document.getElementById(id);if(el&&val)el.value=val;};
+  set('preop-name',p.name);
+  set('preop-id',p.id);
+  set('preop-dob',p.dob);
+  set('preop-blood',p.blood);
+  set('preop-weight',p.weight);
+  set('preop-height',p.height);
+  // BMI
+  if(p.weight&&p.height){const bmi=(parseFloat(p.weight)/((parseFloat(p.height)/100)**2)).toFixed(1);const el=document.getElementById('preop-bmi');if(el)el.value=bmi;}
+  // Allergies from tags
+  if(_allergies.length){const el=document.getElementById('preop-allergies');if(el)el.value=_allergies.join(', ');}
+  else if(p.allergies){const el=document.getElementById('preop-allergies');if(el)el.value=p.allergies;}
+  // Medications from tags
+  if(_meds.length){const el=document.getElementById('preop-meds');if(el)el.value=_meds.join(', ');}
+  else if(p.medications){const el=document.getElementById('preop-meds');if(el)el.value=p.medications;}
+  // Conditions from tags
+  if(_conds.length){const el=document.getElementById('preop-conditions');if(el)el.value=_conds.join(', ');}
+  else if(p.conditions){const el=document.getElementById('preop-conditions');if(el)el.value=p.conditions;}
+}
+
+function buildPreopText(){
+  const g=id=>{const el=document.getElementById(id);return el?el.value.trim():'';}
+  const ch=id=>{const el=document.getElementById(id);return el?el.checked:false;}
+  const procedure=g('preop-procedure')||'(Not specified)';
+  const procDate=g('preop-proc-date')||'(Not specified)';
+  const surgeon=g('preop-surgeon-name')||'(Not specified)';
+  const lines=[
+    '╔══════════════════════════════════════╗',
+    '   PRE-OPERATIVE HEALTH QUESTIONNAIRE   ',
+    '╚══════════════════════════════════════╝',
+    '',
+    'PROCEDURE: '+procedure,
+    'DATE: '+procDate,
+    'SURGEON: '+surgeon,
+    '',
+    '── PATIENT DETAILS ──',
+    'Name: '+g('preop-name'),
+    'SA ID: '+g('preop-id'),
+    'DOB: '+g('preop-dob'),
+    'Blood Type: '+g('preop-blood'),
+    'Weight: '+g('preop-weight')+'kg  Height: '+g('preop-height')+'cm  BMI: '+g('preop-bmi'),
+    '',
+    '── CURRENT MEDICATIONS ──',
+    g('preop-meds')||'None',
+    'Last dose details: '+g('preop-last-dose'),
+    'Blood thinners / anticoagulants: '+(ch('preop-anticoag')?'YES':'No'),
+    'Diabetes medication / insulin: '+(ch('preop-diabetes-med')?'YES':'No'),
+    'Herbal supplements: '+g('preop-herbal'),
+    '',
+    '── ALLERGIES ──',
+    'Allergies: '+(g('preop-allergies')||'None known'),
+    'Latex allergy: '+(ch('preop-latex')?'YES':'No'),
+    '',
+    '── MEDICAL HISTORY ──',
+    'Chronic conditions: '+g('preop-conditions'),
+    'Previous surgeries: '+g('preop-prev-surgery'),
+    'Previous anaesthetic problems: '+g('preop-anaes-problems'),
+    'Family anaesthetic problems (e.g. malignant hyperthermia): '+g('preop-family-anaes'),
+    '',
+    '── CARDIOVASCULAR & RESPIRATORY ──',
+    'Can climb 1 flight of stairs without stopping: '+(ch('preop-stairs')?'YES':'No'),
+    'Chest pain / angina: '+(ch('preop-chest-pain')?'YES':'No'),
+    'Palpitations: '+(ch('preop-palpitations')?'YES':'No'),
+    'Shortness of breath at rest: '+(ch('preop-sob')?'YES':'No'),
+    'Sleep apnoea / CPAP: '+(ch('preop-sleep-apnoea')?'YES':'No'),
+    'Smoking: '+g('preop-smoking'),
+    '',
+    '── STOP-BANG SLEEP APNOEA SCREEN ──',
+    'Snores loudly: '+(ch('sb-snore')?'YES':'No'),
+    'Tired / sleepy during the day: '+(ch('sb-tired')?'YES':'No'),
+    'Observed to stop breathing during sleep: '+(ch('sb-observed')?'YES':'No'),
+    'Treated for high blood pressure: '+(ch('sb-bp')?'YES':'No'),
+    'BMI > 35: '+(ch('sb-bmi')?'YES':'No'),
+    'Age > 50: '+(ch('sb-age')?'YES':'No'),
+    'Neck circumference > 40cm: '+(ch('sb-neck')?'YES':'No'),
+    'Male gender: '+(ch('sb-gender')?'YES':'No'),
+    '',
+    '── AIRWAY ASSESSMENT ──',
+    'Neck mobility problems: '+(ch('preop-neck')?'YES':'No'),
+    'Limited mouth opening: '+(ch('preop-mouth')?'YES':'No'),
+    'Loose / capped teeth / dentures: '+g('preop-teeth'),
+    '',
+    '── FASTING STATUS (day of procedure) ──',
+    'Last food: '+g('preop-last-food'),
+    'Last clear fluids: '+g('preop-last-fluids'),
+    '',
+    '── SOCIAL HISTORY ──',
+    'Alcohol (units/week): '+g('preop-alcohol'),
+    'Recreational drug use: '+g('preop-drugs'),
+    'Pregnancy status: '+g('preop-pregnancy'),
+    '',
+    '── CONSENT ──',
+    'I confirm these answers are accurate to the best of my knowledge.',
+    'Signature: '+g('preop-signature'),
+    'Date: '+new Date().toLocaleDateString('en-ZA'),
+    '',
+    'Generated by Health One-Stop App'
+  ];
+  return lines.join('\n');
+}
+
+function sendPreopWhatsApp(){
+  const phone=document.getElementById('preop-surgeon-phone')?document.getElementById('preop-surgeon-phone').value.trim().replace(/\D/g,''):'';
+  const text=buildPreopText();
+  const url='https://wa.me/'+(phone||'')+  '?text='+encodeURIComponent(text);
+  window.open(url,'_blank');
+}
+
+function sendPreopEmail(){
+  const email=document.getElementById('preop-surgeon-email')?document.getElementById('preop-surgeon-email').value.trim():'';
+  const procedure=document.getElementById('preop-procedure')?document.getElementById('preop-procedure').value.trim():'Procedure';
+  const text=buildPreopText();
+  const subject='Pre-Op Questionnaire — '+procedure;
+  window.location.href='mailto:'+email+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(text);
+}
+
+function printPreop(){
+  const text=buildPreopText();
+  const win=window.open('','_blank');
+  win.document.write('<html><head><title>Pre-Op Questionnaire</title><style>body{font-family:monospace;font-size:13px;padding:20px;white-space:pre-wrap;}</style></head><body>'+escHtml(text)+'</body></html>');
+  win.document.close();
+  win.print();
+}
+
+// ─── Sub-screen navigation ────────────────────────────────────────
+function showSubScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  document.querySelector('.tab-bar').style.display='none';
+  if(name==='pets'){renderPets();setTimeout(()=>{autoFillPetQR();},300);}
+  if(name==='preop'){autoFillPreop();}
+}
+function backToMore(){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-more').classList.add('active');
+  document.querySelector('.tab-bar').style.display='flex';
+}
+function autoFillPetQR(){
+  // QR codes may need regeneration after DOM is ready
+  const list=JSON.parse(Store.get('hos_pets')||'[]');
+  if(!list.length||!window.QRCode)return;
+  renderPets();
+}
+
+// ─── Save / Load Profile ──────────────────────────────────────────
+function saveProfile(){
+  const get=id=>{const el=document.getElementById(id);return el?el.value.trim():'';}
+  const p={
+    name:get('prof-name'),dob:get('prof-dob'),id:get('prof-id'),blood:get('prof-blood'),
+    weight:get('prof-weight'),height:get('prof-height'),gender:get('prof-gender'),
+    phone:get('prof-phone'),emergency:get('prof-emergency'),emergencyPhone:get('prof-emergency-phone'),
+    aidScheme:get('prof-aid-scheme'),aidPlan:get('prof-aid-plan'),aidNumber:get('prof-aid-number'),
+    aidMemberNum:get('prof-aid-member'),hospital:get('prof-hospital'),gp:get('prof-gp'),
+    gpPhone:get('prof-gp-phone'),allergies:_allergies.join(', '),medications:_meds.join(', '),conditions:_conds.join(', '),
+    surgicalHistory:get('prof-surgical'),smoke:get('prof-smoke'),alcohol:get('prof-alcohol'),
+    mentalHealth:get('prof-mental')
+  };
+  Store.set('hos_profile',JSON.stringify(p));
+  renderHealthCard();renderCoverageGuide();renderEmergency();
+  showAlert('profile-alert','✅ Profile saved successfully!');
+}
+
+function loadProfile(){
+  const raw=Store.get('hos_profile');if(!raw)return;
+  const p=JSON.parse(raw);
+  const set=(id,val)=>{const el=document.getElementById(id);if(el&&val!==undefined)el.value=val;};
+  set('prof-name',p.name);set('prof-dob',p.dob);set('prof-id',p.id);set('prof-blood',p.blood);
+  set('prof-weight',p.weight);set('prof-height',p.height);set('prof-gender',p.gender);
+  set('prof-phone',p.phone);set('prof-emergency',p.emergency);set('prof-emergency-phone',p.emergencyPhone);
+  set('prof-aid-scheme',p.aidScheme);set('prof-aid-plan',p.aidPlan);set('prof-aid-number',p.aidNumber);
+  set('prof-aid-member',p.aidMemberNum);set('prof-hospital',p.hospital);set('prof-gp',p.gp);
+  set('prof-gp-phone',p.gpPhone);set('prof-surgical',p.surgicalHistory);
+  set('prof-smoke',p.smoke);set('prof-alcohol',p.alcohol);set('prof-mental',p.mentalHealth);
+  if(p.allergies)p.allergies.split(',').map(s=>s.trim()).filter(Boolean).forEach(a=>{if(!_allergies.includes(a))_allergies.push(a);});
+  if(p.medications)p.medications.split(',').map(s=>s.trim()).filter(Boolean).forEach(m=>{if(!_meds.includes(m))_meds.push(m);});
+  if(p.conditions)p.conditions.split(',').map(s=>s.trim()).filter(Boolean).forEach(c=>{if(!_conds.includes(c))_conds.push(c);});
+  renderAllergyTags();renderMedTags();renderCondTags();
+  renderHealthCard();renderCoverageGuide();renderEmergency();
+  calculateBMI();
+}
+</script>
+<script>
+// ─── Health Card Render ───────────────────────────────────────────
+function renderHealthCard(){
+  const raw=Store.get('hos_profile');const p=raw?JSON.parse(raw):{};
+  const set=(id,txt)=>{const el=document.getElementById(id);if(el)el.textContent=txt||'—';};
+  set('card-name',p.name);set('card-dob',p.dob);set('card-id',p.id);set('card-blood',p.blood);
+  set('card-phone',p.phone);set('card-scheme',p.aidScheme);set('card-plan',p.aidPlan);set('card-member',p.aidNumber||p.aidMemberNum);
+  set('card-emergency',p.emergency);set('card-emergency-phone',p.emergencyPhone);
+  set('card-gp',p.gp);set('card-gp-phone',p.gpPhone);set('card-hospital',p.hospital);
+  set('card-allergies',p.allergies||'None known');set('card-meds',p.medications||'None');set('card-conditions',p.conditions||'None');
+  // QR code
+  const qrEl=document.getElementById('card-qr');
+  if(qrEl&&window.QRCode){
+    qrEl.innerHTML='';
+    const txt=['HEALTH CARD','Name: '+p.name,'DOB: '+p.dob,'ID: '+p.id,'Blood: '+p.blood,'Scheme: '+p.aidScheme,'Member: '+(p.aidNumber||p.aidMemberNum),'Emergency: '+p.emergency+' '+p.emergencyPhone,'GP: '+p.gp+' '+p.gpPhone,'Allergies: '+p.allergies,'Meds: '+p.medications,'Conditions: '+p.conditions].filter(l=>!l.endsWith(': ')).join('\n');
+    try{new QRCode(qrEl,{text:txt||'Health One-Stop',width:120,height:120});}catch(e){}
+  }
+}
+
+// ─── Emergency Screen ─────────────────────────────────────────────
+function renderEmergency(){
+  const raw=Store.get('hos_profile');const p=raw?JSON.parse(raw):{};
+  const set=(id,txt)=>{const el=document.getElementById(id);if(el)el.textContent=txt||'';};
+  set('sos-name',p.name);set('sos-blood',p.blood);set('sos-allergies',p.allergies||'None known');
+  set('sos-meds',p.medications||'None');set('sos-conditions',p.conditions||'None');
+  set('sos-emergency',p.emergency);set('sos-emergency-phone',p.emergencyPhone);
+  set('sos-gp',p.gp);set('sos-gp-phone',p.gpPhone);
+  const callBtn=document.getElementById('sos-call-btn');
+  if(callBtn&&p.emergencyPhone)callBtn.href='tel:'+p.emergencyPhone.replace(/\s/g,'');
+}
+
+// ─── Location / Find Care ─────────────────────────────────────────
+function detectLocation(){
+  const el=document.getElementById('loc-status');if(el)el.textContent='📍 Detecting…';
+  if(!navigator.geolocation){if(el)el.textContent='❌ Geolocation not supported';return;}
+  navigator.geolocation.getCurrentPosition(pos=>{
+    window._userLat=pos.coords.latitude;window._userLon=pos.coords.longitude;
+    fetch('https://nominatim.openstreetmap.org/reverse?lat='+pos.coords.latitude+'&lon='+pos.coords.longitude+'&format=json')
+      .then(r=>r.json()).then(d=>{const suburb=d.address.suburb||d.address.city_district||d.address.town||d.address.city||'';if(el)el.textContent='📍 '+(suburb?suburb+', ':'')+(d.address.city||d.address.town||d.address.county||'Location detected');})
+      .catch(()=>{if(el)el.textContent='📍 Location detected';});
+  },()=>{if(el)el.textContent='❌ Location access denied — please allow location in browser settings.';});
+}
+
+// ─── Tab Switching ────────────────────────────────────────────────
+function switchTab(tab,btn){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const target=document.getElementById('screen-'+tab);if(target)target.classList.add('active');
+  document.querySelector('.tab-bar').style.display='flex';
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  if(tab==='card')renderHealthCard();
+  if(tab==='emergency')renderEmergency();
+  if(tab==='care')renderCoverageGuide();
+  if(tab==='more'){renderDependants();renderBP();renderVaccines();renderLabResults();renderRadiology();}
+}
+
+// ─── Initialise App ───────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded',()=>{
+  loadProfile();
+  loadPhoto();
+  renderDependants();
+  renderCoverageGuide();
+  renderBP();
+  renderVaccines();
+  renderLabResults();
+  renderRadiology();
+  renderPets();
+  // Welcome chat message
+  setTimeout(()=>{addChatBubble('👋 Hello! I\'m your Health One-Stop AI assistant. Ask me about symptoms, medications, or finding care near you. <br><small style="color:#94a3b8;">⚠️ I provide general guidance only — not a substitute for a doctor.</small>','ai');},600);
+  // localStorage availability warning
+  try{localStorage.setItem('__test__','1');localStorage.removeItem('__test__');}
+  catch(e){setTimeout(()=>{addChatBubble('⚠️ <strong>Private browsing mode detected.</strong> Your data will not be saved between sessions. For full functionality, use a regular browser window.','ai');},1200);}
+  // Auto-detect location silently on Find Care tab open
+  document.querySelectorAll('.tab-btn').forEach(t=>{t.addEventListener('click',function(){const tab=this.getAttribute('data-tab');if(tab==='care'&&!window._userLat)detectLocation();});});
+});
+</script>
+
+<!-- QR Code library (loaded async, used by renderHealthCard and renderPets) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" onload="renderHealthCard();renderPets();" defer></script>
+
+<script>
+// ─── Pre-Op: CORRECTED functions (override earlier stubs) ─────────
+function autoFillPreop(){
+  const raw=Store.get('hos_profile');if(!raw)return;const p=JSON.parse(raw);
+  const set=(id,val)=>{const el=document.getElementById(id);if(el&&val)el.value=val;};
+  set('po-name',p.name);
+  set('po-id',p.said);
+  set('po-dob',p.dob);
+  set('po-blood',p.blood);
+  set('po-allergies',p.allergies);
+  const meds=p.meds||'';set('po-meds',meds);
+  set('po-conditions',p.conditions);
+  // Default sign date to today
+  const today=new Date().toISOString().split('T')[0];
+  set('po-sign-date',today);
+}
+
+function getSBVal(name){const el=document.querySelector('input[name="'+name+'"]:checked');return el?el.value:'No';}
+function getVal(id){const el=document.getElementById(id);return el?el.value.trim():'';}
+
+function buildPreopText(){
+  const procedure=getVal('po-procedure')||'(not specified)';
+  const lines=[
+    '╔══════════════════════════════════════════╗',
+    '     PRE-OPERATIVE HEALTH QUESTIONNAIRE     ',
+    '╚══════════════════════════════════════════╝',
+    '',
+    '📋 PROCEDURE: '+procedure,
+    '📅 DATE: '+getVal('po-date'),
+    '🏥 HOSPITAL: '+getVal('po-hospital'),
+    '',
+    '── SURGEON ──',
+    'Name: '+getVal('po-surgeon'),
+    'Cell/WA: '+getVal('po-surgeon-wa'),
+    'Email: '+getVal('po-surgeon-email'),
+    '',
+    '── ANAESTHETIST ──',
+    'Name: '+getVal('po-anaest'),
+    'Cell/WA: '+getVal('po-anaest-wa'),
+    'Email: '+getVal('po-anaest-email'),
+    '',
+    '── 2. PATIENT DETAILS ──',
+    'Full Name: '+getVal('po-name'),
+    'SA ID Number: '+getVal('po-id'),
+    'Date of Birth: '+getVal('po-dob'),
+    'Weight: '+getVal('po-weight')+'kg   Height: '+getVal('po-height')+'cm',
+    'Blood Type: '+getVal('po-blood'),
+    '',
+    '── 3. ALLERGIES ──',
+    'Drug allergies / reactions: '+getVal('po-allergies'),
+    'Latex allergy: '+getVal('po-latex'),
+    'Food allergies: '+getVal('po-food-allergy'),
+    '',
+    '── 4. CURRENT MEDICATIONS ──',
+    getVal('po-meds')||'None',
+    'Anticoagulants / blood thinners: '+getVal('po-anticoag'),
+    'Insulin / diabetic medication: '+getVal('po-insulin'),
+    'Steroids / prednisone: '+getVal('po-steroids'),
+    'Herbal / traditional supplements: '+getVal('po-herbal'),
+    '',
+    '── 5. MEDICAL HISTORY ──',
+    'Chronic conditions: '+getVal('po-conditions'),
+    'Previous operations: '+getVal('po-prev-surg'),
+    'Previous anaesthetic problems: '+getVal('po-prev-anaest'),
+    'Family anaesthetic problems: '+getVal('po-family-anaest'),
+    '',
+    '── 6. CARDIOVASCULAR / STOP-BANG ──',
+    'Climbs stairs without stopping: '+getVal('po-stairs'),
+    'Chest pain / palpitations: '+getVal('po-chest'),
+    'Shortness of breath: '+getVal('po-sob'),
+    'STOP-BANG:',
+    '  S — Snores loudly: '+getSBVal('sb-s'),
+    '  T — Tired / sleepy daytime: '+getSBVal('sb-t'),
+    '  O — Observed stop breathing: '+getSBVal('sb-o'),
+    '  P — High blood pressure / BP meds: '+getSBVal('sb-p'),
+    '  B — BMI > 35: '+getSBVal('sb-b'),
+    '  A — Age > 50: '+getSBVal('sb-a'),
+    '  N — Neck > 40cm: '+getSBVal('sb-n'),
+    '  G — Male gender: '+getSBVal('sb-g'),
+    'CPAP for sleep apnoea: '+getVal('po-cpap'),
+    'Smoking: '+getVal('po-smoking'),
+    '',
+    '── 7. AIRWAY ──',
+    'Neck movement problem: '+getVal('po-neck'),
+    'Mouth opening difficulty: '+getVal('po-mouth'),
+    'Teeth / dentures: '+getVal('po-teeth'),
+    '',
+    '── 8. FASTING STATUS (day of procedure) ──',
+    'Last solid food: '+getVal('po-last-food'),
+    'Last clear fluids: '+getVal('po-last-fluids'),
+    '',
+    '── 9. SOCIAL HISTORY ──',
+    'Alcohol: '+getVal('po-alcohol'),
+    'Recreational drugs: '+getVal('po-drugs'),
+    'Pregnancy / breastfeeding: '+getVal('po-pregnancy'),
+    '',
+    '── 10. DECLARATION ──',
+    'I confirm this information is accurate to the best of my knowledge.',
+    'Signed: '+getVal('po-signature'),
+    'Date: '+getVal('po-sign-date'),
+    '',
+    '— Generated by Health One-Stop App —'
+  ];
+  return lines.join('\n');
+}
+
+function sendPreopWhatsApp(recipient){
+  const phone=recipient==='surgeon'?getVal('po-surgeon-wa').replace(/\D/g,''):getVal('po-anaest-wa').replace(/\D/g,'');
+  const text=buildPreopText();
+  window.open('https://wa.me/'+(phone||'')+  '?text='+encodeURIComponent(text),'_blank');
+}
+
+function sendPreopEmail(recipient){
+  const email=recipient==='surgeon'?getVal('po-surgeon-email'):getVal('po-anaest-email');
+  const procedure=getVal('po-procedure')||'Procedure';
+  const name=getVal('po-name');
+  const subject='Pre-Op Questionnaire — '+name+' — '+procedure;
+  const text=buildPreopText();
+  window.location.href='mailto:'+email+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(text);
+}
+
+function printPreop(){
+  const text=buildPreopText();
+  const win=window.open('','_blank');
+  win.document.write('<html><head><title>Pre-Op Questionnaire</title><style>body{font-family:monospace;font-size:13px;padding:24px;white-space:pre-wrap;max-width:700px;margin:0 auto;line-height:1.6;}@media print{body{padding:10px;}}</style></head><body>'+text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</body></html>');
+  win.document.close();
+  setTimeout(()=>win.print(),300);
+}
+
+// ─── Medication & Conditions: correct IDs for Part 4's HTML ──────
+// Part 4 uses p-meds-input, meds-tags, p-cond-input, cond-tags
+let medItems=[];
+let condItems=[];
+
+function searchMeds(val){
+  const q=(val||'').toLowerCase();
+  const box=document.getElementById('med-suggestions');if(!box)return;
+  if(q.length<2){box.style.display='none';box.innerHTML='';return;}
+  const m=MED_LIST.filter(x=>x.toLowerCase().includes(q)).slice(0,8);
+  if(!m.length){box.style.display='none';return;}
+  box.style.display='block';
+  box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="addMed(\''+x.replace(/'/g,"\\'")+'\')" style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f1f5f9;font-size:14px;color:#1e293b;">'+x+'</div>').join('');
+}
+function addMed(name){
+  if(!medItems.includes(name))medItems.push(name);
+  const inp=document.getElementById('p-meds-input');if(inp)inp.value='';
+  const box=document.getElementById('med-suggestions');if(box){box.style.display='none';box.innerHTML='';}
+  renderMedTags();
+  const hidden=document.getElementById('p-meds');if(hidden)hidden.value=medItems.join(', ');
+}
+function removeMed(name){medItems=medItems.filter(m=>m!==name);renderMedTags();const h=document.getElementById('p-meds');if(h)h.value=medItems.join(', ');}
+function renderMedTags(){
+  const el=document.getElementById('meds-tags');if(!el)return;
+  el.innerHTML=medItems.map(m=>'<span class="tag" style="background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;padding:4px 10px;border-radius:20px;font-size:12px;display:inline-flex;align-items:center;gap:4px;">'+escHtml(m)+'<button onclick="removeMed(\''+m.replace(/'/g,"\\'")+'\''+')" style="background:none;border:none;cursor:pointer;color:#64748b;font-size:12px;padding:0 0 0 4px;">×</button></span>').join('');
+}
+function medKeyDown(e){if(e.key==='Enter'){e.preventDefault();const inp=document.getElementById('p-meds-input');if(inp&&inp.value.trim())addMed(inp.value.trim());}}
+
+function searchConds(val){
+  const q=(val||'').toLowerCase();
+  const box=document.getElementById('cond-suggestions');if(!box)return;
+  if(q.length<2){box.style.display='none';box.innerHTML='';return;}
+  const m=COND_LIST.filter(x=>x.toLowerCase().includes(q)).slice(0,8);
+  if(!m.length){box.style.display='none';return;}
+  box.style.display='block';
+  box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="addCond(\''+x.replace(/'/g,"\\'")+'\''+')" style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f1f5f9;font-size:14px;color:#1e293b;">'+x+'</div>').join('');
+}
+function addCond(name){
+  if(!condItems.includes(name))condItems.push(name);
+  const inp=document.getElementById('p-cond-input');if(inp)inp.value='';
+  const box=document.getElementById('cond-suggestions');if(box){box.style.display='none';box.innerHTML='';}
+  renderCondTags();
+  const hidden=document.getElementById('p-conditions');if(hidden)hidden.value=condItems.join(', ');
+}
+function removeCond(name){condItems=condItems.filter(c=>c!==name);renderCondTags();const h=document.getElementById('p-conditions');if(h)h.value=condItems.join(', ');}
+function renderCondTags(){
+  const el=document.getElementById('cond-tags');if(!el)return;
+  el.innerHTML=condItems.map(c=>'<span class="tag" style="background:#f0fdf4;color:#166534;border:1px solid #86efac;padding:4px 10px;border-radius:20px;font-size:12px;display:inline-flex;align-items:center;gap:4px;">'+escHtml(c)+'<button onclick="removeCond(\''+c.replace(/'/g,"\\'")+'\''+')" style="background:none;border:none;cursor:pointer;color:#64748b;font-size:12px;padding:0 0 0 4px;">×</button></span>').join('');
+}
+function condKeyDown(e){if(e.key==='Enter'){e.preventDefault();const inp=document.getElementById('p-cond-input');if(inp&&inp.value.trim())addCond(inp.value.trim());}}
+
+// ─── Init override: ensure correct startup sequence ───────────────
+window.addEventListener('load',()=>{
+  loadProfile();
+  loadPhoto();
+  renderDependants();
+  renderBP();
+  renderVaccines();
+  renderLabResults();
+  renderRadiology();
+  renderPets();
+  // Chat greeting
+  setTimeout(()=>{
+    const wrap=document.getElementById('chat-messages');
+    if(wrap&&!wrap.children.length)addChatBubble('👋 Hello! I\'m your Health One-Stop AI assistant. Ask me about symptoms, medications, or finding care near you.<br><small style="color:#94a3b8;">⚠️ General guidance only — not a substitute for a doctor.</small>','ai');
+  },800);
+});
+</script>
+<script>
+// ─── Pet Module: CORRECTED (uses actual modal field IDs) ──────────
+function openAddPet(){openModal('modal-addpet');}
+
+function savePet(){
+  const name=document.getElementById('pet-name').value.trim();
+  if(!name){alert('Please enter a pet name.');return;}
+  const pet={
+    id:Date.now(),
+    name,
+    species:document.getElementById('pet-species').value,
+    breed:document.getElementById('pet-breed').value.trim(),
+    dob:document.getElementById('pet-dob').value.trim(),
+    microchip:document.getElementById('pet-chip').value.trim(),
+    conditions:document.getElementById('pet-conditions').value.trim(),
+    meds:document.getElementById('pet-meds').value.trim(),
+    vaccines:document.getElementById('pet-vaccs').value.trim(),
+    insurance:document.getElementById('pet-insurance').value,
+    vetName:document.getElementById('pet-vet-name').value.trim(),
+    vetClinic:document.getElementById('pet-vet-clinic').value.trim(),
+    vetPhone:document.getElementById('pet-vet-phone').value.trim(),
+    notes:document.getElementById('pet-notes').value.trim()
+  };
+  const list=JSON.parse(Store.get('hos_pets')||'[]');
+  list.push(pet);
+  Store.set('hos_pets',JSON.stringify(list));
+  closeModal('modal-addpet');
+  // Clear form
+  ['pet-name','pet-breed','pet-dob','pet-chip','pet-conditions','pet-meds','pet-vaccs','pet-vet-name','pet-vet-clinic','pet-vet-phone','pet-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('pet-species').value='Dog';
+  document.getElementById('pet-insurance').value='None';
+  renderPets();
+}
+
+function deletePet(id){
+  if(!confirm('Remove this pet?'))return;
+  const list=JSON.parse(Store.get('hos_pets')||'[]').filter(p=>p.id!==id);
+  Store.set('hos_pets',JSON.stringify(list));
+  renderPets();
+}
+
+function renderPets(){
+  const el=document.getElementById('pet-list');if(!el)return;
+  const list=JSON.parse(Store.get('hos_pets')||'[]');
+  if(!list.length){
+    el.innerHTML='<div style="text-align:center;color:#94a3b8;font-size:13px;padding:24px 0;">No pets added yet.<br>Tap <strong>+ Add Pet</strong> to get started.</div>';
+    return;
+  }
+  el.innerHTML=list.map(p=>{
+    const qrId='petqr'+p.id;
+    const speciesEmoji={Dog:'🐕',Cat:'🐈',Bird:'🦜',Rabbit:'🐇'}[p.species]||'🐾';
+    return '<div class="pet-card">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;">'+
+        '<div><div style="font-size:16px;font-weight:700;color:#1e293b;">'+speciesEmoji+' '+escHtml(p.name)+'</div>'+
+        '<div style="font-size:12px;color:#64748b;margin-top:2px;">'+(p.species||'')+(p.breed?' · '+escHtml(p.breed):'')+(p.dob?' · '+p.dob:'')+'</div></div>'+
+        '<button onclick="deletePet('+p.id+')" style="background:#fee2e2;border:none;border-radius:8px;padding:4px 10px;color:#dc2626;font-size:12px;cursor:pointer;">🗑️</button>'+
+      '</div>'+
+      (p.microchip?'<div style="font-size:12px;color:#374151;margin-top:6px;">📡 Microchip: <strong>'+escHtml(p.microchip)+'</strong></div>':'')+
+      (p.vetName?'<div style="font-size:12px;color:#374151;">🏥 Vet: <strong>'+escHtml(p.vetName)+'</strong>'+(p.vetClinic?' — '+escHtml(p.vetClinic):'')+(p.vetPhone?' <a href="tel:'+escHtml(p.vetPhone)+'">📞</a>':'')+'</div>':'')+
+      (p.conditions?'<div style="font-size:12px;color:#374151;">⚕️ '+escHtml(p.conditions)+'</div>':'')+
+      (p.meds?'<div style="font-size:12px;color:#374151;">💊 '+escHtml(p.meds)+'</div>':'')+
+      (p.vaccines?'<div style="font-size:12px;color:#374151;">💉 '+escHtml(p.vaccines)+'</div>':'')+
+      (p.insurance&&p.insurance!=='None'?'<div style="font-size:12px;color:#374151;">🛡️ Insurance: '+escHtml(p.insurance)+'</div>':'')+
+      (p.notes?'<div style="font-size:12px;color:#64748b;margin-top:4px;">📝 '+escHtml(p.notes)+'</div>':'')+
+      '<div id="'+qrId+'" style="margin-top:10px;"></div>'+
+    '</div>';
+  }).join('');
+  // Generate QR per pet
+  if(window.QRCode){
+    list.forEach(p=>{
+      const info='PET HEALTH CARD\nName: '+p.name+'\nSpecies: '+p.species+(p.breed?'\nBreed: '+p.breed:'')+(p.microchip?'\nMicrochip: '+p.microchip:'')+(p.vetName?'\nVet: '+p.vetName+(p.vetPhone?' '+p.vetPhone:''):'')+(p.conditions?'\nConditions: '+p.conditions:'')+(p.meds?'\nMeds: '+p.meds:'');
+      const qrEl=document.getElementById('petqr'+p.id);
+      if(qrEl){try{qrEl.innerHTML='';new QRCode(qrEl,{text:info,width:100,height:100});}catch(e){}}
+    });
+  }
+}
+
+function findNearestVet(){searchNearby('vet','Vet / Animal Clinic','🐾');}
+</script>
+
+</body>
+</html>
