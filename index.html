@@ -12,6 +12,22 @@
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231e3a8a'/%3E%3Cstop offset='100%25' stop-color='%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Cpath d='M50,74 C50,74 18,56 18,34 C18,24 26,17 36,17 C42,17 47,21 50,27 C53,21 58,17 64,17 C74,17 82,24 82,34 C82,56 50,74 50,74Z' fill='%23ef4444'/%3E%3Cpolyline points='5,50 22,50 28,40 34,60 40,28 46,70 50,50 65,50 70,43 75,50 95,50' fill='none' stroke='white' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231e3a8a'/%3E%3Cstop offset='100%25' stop-color='%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Cpath d='M50,74 C50,74 18,56 18,34 C18,24 26,17 36,17 C42,17 47,21 50,27 C53,21 58,17 64,17 C74,17 82,24 82,34 C82,56 50,74 50,74Z' fill='%23ef4444'/%3E%3Cpolyline points='5,50 22,50 28,40 34,60 40,28 46,70 50,50 65,50 70,43 75,50 95,50' fill='none' stroke='white' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- ═══ GOOGLE ANALYTICS 4 ════════════════════════════════════════════
+     HOW TO ACTIVATE (3 steps, free):
+     1. Go to https://analytics.google.com  (sign in with your Gmail)
+     2. Click "Start measuring" → create Account → create Property → Web
+     3. Copy your Measurement ID (looks like G-XXXXXXXXXX)
+        Measurement ID: G-RGJJSFLR53 (active)
+     Done — you will see live user counts within 24 hours.
+ ═════════════════════════════════════════════════════════════════════ -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RGJJSFLR53"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());
+  gtag('config','G-RGJJSFLR53');
+  function gaEvent(name,params){if(typeof gtag!=='undefined')gtag('event',name,params||{});}
+</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-height:100vh;padding-bottom:calc(72px + env(safe-area-inset-bottom,0px));}
@@ -284,7 +300,13 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     </div>
     <div class="card-title">👤 Personal Details</div>
     <div class="form-group"><label>Full Name *</label><div class="input-row"><input type="text" id="p-name" placeholder="e.g. Johan Geldenhuys"><button class="voice-btn" id="v-p-name" ontouchstart="" onclick="startVoice('p-name')" title="Speak name">🎤</button></div></div>
-    <div class="form-group"><label>SA ID Number *</label><input type="text" id="p-said" placeholder="13-digit number" maxlength="13" inputmode="numeric"></div>
+    <div class="form-group"><label>Country</label>
+      <select id="p-country" onchange="onCountryChange()">
+        <option>South Africa</option>
+        <option>Namibia</option>
+      </select>
+    </div>
+    <div class="form-group"><label id="lbl-said">ID Number *</label><input type="text" id="p-said" placeholder="13-digit number" maxlength="13" inputmode="numeric"></div>
     <div class="form-group"><label>Date of Birth</label><input type="date" id="p-dob"></div>
     <div class="form-group"><label>Cell Number</label><input type="tel" id="p-phone" placeholder="+27 82 000 0000"></div>
     <div class="form-group"><label>Email Address</label><input type="email" id="p-email" placeholder="you@email.com"></div>
@@ -293,38 +315,46 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   <div class="card">
     <div class="card-title">🩺 Medical Aid</div>
     <div class="form-group"><label>Medical Aid Scheme</label>
-      <select id="p-aid-scheme">
+      <select id="p-aid-scheme" onchange="populatePlans()">
         <option value="">— Select Scheme —</option>
-        <option>Discovery Health</option><option>Bonitas</option>
-        <option>Momentum Health</option><option>Medshield</option>
-        <option>GEMS</option><option>Bestmed</option>
-        <option>Fedhealth</option><option>Keyhealth</option>
-        <option>Profmed</option><option>Sizwe</option>
-        <option>None / Uninsured</option>
       </select>
     </div>
     <div class="form-group"><label>Membership Number</label><input type="text" id="p-aid-num" placeholder="e.g. 12345678"></div>
-    <div class="form-group"><label>Plan / Option</label><input type="text" id="p-aid-plan" placeholder="e.g. Comprehensive, Hospital Plan"></div>
+    <div class="form-group"><label>Plan / Option</label>
+      <select id="p-aid-plan-sel" style="display:none;" onchange="onPlanSelChange()"></select>
+      <input type="text" id="p-aid-plan" placeholder="e.g. Comprehensive, Hospital Plan">
+      <p id="plan-hint" style="display:none;font-size:11px;color:#94a3b8;margin-top:5px;line-height:1.5;">Option names change each year — if yours is not listed, choose "Other" and type it.</p>
+    </div>
     <p style="font-size:12px;color:#64748b;line-height:1.6;">📷 Tap the camera in AI Chat to photograph your medical aid card — auto-fills your profile.</p>
   </div>
   <div class="card">
     <div class="card-title">🚨 Medical Information</div>
-    <div class="form-group"><label>Allergies</label><div class="input-row"><input type="text" id="p-allergies" placeholder="e.g. Penicillin, Peanuts"><button class="voice-btn" id="v-p-allergies" ontouchstart="" onclick="startVoice('p-allergies')" title="Speak">🎤</button></div></div>
     <div class="form-group">
-      <label>Chronic Conditions <span style="font-size:11px;color:#94a3b8;font-weight:400;">(type to search)</span></label>
+      <label>Allergies <span style="font-size:11px;color:#94a3b8;font-weight:400;">(type to search, Enter to add)</span></label>
       <div style="position:relative;">
-        <div class="input-row"><input type="text" id="p-cond-input" placeholder="e.g. Hypertension, Diabetes…" autocomplete="off" oninput="searchConds(this.value)" onkeydown="condKeyDown(event)"><button class="voice-btn" id="v-p-cond-input" ontouchstart="" onclick="startVoice('p-cond-input',addCond)" title="Speak">🎤</button></div>
+        <div class="input-row"><input type="text" id="p-allergy-input" placeholder="e.g. Penicillin, Peanuts…" autocomplete="off" oninput="searchAllergies(this.value)" onkeydown="allergyKeyDown(event)"><button class="voice-btn" id="v-p-allergy-input" ontouchstart="" onclick="startVoice('p-allergy-input',addAllergy)" title="Speak">🎤</button></div>
+        <div id="allergy-suggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:white;border:1.5px solid #2563eb;border-top:none;border-radius:0 0 10px 10px;z-index:500;max-height:180px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
+      </div>
+      <div id="allergy-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
+      <input type="hidden" id="p-allergies">
+    </div>
+    <div class="form-group">
+      <label>Chronic Conditions <span style="font-size:11px;color:#94a3b8;font-weight:400;">(type a name or ICD-10 code)</span></label>
+      <div style="position:relative;">
+        <div class="input-row"><input type="text" id="p-cond-input" placeholder="e.g. Hypertension or I10…" autocomplete="off" oninput="searchConds(this.value)" onkeydown="condKeyDown(event)"><button class="voice-btn" id="v-p-cond-input" ontouchstart="" onclick="startVoice('p-cond-input',addCond)" title="Speak">🎤</button></div>
         <div id="cond-suggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:white;border:1.5px solid #2563eb;border-top:none;border-radius:0 0 10px 10px;z-index:500;max-height:180px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
       </div>
       <div id="cond-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
       <input type="hidden" id="p-conditions">
     </div>
     <div class="form-group">
-      <label>Current Medications <span style="font-size:11px;color:#94a3b8;font-weight:400;">(type to search)</span></label>
+      <label>Current Medications <span style="font-size:11px;color:#94a3b8;font-weight:400;">(type, scan barcode, or speak)</span></label>
       <div style="position:relative;">
         <div class="input-row"><input type="text" id="p-meds-input" placeholder="Type medication name…" autocomplete="off" oninput="searchMeds(this.value)" onkeydown="medKeyDown(event)"><button class="voice-btn" id="v-p-meds-input" ontouchstart="" onclick="startVoice('p-meds-input',addMed)" title="Speak">🎤</button></div>
         <div id="med-suggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:white;border:1.5px solid #2563eb;border-top:none;border-radius:0 0 10px 10px;z-index:500;max-height:180px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
       </div>
+      <button type="button" class="btn btn-outline" onclick="openBarcodeScanner()" style="margin-top:8px;font-size:13px;padding:10px;width:100%;">📷 Scan Medication Barcode</button>
+      <div id="barcode-status" style="display:none;margin-top:8px;font-size:12px;line-height:1.6;padding:10px 12px;border-radius:10px;"></div>
       <div id="meds-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
       <input type="hidden" id="p-meds">
     </div>
@@ -336,6 +366,28 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
       </select>
     </div>
   </div>
+  <!-- PMB CHECKER -->
+  <div class="card" id="pmb-card">
+    <div class="cov-guide-header" onclick="togglePmb(this)"><div class="card-title" style="margin-bottom:0;">🛡️ Is My Condition Covered? (PMB Check)</div><span style="font-size:11px;color:#2563eb;font-weight:600;">Show ▼</span></div>
+    <div id="pmb-body" style="display:none;margin-top:12px;">
+      <p style="font-size:13px;color:#64748b;line-height:1.6;margin-bottom:12px;">Prescribed Minimum Benefits (PMBs) are conditions every registered medical aid must cover <strong>by law</strong> — on every option, regardless of how basic the plan is. Check a condition below.</p>
+      <div style="position:relative;">
+        <div class="input-row"><input type="text" id="pmb-input" placeholder="e.g. Hypertension, depression, or I10…" autocomplete="off" oninput="searchPmb(this.value)"></div>
+        <div id="pmb-suggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:white;border:1.5px solid #2563eb;border-top:none;border-radius:0 0 10px 10px;z-index:500;max-height:200px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
+      </div>
+      <div id="pmb-result" style="margin-top:12px;"></div>
+      <div id="pmb-my-conditions" style="margin-top:12px;"></div>
+      <!-- Colour key -->
+      <div style="margin-top:14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.9;color:#475569;">
+        <strong style="color:#1e293b;">What the colours mean</strong><br>
+        <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#16a34a;vertical-align:middle;margin-right:6px;"></span><strong style="color:#166534;">Green</strong> — On the Chronic Disease List. Your scheme must cover this on any option.<br>
+        <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#eab308;vertical-align:middle;margin-right:6px;"></span><strong style="color:#854d0e;">Yellow</strong> — May be covered as a PMB in certain cases. Confirm with your scheme.<br>
+        <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#dc2626;vertical-align:middle;margin-right:6px;"></span><strong style="color:#991b1b;">Red</strong> — Not a guaranteed PMB. Cover depends on your specific option's benefits.
+      </div>
+      <p id="pmb-country-note" style="font-size:11px;color:#94a3b8;margin-top:10px;line-height:1.6;">PMB rules apply to South African schemes (Medical Schemes Act). General guide — always confirm with your scheme. Council for Medical Schemes: 0861 123 267.</p>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-title">👨‍👩‍👧 Emergency Contact</div>
     <div class="form-group"><label>Contact Name</label><input type="text" id="p-ec-name" placeholder="e.g. Mary Geldenhuys"></div>
@@ -367,6 +419,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     </div>
     <div id="location-result" style="display:none;">
       <div class="location-banner"><div class="loc-icon">📍</div><div><div class="loc-name" id="loc-display">Detecting…</div><div class="loc-sub" id="loc-coords"></div><div class="loc-status">✅ Links updated — tap any button below</div></div></div>
+      <div id="loc-map" style="display:none;margin-bottom:10px;"></div>
       <button class="btn btn-outline" id="update-btn" onclick="detectLocation()" style="font-size:13px;padding:10px;">🔄 Update Location</button>
     </div>
     <div id="location-error" style="display:none;margin-top:10px;"></div>
@@ -374,15 +427,61 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
 
   <div id="coverage-guide-wrap"></div>
 
+  <!-- GAP COVER INFO -->
+  <div class="card">
+    <div class="cov-guide-header" onclick="toggleGapCover(this)"><div class="card-title" style="margin-bottom:0;">🛡️ What is Gap Cover?</div><span style="font-size:11px;color:#2563eb;font-weight:600;">Show ▼</span></div>
+    <div id="gap-cover-body" style="display:none;margin-top:12px;font-size:13px;color:#475569;line-height:1.75;">
+      <p style="margin-bottom:10px;"><strong>Gap cover</strong> is extra insurance that pays the <strong>difference</strong> when a specialist, surgeon, or anaesthetist charges more than your medical aid pays. Example: your medical aid pays 100% of the scheme rate, but the surgeon charges 300% — gap cover pays the missing 200%.</p>
+      <div style="background:#fef3c7;border:1.5px solid #fbbf24;border-radius:10px;padding:11px 13px;margin-bottom:10px;color:#92400e;">⚠️ <strong>Most useful if:</strong> you have a hospital plan or are planning surgery. Specialist bills of 2–5× the scheme rate are common in private hospitals.</div>
+      <p style="margin-bottom:6px;"><strong>Good to know:</strong></p>
+      <p style="margin-bottom:10px;">• It is separate from your medical aid — you must already belong to a medical aid scheme.<br>• Typically costs around R200–R500 per family per month.<br>• Waiting periods may apply (often 3–12 months for existing conditions).<br>• It does NOT cover day-to-day costs like GP visits or medicine.</p>
+      <p style="margin-bottom:6px;"><strong>Well-known SA gap cover providers:</strong></p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
+        <a href="https://www.zestlife.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🟢</div><div class="svc-text"><div class="svc-name">Zestlife</div><div class="svc-sub">Gap cover specialist</div></div><div class="svc-arrow">›</div></a>
+        <a href="https://www.turnberry.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🔵</div><div class="svc-text"><div class="svc-name">Turnberry</div><div class="svc-sub">Gap cover &amp; health insurance</div></div><div class="svc-arrow">›</div></a>
+        <a href="https://www.sirago.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🟣</div><div class="svc-text"><div class="svc-name">Sirago</div><div class="svc-sub">Gap cover underwritten by GENRIC</div></div><div class="svc-arrow">›</div></a>
+        <a href="https://www.stratumbenefits.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🟠</div><div class="svc-text"><div class="svc-name">Stratum Benefits</div><div class="svc-sub">Gap cover options</div></div><div class="svc-arrow">›</div></a>
+      </div>
+      <p style="font-size:12px;color:#94a3b8;">Always compare quotes and read the policy wording before signing. Medical aid payment disputes: Council for Medical Schemes <a href="tel:0861123267" style="color:#2563eb;font-weight:600;">0861 123 267</a>.</p>
+    </div>
+  </div>
+
+  <!-- TRAVEL / INTERNATIONAL MEDICAL INSURANCE -->
+  <div class="card">
+    <div class="cov-guide-header" onclick="toggleAccordionCard(this,'travel-ins-body')"><div class="card-title" style="margin-bottom:0;">✈️ Travel &amp; Medical Insurance Abroad</div><span style="font-size:11px;color:#2563eb;font-weight:600;">Show ▼</span></div>
+    <div id="travel-ins-body" style="display:none;margin-top:12px;font-size:13px;color:#475569;line-height:1.75;">
+      <p style="margin-bottom:10px;">If you get <strong>ill or injured outside South Africa</strong>, your medical aid's normal benefits do NOT apply overseas — you need travel cover. A hospital stay abroad can cost millions of rand.</p>
+      <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:11px 13px;margin-bottom:10px;color:#1e40af;">💡 <strong>First check what you already have:</strong><br>• Many SA schemes (Discovery, Bonitas, Momentum etc.) include <strong>emergency international travel cover</strong> for trips up to ±90 days — but you must often <strong>register/activate it BEFORE you leave</strong>. Phone your scheme.<br>• If you paid for your ticket with a <strong>credit card</strong>, the card often includes basic travel insurance automatically — check with your bank.</div>
+      <p style="margin-bottom:8px;"><strong>When to buy extra travel insurance:</strong></p>
+      <p style="margin-bottom:10px;">• Trips longer than your scheme's cover period<br>• Adventure activities (diving, skiing, hiking)<br>• Travel to countries with expensive healthcare (USA!)<br>• Schengen-visa countries <em>require</em> proof of medical travel cover (min €30,000)<br>• If you have chronic conditions — declare them, otherwise claims may be rejected</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;">
+        <a href="https://www.tic.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🌍</div><div class="svc-text"><div class="svc-name">TIC (Travel Insurance Consultants)</div><div class="svc-sub">SA's largest travel insurance specialist</div></div><div class="svc-arrow">›</div></a>
+        <a href="https://www.hollard.co.za/products/travel-insurance" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">☂️</div><div class="svc-text"><div class="svc-name">Hollard Travel</div><div class="svc-sub">Single &amp; multi-trip policies</div></div><div class="svc-arrow">›</div></a>
+        <a href="https://www.santam.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🛡️</div><div class="svc-text"><div class="svc-name">Santam Travel</div><div class="svc-sub">Travel insurance &amp; assistance</div></div><div class="svc-arrow">›</div></a>
+        <a href="https://www.bryte.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">✈️</div><div class="svc-text"><div class="svc-name">Bryte Travel</div><div class="svc-sub">Leisure &amp; business travel cover</div></div><div class="svc-arrow">›</div></a>
+      </div>
+      <p style="margin-bottom:8px;"><strong>🧳 Doctor's travel checklist:</strong></p>
+      <p style="margin-bottom:10px;">• Carry your chronic medication in original packaging + a copy of the script<br>• Ask your GP for a short letter listing conditions &amp; medication (customs + foreign doctors)<br>• Save your insurer's 24-hr emergency number in your phone before you fly<br>• Load your allergies, conditions and emergency contact in this app — the <strong>My Card QR code</strong> works anywhere in the world</p>
+      <p style="font-size:12px;color:#94a3b8;">General guide. Compare policy wording — especially chronic condition exclusions and evacuation/repatriation cover.</p>
+    </div>
+  </div>
+
+  <div class="card" style="border-left:4px solid #16a34a;">
+    <div class="card-title">🏛️ Government / Public Clinics</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6;">Free or low-cost care for patients <strong>without medical aid</strong>. Find your nearest public clinic, then phone to confirm hours before going.</p>
+    <button ontouchstart="" class="service-btn" onclick="searchNearby('govclinic','Government / Community Clinic','🏛️')"><div class="svc-icon">🏛️</div><div class="svc-text"><div class="svc-name">Find Nearest Public Clinic</div><div class="svc-sub">Community clinics &amp; health centres near you</div></div><div class="svc-arrow">›</div></button>
+    <div id="gov-clinic-links" style="margin-top:10px;"></div>
+  </div>
+
   <div class="card">
     <div class="card-title">👨‍⚕️ Doctors &amp; Hospitals</div>
     <div style="display:flex;flex-direction:column;gap:10px;">
       <button ontouchstart="" class="service-btn" onclick="searchNearby('gp','General Practitioner (GP)','👨‍⚕️')"><div class="svc-icon">👨‍⚕️</div><div class="svc-text"><div class="svc-name">General Practitioner (GP)</div><div class="svc-sub">Family doctors near you</div></div><div class="svc-arrow">›</div></button>
       <button ontouchstart="" class="service-btn" onclick="searchNearby('hospital','Hospital / Clinic','🏥')"><div class="svc-icon">🏥</div><div class="svc-text"><div class="svc-name">Hospital / Clinic</div><div class="svc-sub">Hospitals and day clinics near you</div></div><div class="svc-arrow">›</div></button>
-      <button ontouchstart="" class="service-btn" onclick="searchNearby('specialist','Specialist Doctor','🩺')"><div class="svc-icon">🩺</div><div class="svc-text"><div class="svc-name">Specialist Doctor</div><div class="svc-sub">Cardiologist, surgeon &amp; more</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="openSpecialistPicker()"><div class="svc-icon">🩺</div><div class="svc-text"><div class="svc-name">Specialist Doctor</div><div class="svc-sub">Choose a speciality — ENT, surgeon, paediatrician…</div></div><div class="svc-arrow">›</div></button>
       <button ontouchstart="" class="service-btn" onclick="searchNearby('pharmacy','Pharmacy','💊')"><div class="svc-icon">💊</div><div class="svc-text"><div class="svc-name">Pharmacy</div><div class="svc-sub">Clicks, Dis-Chem, independent</div></div><div class="svc-arrow">›</div></button>
       <button ontouchstart="" class="service-btn" onclick="searchNearby('occ','Occupational Health Doctor','🏭')"><div class="svc-icon">🏭</div><div class="svc-text"><div class="svc-name">Occupational Health Doctor</div><div class="svc-sub">Workplace health &amp; fitness certificates</div></div><div class="svc-arrow">›</div></button>
-      <a href="https://www.hpcsa.co.za/PBRegulation/Verification" target="_blank" class="service-btn"><div class="svc-icon">🔍</div><div class="svc-text"><div class="svc-name">HPCSA Doctor Verification</div><div class="svc-sub">Check a doctor's registration</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://hpcsaonline.custhelp.com/app/i_reg_form" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🔍</div><div class="svc-text"><div class="svc-name">HPCSA Doctor Verification (iRegister)</div><div class="svc-sub">Check a doctor's registration — search by surname or HPCSA number</div></div><div class="svc-arrow">›</div></a>
     </div>
   </div>
 
@@ -396,23 +495,40 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
       <button ontouchstart="" class="service-btn" onclick="searchNearby('optom','Optometrist','👁️')"><div class="svc-icon">👁️</div><div class="svc-text"><div class="svc-name">Optometrist</div><div class="svc-sub">Eye tests &amp; glasses</div></div><div class="svc-arrow">›</div></button>
       <button ontouchstart="" class="service-btn" onclick="searchNearby('dietician','Dietician / Nutritionist','🥗')"><div class="svc-icon">🥗</div><div class="svc-text"><div class="svc-name">Dietician / Nutritionist</div><div class="svc-sub">Dietary advice &amp; nutrition</div></div><div class="svc-arrow">›</div></button>
       <button ontouchstart="" class="service-btn" onclick="searchNearby('psych','Psychologist / Counsellor','🧠')"><div class="svc-icon">🧠</div><div class="svc-text"><div class="svc-name">Psychologist / Counsellor</div><div class="svc-sub">Mental health support</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('chiro','Chiropractor','🤲')"><div class="svc-icon">🤲</div><div class="svc-text"><div class="svc-name">Chiropractor</div><div class="svc-sub">Spine &amp; joint adjustments</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('podiatrist','Podiatrist','🦶')"><div class="svc-icon">🦶</div><div class="svc-text"><div class="svc-name">Podiatrist</div><div class="svc-sub">Foot care, nails &amp; diabetic feet</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('massage','Massage Therapist','💆')"><div class="svc-icon">💆</div><div class="svc-text"><div class="svc-name">Massage Therapist</div><div class="svc-sub">Therapeutic &amp; sports massage</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('wellness','Wellness / Aesthetic Clinic','✨')"><div class="svc-icon">✨</div><div class="svc-text"><div class="svc-name">Wellness &amp; Aesthetic Clinic</div><div class="svc-sub">Skin treatments, botox, IV therapy &amp; spa</div></div><div class="svc-arrow">›</div></button>
+      <a href="https://ahpcsa.co.za/practitioners/" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🔍</div><div class="svc-text"><div class="svc-name">AHPCSA Verification</div><div class="svc-sub">Check a chiropractor / homeopath registration</div></div><div class="svc-arrow">›</div></a>
     </div>
   </div>
 
   <div class="card">
     <div class="card-title">🧪 Get My Test Results</div>
     <div style="display:flex;flex-direction:column;gap:10px;">
-      <a href="https://www.pathcare.co.za" target="_blank" class="service-btn"><div class="svc-icon">🔬</div><div class="svc-text"><div class="svc-name">PathCare</div><div class="svc-sub">Blood tests &amp; lab results online</div></div><div class="svc-arrow">›</div></a>
-      <a href="https://www.ampath.co.za" target="_blank" class="service-btn"><div class="svc-icon">🧬</div><div class="svc-text"><div class="svc-name">Lancet / Ampath</div><div class="svc-sub">View your lab results online</div></div><div class="svc-arrow">›</div></a>
-      <a href="https://www.scpradiology.co.za" target="_blank" class="service-btn"><div class="svc-icon">📡</div><div class="svc-text"><div class="svc-name">SCP Radiology</div><div class="svc-sub">X-ray, MRI &amp; scan reports</div></div><div class="svc-arrow">›</div></a>
-      <a href="https://www.mediclinic.co.za" target="_blank" class="service-btn"><div class="svc-icon">🏥</div><div class="svc-text"><div class="svc-name">Mediclinic</div><div class="svc-sub">Hospital patient results portal</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://www.pathcare.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🔬</div><div class="svc-text"><div class="svc-name">PathCare</div><div class="svc-sub">Blood tests &amp; lab results online</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://www.ampath.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🧬</div><div class="svc-text"><div class="svc-name">Lancet / Ampath</div><div class="svc-sub">View your lab results online</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://www.scpradiology.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">📡</div><div class="svc-text"><div class="svc-name">SCP Radiology</div><div class="svc-sub">X-ray, MRI &amp; scan reports</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://www.mediclinic.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🏥</div><div class="svc-text"><div class="svc-name">Mediclinic</div><div class="svc-sub">Hospital patient results portal</div></div><div class="svc-arrow">›</div></a>
     </div>
   </div>
 
-  <!-- SPONSOR PLACEHOLDER -->
+  <!-- PHARMACY ADVERTISING BANNER -->
   <div class="sponsor-banner">
-    <div class="sponsor-banner-title">📢 Featured Healthcare Partners</div>
-    <div class="sponsor-banner-sub">This space is reserved for pharmacies, medical aids, and healthcare providers who want to reach patients on Health One Stop.<br><br>Contact Dr JA Geldenhuys to advertise here.</div>
+    <div class="sponsor-banner-title">📢 List Your Pharmacy on Health One Stop</div>
+    <div class="sponsor-banner-sub" style="margin-bottom:14px;">Are you a pharmacy or healthcare provider? Get listed on this app and reach patients in your area.<br><span style="color:#16a34a;font-weight:600;">🎁 Free listing</span> while we grow to 10 000 users.</div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <a href="mailto:dokjohan1@gmail.com?subject=Advertise%20on%20Health%20One%20Stop&body=Hi%20Dr%20Geldenhuys%2C%0A%0AI%20would%20like%20to%20list%20my%20pharmacy%2Fpractice%20on%20Health%20One%20Stop.%0A%0AName%3A%20%0AAddress%3A%20%0APhone%3A%20%0A%0AKind%20regards%2C"
+        style="display:inline-flex;align-items:center;gap:7px;background:#2563eb;color:white;text-decoration:none;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:600;font-family:'Poppins',sans-serif;">
+        ✉️ Email Us
+      </a>
+      <!-- WHATSAPP: Replace +27000000000 below with your actual WhatsApp number e.g. +27821234567 -->
+      <a href="https://wa.me/27726876048?text=Hi%20Dr%20Geldenhuys%2C%20I%20would%20like%20to%20list%20my%20pharmacy%20on%20Health%20One%20Stop."
+        style="display:inline-flex;align-items:center;gap:7px;background:#16a34a;color:white;text-decoration:none;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:600;font-family:'Poppins',sans-serif;">
+        💬 WhatsApp
+      </a>
+    </div>
+    <div style="margin-top:10px;font-size:10px;color:#94a3b8;">© 2026 Health One Stop · Advertising enquiries: dokjohan1@gmail.com</div>
   </div>
 
   <div class="card" style="border-left:4px solid #dc2626;">
@@ -465,7 +581,17 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <div class="card-title">👨‍👩‍👧 Family Emergency Info</div>
     <div id="family-emergency-content"></div>
   </div>
-  <div class="card">
+  <div class="card" id="em-numbers-na" style="display:none;">
+    <div class="card-title">📞 Namibia Emergency Numbers</div>
+    <div class="emergency-item"><div class="em-icon">🚑</div><div class="em-info"><div class="em-name">National Emergency</div><div class="em-num">112</div></div><a href="tel:112" class="em-call-btn" onclick="handleEmergencyCall('112',event)">📞 Call</a></div>
+    <div class="emergency-item"><div class="em-icon">🚔</div><div class="em-info"><div class="em-name">Police (NAMPOL)</div><div class="em-num">10111</div></div><a href="tel:10111" class="em-call-btn" onclick="handleEmergencyCall('10111',event)">📞 Call</a></div>
+    <div class="emergency-item"><div class="em-icon">🚗</div><div class="em-info"><div class="em-name">MVA Fund Accident Response</div><div class="em-num">9682</div></div><a href="tel:9682" class="em-call-btn" onclick="handleEmergencyCall('9682',event)">📞 Call</a></div>
+    <div class="emergency-item"><div class="em-icon">☎️</div><div class="em-info"><div class="em-name">E-Med Rescue 24</div><div class="em-num">924</div></div><a href="tel:924" class="em-call-btn" onclick="handleEmergencyCall('924',event)">📞 Call</a></div>
+    <div class="emergency-item"><div class="em-icon">🏥</div><div class="em-info"><div class="em-name">City of Windhoek Emergency</div><div class="em-num">061 211 111</div></div><a href="tel:061211111" class="em-call-btn" onclick="handleEmergencyCall('061211111',event)">📞 Call</a></div>
+    <div class="emergency-item"><div class="em-icon">💙</div><div class="em-info"><div class="em-name">Lifeline / Childline Namibia</div><div class="em-num">116</div></div><a href="tel:116" class="em-call-btn" onclick="handleEmergencyCall('116',event)">📞 Call</a></div>
+    <p style="font-size:11px;color:#94a3b8;margin-top:8px;">Numbers may differ by town — confirm your local ambulance service.</p>
+  </div>
+  <div class="card" id="em-numbers-sa">
     <div class="card-title">📞 SA Emergency Numbers</div>
     <div class="emergency-item"><div class="em-icon">🚑</div><div class="em-info"><div class="em-name">Ambulance / Emergency</div><div class="em-num">10177</div></div><a href="tel:10177" class="em-call-btn" onclick="handleEmergencyCall('10177',event)">📞 Call</a></div>
     <div class="emergency-item"><div class="em-icon">🚔</div><div class="em-info"><div class="em-name">Police</div><div class="em-num">10111</div></div><a href="tel:10111" class="em-call-btn" onclick="handleEmergencyCall('10111',event)">📞 Call</a></div>
@@ -565,6 +691,16 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:10px;">📡 Radiology Reports</div>
     <button class="btn btn-outline" style="margin-bottom:12px;" onclick="openModal('modal-radio')">+ Add Radiology Report</button>
     <div id="radio-list"></div>
+  </div>
+
+  <!-- Backup & Restore -->
+  <div class="card">
+    <div class="card-title">💾 Backup &amp; Restore</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6;">Your data is stored on this phone only. Before installing a new version of the app, tap <strong>Backup</strong> to save everything to a file — then open the new version and tap <strong>Restore</strong>.</p>
+    <button class="btn btn-primary" style="margin-bottom:10px;" onclick="exportBackup()">⬇️ Backup My Data</button>
+    <input type="file" id="restore-input" accept=".json,application/json" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px;" onchange="importBackup(this)">
+    <button class="btn btn-outline" onclick="document.getElementById('restore-input').click()">⬆️ Restore From Backup</button>
+    <div id="backup-alert" style="margin-top:10px;"></div>
   </div>
 </div>
 
@@ -760,6 +896,20 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   </div>
 </div>
 
+<!-- BARCODE SCAN MODAL -->
+<div class="modal-overlay" id="modal-barcode" onclick="if(event.target===this)closeBarcodeScanner()">
+  <div class="modal-sheet" style="max-height:92vh;">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+      <div class="modal-title">📷 Scan Medication Barcode</div>
+      <button ontouchstart="" onclick="closeBarcodeScanner()" style="background:none;border:none;font-size:26px;color:#94a3b8;cursor:pointer;padding:4px 0 4px 12px;touch-action:manipulation;">✕</button>
+    </div>
+    <p style="font-size:13px;color:#64748b;line-height:1.6;margin-bottom:12px;">Hold the barcode on the medicine box steady inside the frame. Good light helps.</p>
+    <div id="barcode-reader" style="width:100%;border-radius:12px;overflow:hidden;background:#000;min-height:240px;"></div>
+    <div id="barcode-result" style="margin-top:14px;"></div>
+  </div>
+</div>
+
 <!-- SCAN MODAL -->
 <div class="modal-overlay" id="modal-scan" onclick="if(event.target===this)closeModal('modal-scan')">
   <div class="modal-sheet">
@@ -876,6 +1026,7 @@ window.switchTab=function(name,btn){
     if(!scr)return;
     scr.classList.add('active');
     if(btn)btn.classList.add('active');
+    gaEvent('tab_view',{tab_name:name});
     window.scrollTo(0,0);
     if(name==='card'){try{renderHealthCard();}catch(e){}}
     if(name==='emergency'){try{renderEmergency();}catch(e){}}
@@ -899,10 +1050,91 @@ function backToMore(){
   switchTab('more',document.querySelector('[data-tab="more"]'));
 }
 
+// ─── Country (SA / Namibia) ────────────────────────────────────────
+const COUNTRY_SCHEMES={
+  'South Africa':['Discovery Health','Bonitas','Momentum Health','Medihelp','Medshield','GEMS','Bestmed','Fedhealth','Keyhealth','Profmed','Sizwe Hosmed','Umvuzo Health','Polmed','Bankmed','LA Health','SAMWUMED','Thebemed','Suremed Health','Genesis Medical','None / Uninsured'],
+  'Namibia':['Namibia Health Plan (NHP)','Namibia Medical Care (NMC)','Nammed','Renaissance Health (RMA)','Heritage Health','GemHealth','Napotel','PSEMAS (Government Employees)','None / Uninsured']
+};
+function getCountry(){const el=document.getElementById('p-country');return el&&el.value?el.value:'South Africa';}
+function populateSchemes(keep){
+  const sel=document.getElementById('p-aid-scheme');if(!sel)return;
+  const country=document.getElementById('p-country')?document.getElementById('p-country').value:'South Africa';
+  const list=COUNTRY_SCHEMES[country]||COUNTRY_SCHEMES['South Africa'];
+  const current=keep||sel.value;
+  sel.innerHTML='<option value="">— Select Scheme —</option>'+list.map(s=>'<option>'+s+'</option>').join('');
+  if(current&&list.includes(current))sel.value=current;
+}
+// Plan / option names per scheme (well-known options — names shift slightly each
+// benefit year, so "Other / not listed" always allows free typing)
+const PLAN_OPTIONS={
+'Discovery Health':['Executive Plan','Classic Comprehensive','Classic Priority','Classic Saver','Essential Saver','Coastal Saver','Classic Smart','Essential Smart','Active Smart','Classic Core','Essential Core','Coastal Core','KeyCare Plus','KeyCare Start'],
+'Bonitas':['BonComprehensive','BonClassic','BonComplete','BonSave','BonFit Select','Primary','Primary Select','Standard','Standard Select','Hospital Standard','BonEssential','BonEssential Select','BonStart','BonStart Plus'],
+'Momentum Health':['Ingwe','Evolve','Custom','Incentive','Extender','Summit'],
+'GEMS':['Tanzanite One','Beryl','Ruby','Emerald Value','Emerald','Onyx'],
+'Bestmed':['Beat1','Beat2','Beat3','Beat4','Pace1','Pace2','Pace3','Pace4','Pulse1','Pulse2','Rhythm1','Rhythm2'],
+'Fedhealth':['myFED','flexiFED 1','flexiFED 2','flexiFED 3','flexiFED 4','maxiFED','maxima Plus','maxima Exec'],
+'Medihelp':['Necesse','MedVital','MedAdd','MedMove','MedPrime','MedElite'],
+'Medshield':['MediBonus','MediSaver','MediPlus','MediValue','MediCore','MediSwift','MediCurve','MediPhila'],
+'Keyhealth':['Essence','Origin','Equilibrium','Silver','Gold','Platinum'],
+'Profmed':['ProPinnacle','ProSecure','ProActive','ProSelect','ProEssential'],
+'Polmed':['Marine','Aquarium'],
+'Bankmed':['Essential','Basic','Core Saver','Traditional','Comprehensive','Plus']
+};
+function populatePlans(keep){
+  const schemeSel=document.getElementById('p-aid-scheme');
+  const planSel=document.getElementById('p-aid-plan-sel');
+  const planTxt=document.getElementById('p-aid-plan');
+  const hint=document.getElementById('plan-hint');
+  if(!planSel||!planTxt)return;
+  const list=PLAN_OPTIONS[schemeSel?schemeSel.value:''];
+  const current=keep!==undefined?keep:(planSel.style.display!=='none'&&planSel.value&&planSel.value!=='__other'?planSel.value:planTxt.value.trim());
+  if(!list){ // no preset options — plain text box
+    planSel.style.display='none';planTxt.style.display='block';if(hint)hint.style.display='none';
+    if(keep!==undefined)planTxt.value=keep||'';
+    return;
+  }
+  planSel.innerHTML='<option value="">— Select Option —</option>'+list.map(o=>'<option>'+o+'</option>').join('')+'<option value="__other">Other / not listed…</option>';
+  planSel.style.display='block';if(hint)hint.style.display='block';
+  if(current&&list.includes(current)){planSel.value=current;planTxt.style.display='none';planTxt.value=current;}
+  else if(current){planSel.value='__other';planTxt.style.display='block';planTxt.value=current;}
+  else{planSel.value='';planTxt.style.display='none';planTxt.value='';}
+}
+function onPlanSelChange(){
+  const planSel=document.getElementById('p-aid-plan-sel');
+  const planTxt=document.getElementById('p-aid-plan');
+  if(planSel.value==='__other'){planTxt.style.display='block';planTxt.value='';planTxt.focus();}
+  else{planTxt.style.display='none';planTxt.value=planSel.value;}
+}
+function getAidPlanValue(){
+  const planSel=document.getElementById('p-aid-plan-sel');
+  const planTxt=document.getElementById('p-aid-plan');
+  if(planSel&&planSel.style.display!=='none'&&planSel.value&&planSel.value!=='__other')return planSel.value;
+  return planTxt?planTxt.value.trim():'';
+}
+function onCountryChange(){
+  populateSchemes();
+  populatePlans();
+  const country=document.getElementById('p-country').value;
+  const lbl=document.getElementById('lbl-said');
+  if(lbl)lbl.textContent=country==='Namibia'?'Namibian ID Number *':'SA ID Number *';
+  const said=document.getElementById('p-said');
+  if(said){said.maxLength=country==='Namibia'?11:13;said.placeholder=country==='Namibia'?'11-digit number':'13-digit number';}
+  const phone=document.getElementById('p-phone');
+  if(phone&&!phone.value)phone.placeholder=country==='Namibia'?'+264 81 000 0000':'+27 82 000 0000';
+  toggleEmergencyCountry(country);
+  if(typeof renderPmbChecker==='function')renderPmbChecker();
+}
+function toggleEmergencyCountry(country){
+  const sa=document.getElementById('em-numbers-sa'),na=document.getElementById('em-numbers-na');
+  if(sa)sa.style.display=country==='Namibia'?'none':'block';
+  if(na)na.style.display=country==='Namibia'?'block':'none';
+}
+
 // ─── Profile Save / Load ───────────────────────────────────────────
 function saveProfile(){
   const profile={
     name:document.getElementById('p-name').value.trim(),
+    country:document.getElementById('p-country').value,
     said:document.getElementById('p-said').value.trim(),
     dob:document.getElementById('p-dob').value,
     phone:document.getElementById('p-phone').value.trim(),
@@ -910,7 +1142,7 @@ function saveProfile(){
     address:document.getElementById('p-address').value.trim(),
     aidScheme:document.getElementById('p-aid-scheme').value,
     aidNum:document.getElementById('p-aid-num').value.trim(),
-    aidPlan:document.getElementById('p-aid-plan').value.trim(),
+    aidPlan:getAidPlanValue(),
     allergies:document.getElementById('p-allergies').value.trim(),
     conditions:document.getElementById('p-conditions').value.trim(),
     meds:document.getElementById('p-meds').value.trim(),
@@ -923,12 +1155,16 @@ function saveProfile(){
   Store.set('hos_profile',JSON.stringify(profile));
   showAlert('profile-alert','✅ Profile saved successfully!');
   refreshHeader();
+  if(typeof renderPmbChecker==='function')renderPmbChecker();
 }
 function loadProfile(){
   const raw=Store.get('hos_profile');
   if(!raw)return;
   const p=JSON.parse(raw);
   document.getElementById('p-name').value=p.name||'';
+  if(document.getElementById('p-country'))document.getElementById('p-country').value=p.country||'South Africa';
+  populateSchemes(p.aidScheme||'');
+  onCountryChange();
   document.getElementById('p-said').value=p.said||'';
   document.getElementById('p-dob').value=p.dob||'';
   document.getElementById('p-phone').value=p.phone||'';
@@ -936,8 +1172,10 @@ function loadProfile(){
   document.getElementById('p-address').value=p.address||'';
   document.getElementById('p-aid-scheme').value=p.aidScheme||'';
   document.getElementById('p-aid-num').value=p.aidNum||'';
-  document.getElementById('p-aid-plan').value=p.aidPlan||'';
+  populatePlans(p.aidPlan||'');
   document.getElementById('p-allergies').value=p.allergies||'';
+  allergyItems=p.allergies?p.allergies.split(',').map(a=>a.trim()).filter(Boolean):[];
+  renderAllergyTags();
   condItems=p.conditions?p.conditions.split(',').map(c=>c.trim()).filter(Boolean):[];
   renderCondTags();
   document.getElementById('p-meds').value=p.meds||'';
@@ -976,11 +1214,11 @@ function renderHealthCard(){
   if(p.aidScheme&&p.aidScheme!=='None / Uninsured'){
     const data=getMedAidCoverage(p.aidScheme,p.aidPlan);
     const rows=data.map(r=>'<div class="coverage-row"><div class="cov-icon">'+r.icon+'</div><div class="cov-label"><strong>'+r.service+'</strong>'+r.detail+'</div><div class="cov-badge '+r.level+'">'+r.label+'</div></div>').join('');
-    coverageHtml='<div class="card"><div class="card-title">💚 Medical Aid Coverage</div><div class="aid-badge">✅ '+p.aidScheme+(p.aidPlan?' — '+p.aidPlan:'')+'</div><div class="info-grid"><div class="info-box"><div class="lbl">Membership No.</div><div class="val">'+(p.aidNum||'—')+'</div></div><div class="info-box"><div class="lbl">Plan / Option</div><div class="val">'+(p.aidPlan||'—')+'</div></div></div><p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.5;">General guide. Log in to your scheme for exact benefits.</p>'+rows+'<a href="'+getSchemeWebsite(p.aidScheme)+'" target="_blank" class="btn btn-outline" style="margin-top:14px;font-size:13px;padding:11px;display:block;text-align:center;text-decoration:none;">🔍 View My '+p.aidScheme+' Benefits</a></div>';
+    coverageHtml='<div class="card"><div class="card-title">💚 Medical Aid Coverage</div><div class="aid-badge">✅ '+p.aidScheme+(p.aidPlan?' — '+p.aidPlan:'')+'</div><div class="info-grid"><div class="info-box"><div class="lbl">Membership No.</div><div class="val">'+(p.aidNum||'—')+'</div></div><div class="info-box"><div class="lbl">Plan / Option</div><div class="val">'+(p.aidPlan||'—')+'</div></div></div><p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.5;">General guide. Log in to your scheme for exact benefits.</p>'+rows+'<a href="'+getSchemeWebsite(p.aidScheme)+'" target="_blank" rel="noopener" class="btn btn-outline" style="margin-top:14px;font-size:13px;padding:11px;display:block;text-align:center;text-decoration:none;">🔍 View My '+p.aidScheme+' Benefits</a></div>';
   }
   const photoB64=Store.get('hos_photo')||'';
   const photoOnCard=photoB64?'<div style="position:absolute;top:14px;right:14px;width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,0.7);overflow:hidden;flex-shrink:0;"><img src="'+photoB64+'" style="width:100%;height:100%;object-fit:cover;"></div>':'<div class="card-logo">Health<br>One Stop</div>';
-  container.innerHTML='<div class="health-card">'+photoOnCard+'<div class="card-chip">💳</div><div class="card-name">'+(p.name||'—')+'</div><div class="card-id">SA ID: '+(p.said||'—')+'</div><div class="card-row"><div class="card-field"><label>DATE OF BIRTH</label><div class="val">'+dobFmt+'</div></div><div class="card-field"><label>BLOOD TYPE</label><div class="val">'+(p.blood||'?')+'</div></div>'+(p.aidScheme?'<div class="card-field"><label>MEDICAL AID</label><div class="val">'+p.aidScheme+'</div></div>':'')+'</div></div>'+trackerHtml+coverageHtml+'<div class="card"><div class="card-title">🚨 Medical Alerts</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:0 0 8px;">Allergies</div><div>'+allergyHtml+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Chronic Conditions</div><div>'+condHtml+'</div>'+(p.meds?'<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Medications</div><p style="font-size:13px;color:#444;">'+p.meds+'</p>':'')+'</div><div class="card"><div class="card-title">📱 My QR Code</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Healthcare providers can scan this for your key medical info.</p><div class="qr-container"><div id="qrcode"></div><div class="qr-label">Scan to view patient info</div></div></div>';
+  container.innerHTML='<div class="health-card">'+photoOnCard+'<div class="card-chip">💳</div><div class="card-name">'+(p.name||'—')+'</div><div class="card-id">'+(p.country==='Namibia'?'ID':'SA ID')+': '+(p.said||'—')+'</div><div class="card-row"><div class="card-field"><label>DATE OF BIRTH</label><div class="val">'+dobFmt+'</div></div><div class="card-field"><label>BLOOD TYPE</label><div class="val">'+(p.blood||'?')+'</div></div>'+(p.aidScheme?'<div class="card-field"><label>MEDICAL AID</label><div class="val">'+p.aidScheme+'</div></div>':'')+'</div></div>'+trackerHtml+coverageHtml+'<div class="card"><div class="card-title">🚨 Medical Alerts</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:0 0 8px;">Allergies</div><div>'+allergyHtml+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Chronic Conditions</div><div>'+condHtml+'</div>'+(p.meds?'<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Medications</div><p style="font-size:13px;color:#444;">'+p.meds+'</p>':'')+'</div><div class="card"><div class="card-title">📱 My QR Code</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Healthcare providers can scan this for your key medical info.</p><div class="qr-container"><div id="qrcode"></div><div class="qr-label">Scan to view patient info</div></div></div>';
   const qrData=JSON.stringify({name:p.name,said:p.said,dob:p.dob,blood:p.blood,allergies:p.allergies,conditions:p.conditions,aid:p.aidScheme,aidNum:p.aidNum,ec:p.ecName+' '+p.ecNum});
   setTimeout(()=>{const el=document.getElementById('qrcode');if(el&&typeof QRCode!=='undefined'){el.innerHTML='';new QRCode(el,{text:qrData,width:200,height:200,colorDark:'#1e3a8a',colorLight:'#ffffff'});}},200);
 }
@@ -1003,7 +1241,8 @@ function getMedAidCoverage(scheme,plan){
 }
 function getSchemeWebsite(scheme){
   const s={'Discovery Health':'https://www.discovery.co.za/medical-aid/benefits','Bonitas':'https://www.bonitas.co.za/members/benefits','Momentum Health':'https://www.momentumhealth.co.za/benefits','Medshield':'https://www.medshield.co.za/benefits','GEMS':'https://www.gems.gov.za/members/benefits','Bestmed':'https://www.bestmed.co.za/members/benefits','Fedhealth':'https://www.fedhealth.co.za/members/benefits','Keyhealth':'https://www.keyhealth.co.za/members/benefits','Profmed':'https://www.profmed.co.za/members/benefits','Sizwe':'https://www.sizwe.co.za/members'};
-  return s[scheme]||'https://www.medicalaidcomparison.co.za';
+  const extra={'Umvuzo Health':'https://www.umvuzohealth.co.za','Medihelp':'https://www.medihelp.co.za','Polmed':'https://www.polmed.co.za','Bankmed':'https://www.bankmed.co.za','LA Health':'https://www.lahealth.co.za','Sizwe Hosmed':'https://sizwehosmed.co.za','SAMWUMED':'https://www.samwumed.org','Thebemed':'https://www.thebemed.co.za','Suremed Health':'https://www.suremedhealth.co.za','Genesis Medical':'https://www.genesismedical.co.za','Namibia Health Plan (NHP)':'https://nhp.com.na','Namibia Medical Care (NMC)':'https://www.nmcfund.com','Nammed':'https://www.nammed.com.na','Renaissance Health (RMA)':'https://www.rmanam.com','Heritage Health':'https://heritagehealth-namibia.com','GemHealth':'https://heritagehealth-namibia.com','Napotel':'http://www.napotelmedical.com.na'};
+  return s[scheme]||extra[scheme]||'https://www.medicalaidcomparison.co.za';
 }
 
 // ─── Emergency ─────────────────────────────────────────────────────
@@ -1014,7 +1253,7 @@ function renderEmergency(){
   const photoB64=Store.get('hos_photo')||'';
   const photoHtml=photoB64?'<div style="display:flex;justify-content:center;margin-bottom:14px;"><div class="em-photo-circle"><img src="'+photoB64+'" alt="Patient photo"></div></div>':'';
   c.innerHTML=photoHtml+'<div class="info-grid"><div class="info-box"><div class="lbl">Patient Name</div><div class="val">'+(p.name||'—')+'</div></div><div class="info-box"><div class="lbl">Blood Type</div><div class="val" style="color:#dc2626;font-size:18px;">'+(p.blood||'?')+'</div></div></div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;margin:10px 0 6px;">🚫 Allergies</div><div>'+(p.allergies?p.allergies.split(',').map(a=>'<span class="tag tag-red">'+a.trim()+'</span>').join(''):'<span style="color:#94a3b8;font-size:13px">None</span>')+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;margin:14px 0 6px;">💊 Medications</div><p style="font-size:13px;color:#444;">'+(p.meds||'None recorded')+'</p>'+(p.ecName?'<div class="emergency-item" style="margin-top:12px;"><div class="em-icon">👤</div><div class="em-info"><div class="em-name">'+p.ecName+(p.ecRel?' ('+p.ecRel+')':'')+'</div><div class="em-num">'+(p.ecNum||'No number')+'</div></div>'+(p.ecNum?'<a href="tel:'+p.ecNum.replace(/\s/g,'')+'" class="em-call-btn" onclick="handleEmergencyCall(\''+p.ecNum.replace(/\s/g,'')+'\',event)">📞 Call</a>':'')+'</div>':'');
-  const famRaw=Store.get('hos_family');const family=famRaw?JSON.parse(famRaw):[];
+  const famRaw=Store.get('hos_dependants');const family=famRaw?JSON.parse(famRaw):[];
   const famCard=document.getElementById('family-emergency-card');const famContent=document.getElementById('family-emergency-content');
   if(family.length&&famCard&&famContent){famCard.style.display='block';famContent.innerHTML=family.map(dep=>{const age=dep.dob?calcAge(dep.dob):'';return '<div class="dep-card"><div class="dep-name">'+escHtml(dep.name||'—')+(dep.sex?' ('+dep.sex+')':'')+(age?' · Age '+age:'')+'</div><div class="dep-detail">🩸 Blood: '+(dep.blood||'?')+(dep.allergies?' · 🚫 Allergies: '+escHtml(dep.allergies):'')+'</div>'+(dep.conditions?'<div class="dep-detail">🏥 Conditions: '+escHtml(dep.conditions)+'</div>':'')+(dep.meds?'<div class="dep-detail">💊 Meds: '+escHtml(dep.meds)+'</div>':'')+'</div>';}).join('');}
   else if(famCard){famCard.style.display='none';}
@@ -1041,6 +1280,7 @@ function detectLocation(){
     let locationName='';
     try{const res=await fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lon+'&format=json',{headers:{'Accept-Language':'en'}});const data=await res.json();const addr=data.address||{};const suburb=addr.suburb||addr.neighbourhood||addr.town||addr.village||'';const city=addr.city||addr.municipality||addr.county||'';const province=addr.state||'';locationName=[suburb||city,province].filter(Boolean).join(', ')||city||'';document.getElementById('loc-display').textContent=[suburb,city,province].filter(Boolean).join(', ')||'Location found';document.getElementById('loc-coords').textContent=(addr.country?addr.country+' · ':'')+lat+', '+lon;updateNearbyLinks(lat,lon,locationName);const raw=Store.get('hos_profile');if(raw){const p=JSON.parse(raw);p.lastLat=lat;p.lastLon=lon;p.lastLocName=locationName;Store.set('hos_profile',JSON.stringify(p));}}catch(e){document.getElementById('loc-display').textContent='Location detected';}
     statusEl.style.display='none';resultEl.style.display='block';
+    showMiniMap(lat,lon);
     if(detectBtn){detectBtn.innerHTML='📡 Detect My Location';detectBtn.disabled=false;}
     if(updateBtn){updateBtn.innerHTML='🔄 Update Location';updateBtn.disabled=false;}
   },err=>{
@@ -1054,6 +1294,14 @@ function updateNearbyLinks(lat,lon,locationName){
   const loc='/@'+lat+','+lon+',13z';const base='https://www.google.com/maps/search/';const near=locationName?'+near+'+encodeURIComponent(locationName):'';
   const searches={'link-gp':'GP+doctor','link-hospital':'hospital+clinic','link-specialist':'specialist+doctor','link-pharmacy':'pharmacy','link-dentist':'dentist','link-physio':'physiotherapist','link-speech':'speech+therapist','link-ot':'occupational+therapist','link-optom':'optometrist','link-dietician':'dietician','link-psych':'psychologist'};
   for(const[id,q]of Object.entries(searches)){const el=document.getElementById(id);if(el)el.href=base+q+near+loc;}
+}
+
+function showMiniMap(lat,lon){
+  const wrap=document.getElementById('loc-map');if(!wrap)return;
+  const la=parseFloat(lat),lo=parseFloat(lon),d=0.02;
+  const bbox=(lo-d)+','+(la-d)+','+(lo+d)+','+(la+d);
+  wrap.innerHTML='<iframe src="https://www.openstreetmap.org/export/embed.html?bbox='+bbox+'&layer=mapnik&marker='+la+','+lo+'" style="width:100%;height:200px;border:none;border-radius:12px;" loading="lazy" title="Map of your location"></iframe><div style="font-size:10px;color:#94a3b8;text-align:center;margin-top:4px;">Map © OpenStreetMap contributors</div>';
+  wrap.style.display='block';
 }
 
 // ─── Coverage Guide ────────────────────────────────────────────────
@@ -1071,18 +1319,56 @@ function renderCoverageGuide(){
   const planTxt=plan?'<div style="font-size:12px;color:#64748b;margin-bottom:8px;">Plan: <strong style="color:#1e293b;">'+escHtml(plan)+'</strong></div>':'';
   wrap.innerHTML='<div class="card"><div class="cov-guide-header" onclick="toggleCovGuide(this)"><div class="card-title" style="margin-bottom:0;">🛡️ Coverage Guide</div><span style="font-size:11px;color:#2563eb;font-weight:600;">Show ▼</span></div><div id="cov-guide-body" style="display:none;margin-top:12px;"><div style="font-size:12px;color:#64748b;margin-bottom:6px;">Scheme: <strong style="color:#1e293b;">'+escHtml(scheme)+'</strong></div>'+planTxt+'<p style="font-size:11px;color:#94a3b8;margin-bottom:8px;">General guide — confirm with your scheme.</p><table class="cov-table"><thead><tr><th>Provider Type</th><th>Typical Cover</th></tr></thead><tbody>'+rows+'</tbody></table><div style="margin-top:14px;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:11px 13px;font-size:12px;color:#1e40af;line-height:1.7;">ℹ️ <strong>PMBs:</strong> By law, ALL schemes must fully cover 270 serious conditions including emergencies. Council for Medical Schemes: <strong>0861 123 267</strong>.</div><div style="margin-top:14px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:13px;font-size:13px;color:#166534;line-height:1.75;"><strong>🛡️ Gap Cover</strong> pays the difference when specialists charge above scheme rates.<br><strong>SA providers:</strong> Zestlife · Turnberry · Sirago · Guardrisk<br><strong>Dispute:</strong> Council for Medical Schemes: <a href="tel:0861123267" style="color:#166534;font-weight:700;">0861 123 267</a></div></div></div>';
 }
+function toggleGapCover(el){const body=document.getElementById('gap-cover-body');const t=el.querySelector('span:last-child');if(!body)return;const open=body.style.display!=='none';body.style.display=open?'none':'block';if(t)t.textContent=open?'Show ▼':'Hide ▲';}
 function toggleCovGuide(el){const body=document.getElementById('cov-guide-body');const toggle=el.querySelector('span:last-child');if(!body)return;const open=body.style.display!=='none';body.style.display=open?'none':'block';if(toggle)toggle.textContent=open?'Show ▼':'Hide ▲';}
 
 // ─── Provider Search ───────────────────────────────────────────────
-const CARE_QUERIES={gp:['"amenity"="doctors"','"healthcare"="doctor"','"amenity"="clinic"','"healthcare"="clinic"','"amenity"="health_centre"','"healthcare"="centre"','"office"="medical"'],hospital:['"amenity"="hospital"','"healthcare"="hospital"','"amenity"="clinic"','"healthcare"="clinic"'],specialist:['"amenity"="doctors"','"healthcare"="doctor"','"healthcare"="specialist"','"office"="medical"'],pharmacy:['"amenity"="pharmacy"','"healthcare"="pharmacy"','"shop"="chemist"'],dentist:['"amenity"="dentist"','"healthcare"="dentist"'],physio:['"healthcare"="physiotherapist"','"healthcare:speciality"="physiotherapy"'],speech:['"healthcare"="speech_therapist"'],ot:['"healthcare"="occupational_therapist"'],optom:['"healthcare"="optometrist"','"shop"="optician"'],dietician:['"healthcare"="dietitian"','"healthcare"="nutritionist"'],psych:['"healthcare"="psychotherapist"','"healthcare"="psychologist"','"healthcare"="mental_health"'],occ:['"healthcare"="occupational_health"','"amenity"="doctors"','"healthcare"="doctor"'],vet:['"amenity"="veterinary"','"healthcare"="veterinary"','"shop"="pet;veterinary"']};
-const GMAPS_TERMS={gp:'GP doctor',hospital:'hospital clinic',specialist:'specialist doctor',pharmacy:'pharmacy',dentist:'dentist',physio:'physiotherapist',speech:'speech therapist',ot:'occupational therapist',optom:'optometrist',dietician:'dietician',psych:'psychologist',occ:'occupational health doctor',vet:'veterinarian vet clinic'};
+const CARE_QUERIES={gp:['"amenity"="doctors"','"healthcare"="doctor"','"amenity"="clinic"','"healthcare"="clinic"','"amenity"="health_centre"','"healthcare"="centre"','"office"="medical"'],hospital:['"amenity"="hospital"','"healthcare"="hospital"','"amenity"="clinic"','"healthcare"="clinic"'],specialist:['"amenity"="doctors"','"healthcare"="doctor"','"healthcare"="specialist"','"office"="medical"'],pharmacy:['"amenity"="pharmacy"','"healthcare"="pharmacy"','"shop"="chemist"'],dentist:['"amenity"="dentist"','"healthcare"="dentist"'],physio:['"healthcare"="physiotherapist"','"healthcare:speciality"="physiotherapy"'],speech:['"healthcare"="speech_therapist"'],ot:['"healthcare"="occupational_therapist"'],optom:['"healthcare"="optometrist"','"shop"="optician"'],dietician:['"healthcare"="dietitian"','"healthcare"="nutritionist"'],psych:['"healthcare"="psychotherapist"','"healthcare"="psychologist"','"healthcare"="mental_health"'],occ:['"healthcare"="occupational_health"','"amenity"="doctors"','"healthcare"="doctor"'],vet:['"amenity"="veterinary"','"healthcare"="veterinary"','"shop"="pet;veterinary"'],govclinic:['"amenity"="clinic"','"healthcare"="clinic"','"amenity"="health_centre"','"healthcare"="centre"','"healthcare"="community_health_worker"'],chiro:['"healthcare"="chiropractor"','"office"="chiropractor"'],podiatrist:['"healthcare"="podiatrist"','"healthcare:speciality"="podiatry"','"shop"="chiropody"'],massage:['"shop"="massage"','"leisure"="spa"','"healthcare"="massage_therapist"'],wellness:['"shop"="beauty"','"leisure"="spa"','"shop"="cosmetics"']};
+const GMAPS_TERMS={gp:'GP doctor',hospital:'hospital clinic',specialist:'specialist doctor',pharmacy:'pharmacy',dentist:'dentist',physio:'physiotherapist',speech:'speech therapist',ot:'occupational therapist',optom:'optometrist',dietician:'dietician',psych:'psychologist',occ:'occupational health doctor',vet:'veterinarian vet clinic',govclinic:'government clinic OR community health centre',chiro:'chiropractor',podiatrist:'podiatrist',massage:'massage therapist',wellness:'wellness aesthetic clinic'};
+// ─── Specialist Speciality Picker ──────────────────────────────────
+const SPECIALITIES=[
+['❤️','Cardiologist','heart specialist cardiologist'],
+['🧴','Dermatologist','dermatologist skin specialist'],
+['👂','ENT (Ear, Nose & Throat)','ENT specialist otorhinolaryngologist'],
+['🤰','Gynaecologist / Obstetrician','gynaecologist obstetrician'],
+['🔪','General Surgeon','general surgeon'],
+['🧠','Neurologist','neurologist'],
+['🧠','Neurosurgeon','neurosurgeon'],
+['🎗️','Oncologist (Cancer)','oncologist cancer specialist'],
+['👁️','Ophthalmologist (Eyes)','ophthalmologist eye specialist'],
+['🦴','Orthopaedic Surgeon','orthopaedic surgeon'],
+['👶','Paediatrician (Children)','paediatrician'],
+['✨','Plastic Surgeon','plastic reconstructive surgeon'],
+['🧘','Psychiatrist','psychiatrist'],
+['🫁','Pulmonologist (Lungs)','pulmonologist lung specialist'],
+['🩻','Radiologist / X-rays','radiology practice'],
+['🚹','Urologist','urologist'],
+['🩺','Physician (Internal Medicine)','specialist physician internal medicine'],
+['🫘','Nephrologist (Kidneys)','nephrologist kidney specialist'],
+['🦴','Rheumatologist (Joints)','rheumatologist'],
+['🍽️','Gastroenterologist (Stomach)','gastroenterologist']
+];
+function openSpecialistPicker(){
+  document.getElementById('search-modal-title').textContent='🩺 Choose a Speciality';
+  const body=document.getElementById('search-modal-body');
+  body.innerHTML='<p style="font-size:12px;color:#64748b;margin-bottom:12px;">Which type of specialist do you need?</p>'+
+    SPECIALITIES.map((s,i)=>'<button ontouchstart="" class="service-btn" style="margin-bottom:8px;width:100%;" onclick="searchSpecialist('+i+')"><div class="svc-icon">'+s[0]+'</div><div class="svc-text"><div class="svc-name">'+s[1]+'</div></div><div class="svc-arrow">›</div></button>').join('')+
+    '<p style="font-size:11px;color:#94a3b8;margin-top:8px;line-height:1.6;">💡 Tip: specialists usually need a GP referral, and your medical aid may pay better if you are referred.</p>';
+  openModal('modal-search');
+}
+function searchSpecialist(i){
+  const s=SPECIALITIES[i];if(!s)return;
+  window._gmOverride=s[2];
+  searchNearby('specialist',s[1],s[0]);
+}
 function calcDistance(lat1,lon1,lat2,lon2){const R=6371,dLat=(lat2-lat1)*Math.PI/180,dLon=(lon2-lon1)*Math.PI/180;const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
 function searchNearby(type,label,icon){
   document.getElementById('search-modal-title').textContent=icon+' '+label;
   const body=document.getElementById('search-modal-body');
-  const gmTerm=GMAPS_TERMS[type]||label;
+  if(type!=='specialist')window._gmOverride=null;
+  const gmTerm=window._gmOverride||GMAPS_TERMS[type]||label;
   const gmUrl='https://www.google.com/maps/search/'+encodeURIComponent(gmTerm+' near me');
-  const gmBtn='<a href="'+gmUrl+'" target="_blank" style="display:block;text-align:center;margin:14px 0 4px;padding:12px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;color:#166534;font-weight:700;font-size:13px;text-decoration:none;">🗺️ Not finding what you need? Search Google Maps →</a>';
+  const gmBtn='<a href="'+gmUrl+'" target="_blank" rel="noopener" style="display:block;text-align:center;margin:14px 0 4px;padding:12px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;color:#166534;font-weight:700;font-size:13px;text-decoration:none;">🗺️ Not finding what you need? Search Google Maps →</a>';
   if(!window._userLat||!window._userLon){body.innerHTML='<div class="no-loc-box">📍 <strong>Location not detected yet.</strong><br><br>Go to Find Care and tap <b>"Detect My Location"</b> first.</div>'+gmBtn;openModal('modal-search');return;}
   const lat=window._userLat,lon=window._userLon;
   const selEl=document.getElementById('search-radius');const radius=selEl?parseInt(selEl.value)||30000:30000;
@@ -1091,55 +1377,165 @@ function searchNearby(type,label,icon){
   const queries=CARE_QUERIES[type]||['"amenity"="doctors"'];
   const parts=queries.map(q=>'node['+q+'](around:'+radius+','+lat+','+lon+');way['+q+'](around:'+radius+','+lat+','+lon+');').join('');
   const query='[out:json][timeout:25];('+parts+');out center tags;';
-  fetch('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(query)).then(r=>r.json()).then(data=>{
+  const _opUrls=['https://overpass-api.de/api/interpreter?data=','https://overpass.kumi.systems/api/interpreter?data='];
+  const _opFetch=ix=>fetch(_opUrls[ix]+encodeURIComponent(query)).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).catch(err=>{if(ix+1<_opUrls.length)return _opFetch(ix+1);throw err;});
+  _opFetch(0).then(data=>{
     const seen=new Set();
     const results=data.elements.map(el=>{const elLat=el.lat||(el.center&&el.center.lat);const elLon=el.lon||(el.center&&el.center.lon);const t=el.tags||{};const name=t.name||t['name:en']||t['operator']||'';if(!elLat||!elLon||!name)return null;const key=name.toLowerCase().trim();if(seen.has(key))return null;seen.add(key);return{name,elLat,elLon,dist:calcDistance(lat,lon,elLat,elLon),phone:t.phone||t['contact:phone']||t['contact:mobile']||'',addr:[t['addr:housenumber'],t['addr:street'],t['addr:suburb']||t['addr:city']].filter(Boolean).join(' '),hours:t.opening_hours||''};}).filter(Boolean).sort((a,b)=>a.dist-b.dist).slice(0,30);
     const radSel='<div class="radius-row"><label>Radius:</label><select id="search-radius" onchange="searchNearby(\''+type+'\',\''+label+'\',\''+icon+'\')"><option value="5000"'+(radius===5000?' selected':'')+'>5 km</option><option value="10000"'+(radius===10000?' selected':'')+'>10 km</option><option value="30000"'+(radius===30000?' selected':'')+'>30 km</option><option value="50000"'+(radius===50000?' selected':'')+'>50 km</option><option value="100000"'+(radius===100000?' selected':'')+'>100 km</option></select></div>';
     if(!results.length){body.innerHTML=radSel+'<div class="search-empty">😔 No results within '+(radius/1000)+'km in OpenStreetMap. Try a larger radius or Google Maps below.</div>'+gmBtn+'<div class="search-credit">Data © OpenStreetMap contributors</div>';return;}
     const rawP=Store.get('hos_profile');const pObj=rawP?JSON.parse(rawP):{};const covStatus=getCovStatus(pObj.aidScheme||'',pObj.aidPlan||'',type);const covBadge=covBadgeHtml(covStatus);
     let html=radSel+'<p style="font-size:12px;color:#64748b;margin-bottom:12px;">Found <strong>'+results.length+'</strong> result(s) within '+(radius/1000)+'km</p>';
-    results.forEach(r=>{const distStr=r.dist<1?(r.dist*1000).toFixed(0)+'m':r.dist.toFixed(1)+'km';const appleUrl='https://maps.apple.com/?daddr='+r.elLat+','+r.elLon+'&dirflg=d';const gDirUrl='https://www.google.com/maps/dir/?api=1&destination='+r.elLat+','+r.elLon;html+='<div class="result-card"><div class="result-name">'+icon+' '+escHtml(r.name)+'</div>'+(covBadge?'<div>'+covBadge+'</div>':'')+'<div class="result-dist">📍 '+distStr+' away</div>'+(r.addr?'<div class="result-addr">'+escHtml(r.addr)+'</div>':'')+(r.hours?'<div class="result-addr">🕐 '+escHtml(r.hours)+'</div>':'')+'<div class="result-actions">'+(r.phone?'<a href="tel:'+r.phone.replace(/[\s\-()]/g,'')+'" class="result-actions btn-call">📞 Call</a>':'')+'<a href="'+appleUrl+'" target="_blank" class="result-actions btn-dir">🍎 Maps</a><a href="'+gDirUrl+'" target="_blank" class="result-actions btn-dir" style="background:#fef9c3;color:#713f12;">📍 Google</a></div></div>';});
+    html+='<div style="background:#fef9c3;border:1.5px solid #fde047;border-radius:10px;padding:10px 12px;font-size:12px;color:#713f12;line-height:1.6;margin-bottom:10px;">⚠️ <strong>Please note:</strong> these listings come from public map data and are not always up to date or correctly categorised — some results may be a different type of provider. <strong>Phone first to confirm</strong> before visiting.'+(type==='specialist'||type==='podiatrist'||type==='chiro'?' For an exact '+escHtml(label)+' search, use the green <strong>Google Maps</strong> button below — Google\'s listings are usually the most current.':'')+'</div>';
+    results.forEach(r=>{const distStr=r.dist<1?(r.dist*1000).toFixed(0)+'m':r.dist.toFixed(1)+'km';const appleUrl='https://maps.apple.com/?daddr='+r.elLat+','+r.elLon+'&dirflg=d';const gDirUrl='https://www.google.com/maps/dir/?api=1&destination='+r.elLat+','+r.elLon;html+='<div class="result-card"><div class="result-name">'+icon+' '+escHtml(r.name)+'</div>'+(covBadge?'<div>'+covBadge+'</div>':'')+'<div class="result-dist">📍 '+distStr+' away</div>'+(r.addr?'<div class="result-addr">'+escHtml(r.addr)+'</div>':'')+(r.hours?'<div class="result-addr">🕐 '+escHtml(r.hours)+'</div>':'')+'<div class="result-actions">'+(r.phone?'<a href="tel:'+r.phone.replace(/[\s\-()]/g,'')+'" class="result-actions btn-call">📞 Call</a>':'')+'<a href="'+appleUrl+'" target="_blank" rel="noopener" class="result-actions btn-dir">🍎 Maps</a><a href="'+gDirUrl+'" target="_blank" rel="noopener" class="result-actions btn-dir" style="background:#fef9c3;color:#713f12;">📍 Google</a></div></div>';});
     html+=gmBtn+'<div class="search-credit">Data © OpenStreetMap contributors</div>';body.innerHTML=html;
-  }).catch(()=>{body.innerHTML='<div class="search-empty">⚠️ Search timed out. Try again.</div>'+gmBtn;});
+  }).catch(()=>{body.innerHTML='<div class="search-empty">⚠️ Could not reach the map service. Check your internet connection and try again.</div>'+gmBtn;});
 }
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function showAlert(id,msg,type='success'){const el=document.getElementById(id);if(!el)return;el.innerHTML='<div class="alert'+(type==='error'?' error':'')+'">'+msg+'</div>';setTimeout(()=>{el.innerHTML='';},3500);}
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+// ─── Backup & Restore ─────────────────────────────────────────────
+const BACKUP_KEYS=['hos_profile','hos_photo','hos_dependants','hos_pets','hos_bp','hos_vaccines','hos_labs','hos_radiology','hos_barcodes'];
+function exportBackup(){
+  const data={app:'HealthOneStop',version:8,date:new Date().toISOString()};
+  BACKUP_KEYS.forEach(k=>{const v=Store.get(k);if(v)data[k]=v;});
+  const blob=new Blob([JSON.stringify(data)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='HealthOneStop_backup_'+new Date().toISOString().split('T')[0]+'.json';
+  document.body.appendChild(a);a.click();a.remove();
+  showAlert('backup-alert','✅ Backup file downloaded — keep it somewhere safe.');
+}
+function importBackup(input){
+  if(!input.files||!input.files[0])return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      if(data.app!=='HealthOneStop')throw new Error('wrong file');
+      BACKUP_KEYS.forEach(k=>{if(data[k])Store.set(k,data[k]);});
+      showAlert('backup-alert','✅ Data restored! Reloading…');
+      setTimeout(()=>location.reload(),1200);
+    }catch(err){showAlert('backup-alert','⚠️ That does not look like a Health One Stop backup file.','error');}
+  };
+  reader.readAsText(input.files[0]);
+  input.value='';
+}
 </script>
 <script>
 // ─── Medication Autocomplete ───────────────────────────────────────
 const MED_LIST=['Metformin','Metformin XR','Glipizide','Gliclazide','Glibenclamide','Sitagliptin','Empagliflozin','Dapagliflozin','Insulin Glargine','Insulin Aspart','Insulin NPH','Atorvastatin','Rosuvastatin','Simvastatin','Amlodipine','Nifedipine','Felodipine','Enalapril','Ramipril','Lisinopril','Perindopril','Losartan','Valsartan','Bisoprolol','Carvedilol','Atenolol','Hydrochlorothiazide','Furosemide','Indapamide','Spironolactone','Warfarin','Aspirin','Clopidogrel','Rivaroxaban','Apixaban','Allopurinol','Colchicine','Methotrexate','Prednisone','Prednisolone','Methylprednisolone','Salbutamol inhaler','Budesonide inhaler','Fluticasone inhaler','Tiotropium','Montelukast','Cetirizine','Loratadine','Fexofenadine','Omeprazole','Esomeprazole','Pantoprazole','Ranitidine','Domperidone','Metoclopramide','Lactulose','Bisacodyl','Levothyroxine','Carbimazole','Ferrous sulphate','Folic acid','Vitamin B12','Vitamin D3','Calcium carbonate','Multivitamin','Amoxicillin','Amoxicillin-clavulanate','Azithromycin','Doxycycline','Ciprofloxacin','Metronidazole','Fluconazole','Acyclovir','Tenofovir','Emtricitabine','Efavirenz','Lopinavir/ritonavir','Cotrimoxazole','Isoniazid','Rifampicin','Pyrazinamide','Ethambutol','Amitriptyline','Imipramine','Fluoxetine','Sertraline','Escitalopram','Citalopram','Venlafaxine','Duloxetine','Mirtazapine','Haloperidol','Risperidone','Olanzapine','Quetiapine','Clonazepam','Diazepam','Lorazepam','Alprazolam','Zolpidem','Phenytoin','Carbamazepine','Valproate','Levetiracetam','Lamotrigine','Tramadol','Morphine','Codeine','Ibuprofen','Naproxen','Diclofenac','Paracetamol','Meloxicam','Celecoxib','Gabapentin','Pregabalin','Baclofen','Cyclobenzaprine','Sildenafil','Tadalafil','Tamsulosin','Finasteride','Medroxyprogesterone','Norethisterone','Ethinylestradiol','Clomiphene','Progesterone'];
-let _meds=[];
-function searchMeds(){const q=document.getElementById('med-search').value.trim().toLowerCase();const box=document.getElementById('med-suggestions');if(q.length<2){box.innerHTML='';return;}const m=MED_LIST.filter(x=>x.toLowerCase().includes(q)).slice(0,8);box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="addMed(\''+escHtml(x)+'\')">'+escHtml(x)+'</div>').join('');}
-function addMed(name){if(!_meds.includes(name))_meds.push(name);document.getElementById('med-search').value='';document.getElementById('med-suggestions').innerHTML='';renderMedTags();}
-function removeMed(name){_meds=_meds.filter(m=>m!==name);renderMedTags();}
-function renderMedTags(){const el=document.getElementById('med-tags');if(!el)return;el.innerHTML=_meds.map(m=>'<span class="tag">'+escHtml(m)+' <button onclick="removeMed(\''+escHtml(m)+'\')">×</button></span>').join('');}
-
+// SA brand names & combination products (brand — active ingredients)
+const MED_BRANDS=[
+'Coveram (perindopril + amlodipine)','Reaptan (perindopril + amlodipine)','Coversyl / Prexum (perindopril)','Prexum Plus (perindopril + indapamide)','Bi-Prexum (perindopril + bisoprolol)','Co-Aprovel (irbesartan + HCTZ)','Co-Diovan (valsartan + HCTZ)','Exforge (amlodipine + valsartan)','Exforge HCT (amlodipine + valsartan + HCTZ)','Twynsta (telmisartan + amlodipine)','Micardis Plus (telmisartan + HCTZ)','Fortzaar (losartan + HCTZ)','Zartan Co (losartan + HCTZ)','Amloc (amlodipine)','Ciplavasc (amlodipine)','Ridaq (hydrochlorothiazide)','Pharmapress (enalapril)','Renitec (enalapril)','Tritace (ramipril)','Bilocor (bisoprolol)','Carloc (carvedilol)','Inderal (propranolol)','Adco-Atenolol (atenolol)','Cardura (doxazosin)','Lasix (furosemide)','Aldactone (spironolactone)',
+'Glucophage (metformin)','Diaglucide (gliclazide)','Amaryl (glimepiride)','Glucovance (metformin + glibenclamide)','Galvus Met (vildagliptin + metformin)','Janumet (sitagliptin + metformin)','Xigduo (dapagliflozin + metformin)','Jardiance (empagliflozin)','Forxiga (dapagliflozin)','Lantus (insulin glargine)','Tresiba (insulin degludec)','NovoRapid (insulin aspart)','Actraphane (biphasic insulin)',
+'Lipitor (atorvastatin)','Aspavor (atorvastatin)','Crestor (rosuvastatin)','Zocor (simvastatin)','Ezetrol (ezetimibe)','Atozet (atorvastatin + ezetimibe)',
+'Ecotrin (aspirin low-dose)','Plavix (clopidogrel)','Xarelto (rivaroxaban)','Eliquis (apixaban)',
+'Eltroxin (levothyroxine)','Euthyrox (levothyroxine)','Neo-Mercazole (carbimazole)',
+'Venteze (salbutamol)','Asthavent (salbutamol)','Ventolin (salbutamol)','Seretide (fluticasone + salmeterol)','Foxair (fluticasone + salmeterol)','Symbicord (budesonide + formoterol)','Spiriva (tiotropium)','Singulair (montelukast)',
+'Texa (cetirizine)','Allecet (cetirizine)','Allergex (chlorphenamine)','Deselex (desloratadine)','Clarityne (loratadine)','Telfast (fexofenadine)',
+'Losec (omeprazole)','Nexiam (esomeprazole)','Topzole (pantoprazole)','Gaviscon','Buscopan (hyoscine)',
+'Panado (paracetamol)','Painamol (paracetamol)','Disprin (aspirin)','Grand-Pa (aspirin + paracetamol + caffeine)','Adco-Dol (paracetamol + codeine + caffeine + doxylamine)','Stilpane (paracetamol + codeine + caffeine + meprobamate)','Stopayne (paracetamol + codeine)','Syndol (paracetamol + codeine)','Betapyn (paracetamol + codeine)','Mybulen (ibuprofen + paracetamol + codeine)','Myprodol (ibuprofen + paracetamol + codeine)','Synaleve (paracetamol + codeine + meprobamate)','Tramacet (tramadol + paracetamol)','Brufen (ibuprofen)','Nurofen (ibuprofen)','Voltaren (diclofenac)','Cataflam (diclofenac)','Ponstan (mefenamic acid)','Celebrex (celecoxib)','Arcoxia (etoricoxib)','Mobic (meloxicam)','Norflex Co (orphenadrine + paracetamol)',
+'Sinutab (paracetamol + pseudoephedrine)','Corenza C (aspirin + chlorphenamine + vit C)','Med-Lemon (paracetamol)','Degoran','ACC 200 (acetylcysteine)','Benylin','Bisolvon (bromhexine)',
+'Puricos (allopurinol)','Urbanol (clobazam)','Ativan (lorazepam)','Adco-Zolpidem (zolpidem)','Stilnox (zolpidem)',
+'Cipralex (escitalopram)','Lexamil (escitalopram)','Nuzak (fluoxetine)','Prohexal (fluoxetine)','Zoloft / Serlife (sertraline)','Cymgen (duloxetine)','Venlor (venlafaxine)','Trepiline (amitriptyline)','Remeron (mirtazapine)','Wellbutrin (bupropion)',
+'Epilim (valproate)','Tegretol (carbamazepine)','Lamictin (lamotrigine)','Keppra (levetiracetam)','Epleptin (gabapentin)','Lyrica (pregabalin)',
+'Concerta (methylphenidate)','Ritalin (methylphenidate)','Vyvanse (lisdexamfetamine)',
+'Augmentin (amoxicillin + clavulanate)','Amoxil (amoxicillin)','Zithromax (azithromycin)','Klacid (clarithromycin)','Cipro (ciprofloxacin)','Purbac / Bactrim (cotrimoxazole)','Flagyl (metronidazole)','Diflucan (fluconazole)','Zovirax (acyclovir)','Tamiflu (oseltamivir)',
+'Tribuss (TEE: tenofovir + emtricitabine + efavirenz)','Odimune (tenofovir + emtricitabine + efavirenz)','Atroiza (tenofovir + emtricitabine + efavirenz)','Acriptega (TLD: tenofovir + lamivudine + dolutegravir)','Rifafour (rifampicin + isoniazid + pyrazinamide + ethambutol)',
+'Duromine (phentermine)','Saxenda (liraglutide)','Ozempic (semaglutide)',
+'Viagra (sildenafil)','Cialis (tadalafil)','Dynafil (sildenafil)','Flomax / Urimax (tamsulosin)','Proscar (finasteride)',
+'Yasmin (contraceptive)','Triphasil (contraceptive)','Nordette (contraceptive)','Depo-Provera (medroxyprogesterone injection)','Mirena (levonorgestrel IUS)','Premarin (conjugated oestrogens)','Estrofem (estradiol)',
+'Fosamax (alendronate)','Calcimed (calcium)','Slow-Mag (magnesium)','Ferrimed (iron)','Foliglobin (folic acid + B12)'
+];
+MED_BRANDS.forEach(b=>MED_LIST.push(b));
 // ─── Conditions Autocomplete ───────────────────────────────────────
-const COND_LIST=['Type 1 Diabetes','Type 2 Diabetes','Hypertension','Hyperlipidaemia','Hypothyroidism','Hyperthyroidism','Asthma','COPD','Chronic Bronchitis','Emphysema','Heart Failure','Ischaemic Heart Disease','Atrial Fibrillation','Previous MI','Stroke / CVA','TIA','Epilepsy','Parkinson\'s Disease','Multiple Sclerosis','Rheumatoid Arthritis','Osteoarthritis','Gout','Osteoporosis','Chronic Kidney Disease','Nephrotic Syndrome','Liver Cirrhosis','NAFLD','Hepatitis B','Hepatitis C','HIV / AIDS','Tuberculosis','Malaria (recent)','Anaemia','Sickle Cell Disease','Depression','Anxiety Disorder','Bipolar Disorder','Schizophrenia','ADHD','Autism Spectrum','Dementia','Alzheimer\'s Disease','Crohn\'s Disease','Ulcerative Colitis','IBS','GERD / Reflux','Peptic Ulcer','Coeliac Disease','Migraine','Chronic Back Pain','Fibromyalgia','Lupus (SLE)','Psoriasis','Eczema','Cancer (specify)','Previous Cancer','Obesity','Metabolic Syndrome','Sleep Apnoea','Anxiety','PTSD','Eating Disorder'];
-let _conds=[];
-function searchConds(){const q=document.getElementById('cond-search').value.trim().toLowerCase();const box=document.getElementById('cond-suggestions');if(q.length<2){box.innerHTML='';return;}const m=COND_LIST.filter(x=>x.toLowerCase().includes(q)).slice(0,8);box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="addCond(\''+escHtml(x.replace(/'/g,"\\\'"))+'\')">'+escHtml(x)+'</div>').join('');}
-function addCond(name){if(!_conds.includes(name))_conds.push(name);document.getElementById('cond-search').value='';document.getElementById('cond-suggestions').innerHTML='';renderCondTags();}
-function removeCond(name){_conds=_conds.filter(c=>c!==name);renderCondTags();}
-function renderCondTags(){const el=document.getElementById('cond-tags');if(!el)return;el.innerHTML=_conds.map(c=>'<span class="tag">'+escHtml(c)+' <button onclick="removeCond(\''+escHtml(c.replace(/'/g,"\\\'"))+'\')">×</button></span>').join('');}
-
-// ─── Allergies Autocomplete ────────────────────────────────────────
-const ALLERGY_LIST=['Penicillin','Amoxicillin','Ampicillin','Cephalosporins','Sulphonamides','Cotrimoxazole','Metronidazole','Ciprofloxacin','Aspirin','Ibuprofen','Naproxen','Diclofenac','NSAIDs','Codeine','Morphine','Tramadol','Contrast dye','Latex','Peanuts','Tree nuts','Shellfish','Fish','Eggs','Milk / Dairy','Wheat / Gluten','Soya','Bee sting','Wasp sting','Penicillin (pen allergy)','Sulfa drugs','Metformin','Statins'];
-let _allergies=[];
-function searchAllergies(){const q=document.getElementById('allergy-search')?document.getElementById('allergy-search').value.trim().toLowerCase():'';const box=document.getElementById('allergy-suggestions');if(!box)return;if(q.length<2){box.innerHTML='';return;}const m=ALLERGY_LIST.filter(x=>x.toLowerCase().includes(q)).slice(0,8);box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="addAllergy(\''+escHtml(x)+'\')">'+escHtml(x)+'</div>').join('');}
-function addAllergy(name){if(!_allergies.includes(name))_allergies.push(name);const el=document.getElementById('allergy-search');if(el)el.value='';const box=document.getElementById('allergy-suggestions');if(box)box.innerHTML='';renderAllergyTags();}
-function removeAllergy(name){_allergies=_allergies.filter(a=>a!==name);renderAllergyTags();}
-function renderAllergyTags(){const el=document.getElementById('allergy-tags');if(!el)return;el.innerHTML=_allergies.map(a=>'<span class="tag">'+escHtml(a)+' <button onclick="removeAllergy(\''+escHtml(a)+'\')">×</button></span>').join('');}
-
+// ─── ICD-10 Conditions Dataset ─────────────────────────────────────
+// c=ICD-10 code, n=plain-language name, cdl=on the Chronic Disease List
+// (the 26 chronic conditions every SA scheme must cover as a PMB).
+const ICD10_CONDITIONS=[
+  {c:'E10',n:'Type 1 Diabetes',cdl:true},
+  {c:'E11',n:'Type 2 Diabetes',cdl:true},
+  {c:'E03',n:'Hypothyroidism (underactive thyroid)',cdl:true},
+  {c:'E05',n:'Hyperthyroidism (overactive thyroid)',cdl:false},
+  {c:'E78.5',n:'Hyperlipidaemia (high cholesterol)',cdl:true},
+  {c:'E27.1',n:"Addison's disease",cdl:true},
+  {c:'E23.2',n:'Diabetes insipidus',cdl:true},
+  {c:'E66',n:'Obesity',cdl:false},
+  {c:'E88.9',n:'Metabolic syndrome',cdl:false},
+  {c:'I10',n:'Hypertension (high blood pressure)',cdl:true},
+  {c:'I25',n:'Coronary artery disease (ischaemic heart)',cdl:true},
+  {c:'I21',n:'Previous heart attack (MI)',cdl:true},
+  {c:'I50',n:'Heart failure',cdl:true},
+  {c:'I42',n:'Cardiomyopathy',cdl:true},
+  {c:'I48',n:'Atrial fibrillation',cdl:true},
+  {c:'I49',n:'Cardiac arrhythmia (dysrhythmia)',cdl:true},
+  {c:'I63',n:'Stroke (CVA)',cdl:false},
+  {c:'G45',n:'TIA (mini-stroke)',cdl:false},
+  {c:'J45',n:'Asthma',cdl:true},
+  {c:'J44',n:'COPD (chronic lung disease)',cdl:true},
+  {c:'J47',n:'Bronchiectasis',cdl:true},
+  {c:'J42',n:'Chronic bronchitis',cdl:false},
+  {c:'J43',n:'Emphysema',cdl:false},
+  {c:'G47.3',n:'Sleep apnoea',cdl:false},
+  {c:'G40',n:'Epilepsy',cdl:true},
+  {c:'G20',n:"Parkinson's disease",cdl:true},
+  {c:'G35',n:'Multiple sclerosis',cdl:true},
+  {c:'G43',n:'Migraine',cdl:false},
+  {c:'G30',n:"Alzheimer's disease",cdl:false},
+  {c:'F03',n:'Dementia',cdl:false},
+  {c:'M06',n:'Rheumatoid arthritis',cdl:true},
+  {c:'M15',n:'Osteoarthritis',cdl:false},
+  {c:'M10',n:'Gout',cdl:false},
+  {c:'M81',n:'Osteoporosis',cdl:false},
+  {c:'M32',n:'Systemic lupus erythematosus (SLE)',cdl:true},
+  {c:'M54.5',n:'Chronic low back pain',cdl:false},
+  {c:'M79.7',n:'Fibromyalgia',cdl:false},
+  {c:'N18',n:'Chronic kidney disease',cdl:true},
+  {c:'N04',n:'Nephrotic syndrome',cdl:false},
+  {c:'K50',n:"Crohn's disease",cdl:true},
+  {c:'K51',n:'Ulcerative colitis',cdl:true},
+  {c:'K74',n:'Liver cirrhosis',cdl:false},
+  {c:'K76.0',n:'Fatty liver (NAFLD)',cdl:false},
+  {c:'K21',n:'GERD / acid reflux',cdl:false},
+  {c:'K27',n:'Peptic ulcer',cdl:false},
+  {c:'K58',n:'Irritable bowel syndrome (IBS)',cdl:false},
+  {c:'K90.0',n:'Coeliac disease',cdl:false},
+  {c:'B20',n:'HIV / AIDS',cdl:true},
+  {c:'A15',n:'Tuberculosis (TB)',cdl:false},
+  {c:'B18.1',n:'Hepatitis B',cdl:false},
+  {c:'B18.2',n:'Hepatitis C',cdl:false},
+  {c:'B54',n:'Malaria (recent)',cdl:false},
+  {c:'D50',n:'Iron-deficiency anaemia',cdl:false},
+  {c:'D57',n:'Sickle cell disease',cdl:false},
+  {c:'D66',n:'Haemophilia',cdl:true},
+  {c:'F32',n:'Depression',cdl:false},
+  {c:'F41',n:'Anxiety disorder',cdl:false},
+  {c:'F31',n:'Bipolar mood disorder',cdl:true},
+  {c:'F20',n:'Schizophrenia',cdl:true},
+  {c:'F43.1',n:'PTSD',cdl:false},
+  {c:'F90',n:'ADHD',cdl:false},
+  {c:'F84',n:'Autism spectrum disorder',cdl:false},
+  {c:'F50',n:'Eating disorder',cdl:false},
+  {c:'H40',n:'Glaucoma',cdl:true},
+  {c:'L40',n:'Psoriasis',cdl:false},
+  {c:'L20',n:'Eczema / atopic dermatitis',cdl:false},
+  {c:'C80',n:'Cancer (specify type)',cdl:false},
+  {c:'Z85',n:'Previous cancer (in remission)',cdl:false}
+];
+// Backward-compatible plain list (used by anything expecting names only)
+const COND_LIST=ICD10_CONDITIONS.map(x=>x.n);
 // ─── Voice Input ──────────────────────────────────────────────────
-let _voiceTarget=null;
-function startVoice(targetId){
+function startVoice(targetId,callback){
   if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){showAlert('profile-alert','❌ Voice input not supported on this browser. Try Chrome.','error');return;}
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   const r=new SR();r.lang='en-ZA';r.interimResults=false;r.maxAlternatives=1;
-  r.onresult=e=>{const txt=e.results[0][0].transcript;const el=document.getElementById(targetId);if(el){el.value+=(el.value?' ':'')+txt;}};
+  const btn=document.getElementById('v-'+targetId);if(btn)btn.classList.add('listening');
+  r.onresult=e=>{const txt=e.results[0][0].transcript.trim();if(callback){callback(txt);}else{const el=document.getElementById(targetId);if(el){el.value+=(el.value?' ':'')+txt;}}};
   r.onerror=()=>showAlert('profile-alert','⚠️ Voice capture failed. Check microphone permissions.','error');
+  r.onend=()=>{if(btn)btn.classList.remove('listening');};
   r.start();
 }
 
@@ -1152,11 +1548,11 @@ const AI_RULES=[
   {k:['diarrhoea','diarrhea','loose stool','upset stomach'],r:'For diarrhoea: stay well hydrated — oral rehydration sachets (Rehidrat) or water + salt + sugar. Avoid dairy temporarily. See a doctor if there is blood in the stool, fever, or it lasts more than 2 days.'},
   {k:['nausea','vomiting','throwing up'],r:'Sip clear fluids slowly. Try dry crackers. Avoid solid food until nausea settles. See a doctor if you cannot keep any fluids down for more than 6 hours, or there is blood in the vomit.'},
   {k:['rash','skin rash','hives','itchy skin'],r:'A localised rash: cool compress, antihistamine (cetirizine or loratadine). Avoid known triggers. See a doctor if the rash is spreading rapidly, you have breathing difficulty, or your face/throat is swelling (anaphylaxis — call 112).'},
-  {k:['burn','burned','scalded'],r:'For a minor burn: cool under running water for 20 minutes. Do not apply butter or toothpaste. Cover loosely with cling wrap or a clean cloth. See a doctor for burns larger than the palm, on the face/hands/genitals, or deep burns.'},
+  {k:['burnt','burned','scald','burn wound','hot water burn','burn on'],r:'For a minor burn: cool under running water for 20 minutes. Do not apply butter or toothpaste. Cover loosely with cling wrap or a clean cloth. See a doctor for burns larger than the palm, on the face/hands/genitals, or deep burns.'},
   {k:['wound','cut','bleeding','laceration'],r:'Apply firm pressure with a clean cloth for 10–15 minutes. Elevate if possible. See a doctor if bleeding does not stop, the cut is deep or gaping, or there is risk of infection (animal bite, dirty wound).'},
   {k:['bite','animal bite','snake bite','dog bite'],r:'For snake bite: keep calm and still, immobilise the limb, go to the nearest emergency room immediately. Do not cut or suck the bite. For dog/cat bites: wash well with soap and water, see a doctor — you may need antibiotics or rabies prophylaxis.'},
   {k:['eye','eye pain','red eye','discharge'],r:'For a red or irritated eye: rinse with clean water. Avoid rubbing. Sunglasses if light-sensitive. See a doctor if there is severe pain, vision change, chemical splash, or pus.'},
-  {k:['blood pressure','hypertension','bp'],r:'Normal BP is below 120/80 mmHg. High BP (>140/90) should be managed with medication, low-salt diet, exercise, and no smoking. Log your BP readings in the <strong>My Card</strong> tab. See your doctor if BP >180/110 or you have headache/vision changes.'},
+  {k:['blood pressure','hypertension','bp'],r:'Normal BP is below 120/80 mmHg. High BP (>140/90) should be managed with medication, low-salt diet, exercise, and no smoking. Log your BP readings in the <strong>My Card</strong> tab. See your doctor if BP >160/100 or you have headache/vision changes.'},
   {k:['diabetes','blood sugar','glucose'],r:'Manage diabetes with prescribed medication, a low-sugar diet, and regular checks. Signs of low blood sugar (hypoglycaemia): shakiness, sweating, confusion — eat 15g fast sugar (glucose tablets, juice). See a doctor if blood sugar is very high (>15 mmol/L) or you feel very unwell.'},
   {k:['medication','medicine','tablets','pill','dose','dosage'],r:'I can give general information but cannot prescribe. Your medication details are in your health card. Always take medications as prescribed. Contact your doctor or pharmacist for dosage questions.'},
   {k:['pregnant','pregnancy'],r:'During pregnancy: attend all antenatal visits, take folic acid 5mg daily, avoid alcohol and smoking. Any vaginal bleeding, severe headache, or reduced fetal movement needs urgent medical attention.'},
@@ -1164,14 +1560,66 @@ const AI_RULES=[
   {k:['mental health','depressed','depression','anxiety','suicidal','want to die'],r:'I\'m sorry you\'re feeling this way. You are not alone. Please reach out:\n• SADAG: <strong>0800 456 789</strong> (free, 24/7)\n• Lifeline: <strong>0861 322 322</strong>\n• SMS: 31393\nIf you are in immediate danger, call <strong>10177</strong> or go to your nearest emergency room.'},
   {k:['back pain','backache','lower back'],r:'For mild back pain: gentle movement, warm pack, ibuprofen or paracetamol. Avoid prolonged bed rest. See a doctor if pain radiates down the leg, causes numbness/weakness, or follows an injury.'},
   {k:['chest pain','heart attack','chest tightness'],r:'🚨 Chest pain can be serious. If the pain is crushing, radiates to the arm or jaw, comes with sweating or shortness of breath — call <strong>10177</strong> immediately. Chew 300mg aspirin if not allergic while waiting for help.'},
+  {k:['earache','ear pain','ear infection','sore ear'],r:'For earache: paracetamol or ibuprofen for pain, warm compress against the ear. Do not put anything inside the ear. See a doctor if pain lasts >2 days, there is discharge, fever, or it\'s a child under 2.'},
+  {k:['toothache','tooth pain','sore tooth','abscess'],r:'For toothache: ibuprofen + paracetamol together work well, rinse with warm salt water. See a dentist soon — toothache rarely settles on its own. Swelling of the face or fever means infection: see a dentist or doctor urgently.'},
+  {k:['sinus','sinusitis','face pressure','post nasal'],r:'For sinusitis: steam inhalation, saline nose rinse, decongestant (e.g. Sinutab) for max 5 days, paracetamol for pain. See a doctor if symptoms last >10 days, fever is high, or pain is one-sided and severe.'},
+  {k:['tonsil','strep','swallow pain'],r:'Sore throat/tonsillitis: salt-water gargles, lozenges, paracetamol or ibuprofen. Most are viral and settle in 3–5 days. See a doctor if you have high fever, white spots on the tonsils, can\'t swallow fluids, or symptoms last >5 days.'},
+  {k:['urine','bladder','uti','burning pee','pee','wee burn','cystitis','urinary'],r:'Bladder infection symptoms: burning urine, frequency, urgency. Drink plenty of water. Women with mild symptoms can try citro-soda while arranging care — but a urine test and antibiotics are usually needed. See a doctor same week; urgently if fever, back pain, or vomiting (kidney infection).'},
+  {k:['period','menstrual','cramps','heavy bleeding','dysmenorrhoea'],r:'Period pain: ibuprofen or mefenamic acid (Ponstan) works best if started early, plus a heat pack. See a doctor if periods are very heavy (soaking pads hourly), last >7 days, or pain stops you functioning — this is treatable, don\'t just endure it.'},
+  {k:['menopause','hot flush','hot flash'],r:'Menopause symptoms (hot flushes, poor sleep, mood changes) are very treatable. Lifestyle helps: regular exercise, limit alcohol/caffeine, layered clothing. Hormone therapy and non-hormonal options exist — discuss with your GP or gynaecologist.'},
+  {k:['constipat','hard stool'],r:'For constipation: more fibre, more water, more movement. Short-term: lactulose or Movicol-type laxatives from the pharmacy. See a doctor if there is blood, weight loss, or it\'s a sudden change in an adult over 45.'},
+  {k:['heartburn','reflux','indigestion','acid'],r:'For heartburn: smaller meals, avoid late eating, limit coffee/alcohol, raise the bed head. Antacids (Gaviscon) for quick relief; a 2-week course of omeprazole from the pharmacy if frequent. See a doctor if you have trouble swallowing, weight loss, or are over 50 with new symptoms.'},
+  {k:['piles','haemorrhoid','hemorrhoid','anal'],r:'For piles: fibre + water to keep stools soft, don\'t strain or sit long on the toilet, pharmacy ointments (e.g. Anusol) help. See a doctor if bleeding persists — never assume rectal bleeding is "just piles" without a check.'},
+  {k:['dizzy','dizziness','vertigo','light-headed','lightheaded'],r:'Dizziness has many causes: dehydration, low BP, inner ear (vertigo), low blood sugar. Sit or lie down until it passes, drink fluids. See a doctor urgently if it comes with chest pain, weakness of one side, slurred speech, or fainting.'},
+  {k:['nosebleed','nose bleed','epistaxis'],r:'For a nosebleed: sit up, lean FORWARD, pinch the soft part of the nose firmly for 10–15 minutes without peeking. Ice on the bridge helps. See a doctor if it doesn\'t stop after 20 minutes or you take blood thinners.'},
+  {k:['sprain','twisted ankle','strain','pulled muscle'],r:'For a sprain: RICE — Rest, Ice (20 min at a time), Compression bandage, Elevation. Ibuprofen for pain/swelling. See a doctor or get an X-ray if you cannot put weight on it, or there is deformity or severe swelling.'},
+  {k:['gout','big toe pain'],r:'A gout attack: ibuprofen or other anti-inflammatory ASAP, rest the joint, fluids, avoid alcohol and red meat during the attack. If attacks recur, see your doctor about urate-lowering treatment (e.g. allopurinol) — gout is very controllable.'},
+  {k:['joint pain','arthritis','stiff joints','knee pain'],r:'For joint pain: keep moving gently — motion is lotion. Paracetamol or anti-inflammatory gel/tablets, weight loss helps knees enormously. See a doctor if a joint is hot, swollen and red (possible infection or gout), or stiffness lasts >30 min each morning (possible inflammatory arthritis).'},
+  {k:['hay fever','hayfever','sneezing','itchy eyes','allergic rhinitis'],r:'For hay fever: daily non-drowsy antihistamine (cetirizine/loratadine), saline nose rinse, steroid nose spray (e.g. Flomist) is the most effective single treatment. Keep windows closed on windy days.'},
+  {k:['asthma','wheez','inhaler','tight chest'],r:'Asthma flare: use your reliever inhaler (e.g. Ventolin/Venteze) — 2 puffs via spacer, repeat every few minutes up to 10 puffs. 🚨 If still struggling to speak or breathe after that, call <strong>10177</strong>. If you use your reliever more than twice a week, see your doctor — your controller needs adjusting.'},
+  {k:['eczema','dry skin','dermatitis'],r:'For eczema: moisturise generously twice daily (aqueous cream or emulsifying ointment), short lukewarm showers, fragrance-free soap. Mild steroid cream (hydrocortisone 1%) for flares. See a doctor if skin is weeping, crusted, or infected.'},
+  {k:['acne','pimples','breakout'],r:'For acne: wash twice daily, benzoyl peroxide gel from the pharmacy, don\'t pick. It takes 6–8 weeks to see improvement. If scarring or no improvement, see a doctor — prescription treatments work very well.'},
+  {k:['sunburn','sun burn'],r:'For sunburn: cool showers, moisturise (after-sun or aqueous cream), drink extra water, ibuprofen for pain. Blistering = deeper burn, keep blisters intact. Remember SPF 30+ next time — SA and Namibian sun is fierce.'},
+  {k:['sleep','insomnia','can\'t sleep','cant sleep'],r:'For better sleep: fixed wake-up time, no screens 1 hour before bed, no caffeine after 14:00, bedroom dark and cool, bed = sleep only. Avoid sleeping tablets long-term. See a doctor if snoring + daytime sleepiness (possible sleep apnoea) or low mood is behind it.'},
+  {k:['stress','burnout','overwhelmed','panic'],r:'For stress: regular exercise is the best evidence-based treatment, slow breathing (4 in, 6 out) calms panic, limit alcohol, talk to someone you trust. If it affects sleep, work or relationships for >2 weeks, see your GP or a counsellor — SADAG <strong>0800 456 789</strong> is free, 24/7.'},
+  {k:['smoking','quit smoking','stop smoking','vape'],r:'Quitting smoking is the single best thing you can do for your health. Best results: set a quit date, nicotine replacement (patches/gum) or prescription tablets (e.g. varenicline), plus support. Ask your GP or pharmacist. Most people need a few attempts — keep going.'},
+  {k:['alcohol','drinking too much','hangover'],r:'Low-risk drinking: no more than 2 standard drinks/day with alcohol-free days. If you\'re worried about your drinking, that worry is worth listening to — talk to your GP. SANCA: <strong>011 892 3829</strong>. Never drink and drive.'},
+  {k:['weight','lose weight','diet','obesity'],r:'Sustainable weight loss: aim for 0.5–1kg/week — smaller portions, cut sugary drinks completely, protein + vegetables at each meal, 150 min walking/week. Crash diets fail. Your GP can check for thyroid/metabolic causes and discuss medication options if BMI is high.'},
+  {k:['cholesterol','lipids'],r:'High cholesterol has no symptoms — it\'s found on a blood test. Treatment: less processed food, more fish/nuts/olive oil, exercise, and statins if your overall heart risk is raised. If you\'re on a statin, take it consistently — it works while you take it.'},
+  {k:['thyroid','tired all the time','fatigue','exhausted'],r:'Constant tiredness has many causes: poor sleep, stress, anaemia, thyroid, diabetes, depression. If rest doesn\'t fix it within 2–3 weeks, see your GP for a check and basic blood tests rather than guessing.'},
+  {k:['vaccine','vaccination','flu shot','immunis'],r:'Vaccines save lives. Annual flu vaccine (autumn) is wise for over-65s, pregnant women, diabetics, and heart/lung patients. Children\'s schedule vaccines are free at government clinics. Keep your records in the <strong>More → Vaccines</strong> section of this app.'},
+  {k:['worm','deworm'],r:'Deworming: families with young children can deworm every 6 months (mebendazole, e.g. Vermox — single dose, repeat in 2 weeks, treat the whole household). Available at any pharmacy.'},
+  {k:['tick','tick bite','spotted fever'],r:'Tick bite fever: watch for a black scab (eschar) at the bite, fever, headache and sore muscles 5–7 days later. It needs doxycycline from a doctor — don\'t wait it out. Remove ticks with tweezers, pulling straight out.'},
+  {k:['malaria','mosquito'],r:'Malaria: fever after visiting a malaria area (Limpopo/Mpumalanga lowveld, KZN north, most of northern Namibia, Mozambique) is malaria until proven otherwise — get tested SAME DAY. Prevention: prophylaxis tablets, repellent, nets. It can kill within days; never ignore the fever.'},
+  {k:['sti','std','discharge','genital'],r:'Possible STI symptoms (discharge, sores, burning): get tested and treated early — most STIs are easily cured, and partners must be treated too. Government clinics treat STIs free and confidentially. Use condoms. An HIV test is part of any STI check.'},
+  {k:['hiv test','hiv positive','arv'],r:'HIV testing is quick, free at government clinics, and confidential. If positive: modern ARVs (one tablet daily) give a normal life expectancy, and an undetectable viral load means you cannot pass HIV on (U=U). Start treatment immediately — don\'t delay.'},
+  {k:['tb','tuberculosis','coughing blood','night sweats'],r:'TB warning signs: cough >2 weeks, night sweats, weight loss, coughing blood. Testing and full treatment are FREE at government clinics. TB is curable — but only if you complete all 6 months of treatment without stopping.'},
+  {k:['kidney stone','renal colic','flank pain'],r:'Kidney stone pain (severe loin-to-groin pain, can\'t sit still): strong anti-inflammatories help most (e.g. diclofenac), drink water. Go to a doctor/ER for the first episode, if fever develops, or pain is uncontrolled — fever + stone is an emergency.'},
+  {k:['prostate','psa','urinating at night'],r:'Men over 50 (45 if family history): discuss prostate checks (PSA blood test) with your GP. Waking often at night to urinate, weak stream, or dribbling is usually benign enlargement — very treatable with tablets. Blood in urine always needs a check.'},
+  {k:['erectile','impotence','erection'],r:'Erectile difficulty is common and treatable — and can be an early warning of heart/vessel disease or diabetes, so it\'s worth a proper GP check, not just tablets. Treatments (e.g. sildenafil) are effective but should not be mixed with nitrate heart medication.'},
+  {k:['swollen legs','ankle swelling','oedema','edema'],r:'Swollen ankles: raise the legs when sitting, reduce salt, support stockings help. See a doctor soon if one leg only (possible clot — urgent), or if swelling comes with breathlessness (possible heart cause).'},
+  {k:['anaemia','anemia','pale','iron'],r:'Anaemia symptoms: tiredness, paleness, breathlessness on stairs. Causes include iron deficiency (heavy periods, poor diet) and chronic disease. Don\'t just take iron — see a doctor to find the CAUSE first, especially in men and after menopause.'},
+  {k:['baby','infant','teething','colic'],r:'For babies: fever in an infant under 3 months = see a doctor immediately. Teething: chilled teething ring, paracetamol drops by weight. Colic usually peaks at 6 weeks and settles by 4 months. Trust your instinct — if baby looks ill, get them seen.'},
+  {k:['medical aid','covered by','what is covered','my cover','pmb','benefits'],r:'For cover questions: open the <strong>🛡️ PMB checker</strong> in your Profile tab — it shows in green/yellow/red whether a condition must be covered by law on any option. The <strong>Coverage Guide</strong> in Find Care shows typical cover per provider type, and <strong>My Card</strong> has a button to your scheme\'s own benefits page. For exact benefits, your scheme\'s call centre is the final word.'},
+  {k:['contracept','birth control','family planning','morning after'],r:'Contraception options: pill, injection (2–3 monthly), implant (3 years), IUD (5–10 years), condoms. Free at government clinics. Emergency (morning-after) pill works best within 72 hours — available at any pharmacy without prescription.'},
 ];
 let _chatVoice=false;
 function processChat(msg){
   const lc=msg.toLowerCase();
-  for(const rule of AI_RULES){if(rule.k.some(k=>lc.includes(k)))return rule.r;}
+  // Babies first — their advice differs from adults
+  if(lc.includes('baby')||lc.includes('infant')||lc.includes('newborn')){const br=AI_RULES.find(x=>x.k.includes('baby'));if(br)return br.r;}
+  // Short keywords (≤4 letters like "bp","uti","tb") must match whole words only,
+  // so "covered" never triggers "ed", "speech" never triggers "pee", etc.
+  const kwMatch=k=>k.length<=4?new RegExp('\\b'+k.replace(/[^a-z0-9 ]/g,'')+'\\b').test(lc):lc.includes(k);
+  for(const rule of AI_RULES){if(rule.k.some(kwMatch))return rule.r;}
   if(lc.includes('who are you')||lc.includes('what are you'))return'I am the Health One-Stop AI assistant — here to give you basic health guidance. I am not a substitute for a real doctor. For anything serious, please see a healthcare provider.';
   if(lc.includes('thank'))return'You\'re welcome! Stay healthy. 🌿';
-  return'I\'m not sure about that specific question. For personalised medical advice, please consult your GP or pharmacist. You can use the <strong>Find Care</strong> tab to locate a provider near you.';
+  if(/^(hi|hello|hallo|good morning|good day|goeie|howzit|hey)\b/.test(lc))return'Hello! 👋 Ask me about a symptom in simple words — for example <em>"sore throat"</em>, <em>"earache"</em>, <em>"heartburn"</em>, <em>"can\'t sleep"</em> — or tap one of the topic buttons above.';
+  // Smarter fallback: try to find a partial keyword match on single words
+  const STOP=['what','when','where','which','does','have','that','with','this','your','about','should','could','would','please','help','need','some','from','they','will','very','much','many','suggest','tell'];
+  const words=lc.split(/[^a-z']+/).filter(w=>w.length>3&&!STOP.includes(w));
+  for(const rule of AI_RULES){for(const k of rule.k){if(k.length<5)continue;for(const w of words){if(k.includes(w)||w.includes(k))return rule.r;}}}
+  return'I don\'t have specific guidance on that yet — I work best with everyday symptoms in simple words. Try asking about things like: <em>sore throat, earache, rash, burn, heartburn, period pain, bladder infection, back pain, gout, sleep, stress, baby fever</em> — or tap a topic button above.<br><br>For anything beyond that, your GP or pharmacist is the right person, and the <strong>Find Care</strong> tab will locate one near you. 💙';
 }
 function addChatBubble(text,who){
   const wrap=document.getElementById('chat-messages');
@@ -1181,6 +1629,12 @@ function addChatBubble(text,who){
   wrap.appendChild(div);
   wrap.scrollTop=wrap.scrollHeight;
 }
+function sendSuggestion(text){
+  addChatBubble(escHtml(text),'user');
+  setTimeout(()=>{addChatBubble(processChat(text),'ai');},400);
+  gaEvent('chat_chip',{chip:text});
+}
+function chatKeyDown(e){if(e.key==='Enter')sendChat();}
 function sendChat(){
   const inp=document.getElementById('chat-input');
   const msg=inp?inp.value.trim():'';
@@ -1188,13 +1642,14 @@ function sendChat(){
   addChatBubble(escHtml(msg),'user');
   inp.value='';
   setTimeout(()=>{const reply=processChat(msg);addChatBubble(reply,'ai');},400);
+  gaEvent('chat_message');
 }
 function toggleVoice(){
   _chatVoice=!_chatVoice;
-  const btn=document.getElementById('voice-chat-btn');
-  if(!_chatVoice){if(btn)btn.textContent='🎙️';return;}
-  if(btn)btn.textContent='🔴';
-  if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){showAlert('chat-alert','Voice not supported','error');_chatVoice=false;if(btn)btn.textContent='🎙️';return;}
+  const btn=document.getElementById('mic-btn');
+  if(!_chatVoice){if(btn){btn.textContent='🎤';btn.classList.remove('active');}if(window._chatRecognizer){try{window._chatRecognizer.stop();}catch(e){}}return;}
+  if(btn){btn.textContent='🔴';btn.classList.add('active');}
+  if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){addChatBubble('⚠️ Voice input is not supported on this browser. Try Chrome.','ai');_chatVoice=false;if(btn)btn.textContent='🎤';return;}
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   const r=new SR();r.lang='en-ZA';r.continuous=true;r.interimResults=false;
   r.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal){const t=e.results[i][0].transcript.trim();addChatBubble(escHtml(t),'user');setTimeout(()=>addChatBubble(processChat(t),'ai'),400);}}};
@@ -1205,56 +1660,59 @@ function toggleVoice(){
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.activeElement&&document.activeElement.id==='chat-input')sendChat();});
 </script>
 <script>
-// ─── Camera / OCR ─────────────────────────────────────────────────
-function scanCard(){
-  const input=document.createElement('input');input.type='file';input.accept='image/*';input.capture='environment';
-  input.onchange=async e=>{
-    const file=e.target.files[0];if(!file)return;
-    const reader=new FileReader();
-    reader.onload=async ev=>{
-      const img=document.getElementById('scan-preview');
-      if(img){img.src=ev.target.result;img.style.display='block';}
-      document.getElementById('scan-status').textContent='🔍 Reading card…';
-      openModal('modal-scan');
-      await runOCR(ev.target.result);
-    };
-    reader.readAsDataURL(file);
+// ─── Camera / OCR (scan medical aid card) ─────────────────────────
+function scanCard(input){
+  if(!input||!input.files||!input.files[0])return;
+  const file=input.files[0];
+  const reader=new FileReader();
+  reader.onload=async ev=>{
+    const body=document.getElementById('scan-body');
+    body.innerHTML='<img class="ocr-preview" src="'+ev.target.result+'">'
+      +'<div class="ocr-progress-bar" id="scan-status"><span class="spinner-dark"></span>Reading card…</div>'
+      +'<div class="ocr-field"><label>Full Name</label><input type="text" id="scan-name"></div>'
+      +'<div class="ocr-field"><label>SA ID Number</label><input type="text" id="scan-id" inputmode="numeric"></div>'
+      +'<div class="ocr-field"><label>Medical Aid</label><input type="text" id="scan-scheme"></div>'
+      +'<div class="ocr-field"><label>Member No.</label><input type="text" id="scan-member"></div>'
+      +'<button class="btn btn-primary" style="margin-top:10px;" onclick="confirmCardEntry()">✅ Use These Details</button>'
+      +'<button class="modal-close-btn" onclick="closeModal(\'modal-scan\')">Cancel</button>';
+    openModal('modal-scan');
+    await runOCR(ev.target.result);
   };
-  input.click();
+  reader.readAsDataURL(file);
+  input.value='';
 }
 async function runOCR(dataUrl){
+  const status=document.getElementById('scan-status');
   try{
-    if(!window.Tesseract)await new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});
+    if(!window.Tesseract)await new Promise((res,rej)=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';sc.onload=res;sc.onerror=rej;document.head.appendChild(sc);});
     const {data:{text}}=await Tesseract.recognize(dataUrl,'eng');
-    document.getElementById('scan-status').textContent='✅ Text detected — review below:';
+    if(status)status.innerHTML='✅ Text detected — check and correct below:';
     const parsed=parseCardText(text);
-    document.getElementById('scan-name').value=parsed.name||'';
-    document.getElementById('scan-id').value=parsed.id||'';
-    document.getElementById('scan-scheme').value=parsed.scheme||'';
-    document.getElementById('scan-member').value=parsed.member||'';
-  }catch(err){document.getElementById('scan-status').textContent='⚠️ Could not read card — fill in manually.';}
+    const set=(id,v)=>{const el=document.getElementById(id);if(el&&v)el.value=v;};
+    set('scan-name',parsed.name);set('scan-id',parsed.id);set('scan-scheme',parsed.scheme);set('scan-member',parsed.member);
+  }catch(err){if(status)status.innerHTML='⚠️ Could not read the card — please fill in manually below.';}
 }
 function parseCardText(text){
   const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
   const result={};
   const idMatch=text.match(/\b(\d{13})\b/);if(idMatch)result.id=idMatch[1];
-  const memMatch=text.match(/\b(\d{7,12})\b/);if(memMatch&&!result.id)result.member=memMatch[1];
-  const schemes=['Discovery','Bonitas','Momentum','Medshield','GEMS','Fedhealth','Bestmed','Profmed','Sizwe','Keyhealth','Medihelp'];
-  for(const s of schemes){if(text.toLowerCase().includes(s.toLowerCase())){result.scheme=s;break;}}
+  const memMatch=text.match(/\b(\d{7,12})\b/);if(memMatch&&(!result.id||memMatch[1]!==result.id))result.member=memMatch[1];
+  const schemes={'discovery':'Discovery Health','bonitas':'Bonitas','momentum':'Momentum Health','medihelp':'Medihelp','medshield':'Medshield','gems':'GEMS','fedhealth':'Fedhealth','bestmed':'Bestmed','profmed':'Profmed','sizwe':'Sizwe Hosmed','hosmed':'Sizwe Hosmed','keyhealth':'Keyhealth','umvuzo':'Umvuzo Health','polmed':'Polmed','bankmed':'Bankmed','la health':'LA Health','samwumed':'SAMWUMED','thebemed':'Thebemed','suremed':'Suremed Health','genesis':'Genesis Medical','nhp':'Namibia Health Plan (NHP)','nammed':'Nammed','renaissance':'Renaissance Health (RMA)','heritage':'Heritage Health','napotel':'Napotel','psemas':'PSEMAS (Government Employees)'};
+  const lc=text.toLowerCase();
+  for(const k of Object.keys(schemes)){if(lc.includes(k)){result.scheme=schemes[k];break;}}
   if(lines.length>0)result.name=lines[0];
   return result;
 }
 function confirmCardEntry(){
-  const name=document.getElementById('scan-name').value.trim();
-  const id=document.getElementById('scan-id').value.trim();
-  const scheme=document.getElementById('scan-scheme').value.trim();
-  const member=document.getElementById('scan-member').value.trim();
-  if(name){const el=document.getElementById('prof-name');if(el)el.value=name;}
-  if(id){const el=document.getElementById('prof-id');if(el)el.value=id;}
-  if(scheme){const el=document.getElementById('prof-aid-scheme');if(el)el.value=scheme;}
-  if(member){const el=document.getElementById('prof-aid-number');if(el)el.value=member;}
+  const g=id=>{const el=document.getElementById(id);return el?el.value.trim():'';};
+  const name=g('scan-name'),id=g('scan-id'),scheme=g('scan-scheme'),member=g('scan-member');
+  if(name)document.getElementById('p-name').value=name;
+  if(id)document.getElementById('p-said').value=id;
+  if(scheme){document.getElementById('p-aid-scheme').value=scheme;populatePlans();}
+  if(member)document.getElementById('p-aid-num').value=member;
   closeModal('modal-scan');
-  showAlert('profile-alert','✅ Card details imported — save your profile to confirm.');
+  switchTab('profile',document.querySelector('[data-tab="profile"]'));
+  showAlert('profile-alert','✅ Card details imported — check them, then tap Save Profile.');
 }
 
 // ─── Profile Photo ────────────────────────────────────────────────
@@ -1265,431 +1723,244 @@ function savePhoto(input){
   reader.readAsDataURL(input.files[0]);
 }
 function loadPhoto(){
-  const data=Store.get('hos_photo');
-  ['prof-photo','card-photo'].forEach(id=>{const el=document.getElementById(id);if(el&&data){el.src=data;el.style.display='block';}});
+  const data=Store.get('hos_photo');if(!data)return;
+  const img=document.getElementById('profile-photo-img');
+  const ph=document.getElementById('profile-photo-placeholder');
+  if(img){img.src=data;img.style.display='block';}
+  if(ph)ph.style.display='none';
 }
 
 // ─── BMI Calculator ───────────────────────────────────────────────
 function calculateBMI(){
-  const h=parseFloat(document.getElementById('prof-height')&&document.getElementById('prof-height').value)||0;
-  const w=parseFloat(document.getElementById('prof-weight')&&document.getElementById('prof-weight').value)||0;
+  const h=parseFloat(document.getElementById('bmi-height').value)||0;
+  const w=parseFloat(document.getElementById('bmi-weight').value)||0;
   const el=document.getElementById('bmi-result');if(!el)return;
-  if(!h||!w){el.textContent='';return;}
-  const bmi=(w/((h/100)**2)).toFixed(1);
-  let cat='';if(bmi<18.5)cat='Underweight';else if(bmi<25)cat='Healthy';else if(bmi<30)cat='Overweight';else cat='Obese';
-  el.innerHTML='BMI: <strong>'+bmi+'</strong> — '+cat;
+  if(!h||!w){el.innerHTML='';return;}
+  const bmi=w/((h/100)**2);
+  let cat,bg,col,tip;
+  if(bmi<18.5){cat='Underweight';bg='#fef3c7';col='#92400e';tip='Consider speaking to a dietician about healthy weight gain.';}
+  else if(bmi<25){cat='Healthy weight';bg='#dcfce7';col='#166534';tip='Great — keep up the balanced diet and regular activity.';}
+  else if(bmi<30){cat='Overweight';bg='#fef3c7';col='#92400e';tip='Small changes help: more activity, smaller portions, less sugar.';}
+  else{cat='Obese';bg='#fee2e2';col='#991b1b';tip='Please discuss a weight plan with your GP or clinic.';}
+  el.innerHTML='<div class="bmi-result" style="background:'+bg+';color:'+col+';"><div class="bmi-num">'+bmi.toFixed(1)+'</div><div class="bmi-cat">'+cat+'</div><div class="bmi-tip">'+tip+'</div></div>';
 }
 
 // ─── Blood Pressure Log ───────────────────────────────────────────
 function saveBP(){
-  const sys=document.getElementById('bp-sys').value;const dia=document.getElementById('bp-dia').value;const pulse=document.getElementById('bp-pulse').value;
-  if(!sys||!dia)return;
+  const sys=parseInt(document.getElementById('bp-systolic').value);
+  const dia=parseInt(document.getElementById('bp-diastolic').value);
+  const date=document.getElementById('bp-date').value||new Date().toISOString().split('T')[0];
+  if(!sys||!dia){showAlert('bp-alert','⚠️ Enter both numbers.','error');return;}
   const log=JSON.parse(Store.get('hos_bp')||'[]');
-  log.unshift({sys,dia,pulse,date:new Date().toLocaleString('en-ZA')});
-  if(log.length>20)log.length=20;
+  log.unshift({sys,dia,date});
+  if(log.length>30)log.length=30;
   Store.set('hos_bp',JSON.stringify(log));
-  document.getElementById('bp-sys').value='';document.getElementById('bp-dia').value='';document.getElementById('bp-pulse').value='';
+  document.getElementById('bp-systolic').value='';document.getElementById('bp-diastolic').value='';
+  showAlert('bp-alert','✅ Reading saved.');
   renderBP();
 }
 function deleteBP(i){const log=JSON.parse(Store.get('hos_bp')||'[]');log.splice(i,1);Store.set('hos_bp',JSON.stringify(log));renderBP();}
 function renderBP(){
-  const el=document.getElementById('bp-log');if(!el)return;
+  const el=document.getElementById('bp-list');if(!el)return;
   const log=JSON.parse(Store.get('hos_bp')||'[]');
   if(!log.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No readings yet.</p>';return;}
   el.innerHTML=log.map((r,i)=>{
-    let cat='';const s=parseInt(r.sys),d=parseInt(r.dia);
-    if(s<120&&d<80)cat='<span style="color:#16a34a">✓ Normal</span>';
-    else if(s<130&&d<80)cat='<span style="color:#ca8a04">⚠ Elevated</span>';
-    else if(s<140||d<90)cat='<span style="color:#ea580c">⬆ Stage 1</span>';
-    else cat='<span style="color:#dc2626">🔴 Stage 2</span>';
-    return'<div class="bp-row"><span><strong>'+r.sys+'/'+r.dia+'</strong>'+(r.pulse?' · '+r.pulse+'bpm':'')+' '+cat+'</span><span style="color:#94a3b8;font-size:11px;">'+r.date+'</span><button class="icon-btn" onclick="deleteBP('+i+')">🗑️</button></div>';
+    const sv=parseInt(r.sys),dv=parseInt(r.dia);
+    let cls='bp-normal',cat='✓ Normal';
+    if(sv>=180||dv>=110){cls='bp-high';cat='🔴 Very high — see a doctor';}
+    else if(sv>=140||dv>=90){cls='bp-high';cat='⬆ High (Stage 2)';}
+    else if(sv>=130||dv>=80){cls='bp-elevated';cat='⚠ Raised (Stage 1)';}
+    else if(sv>=120){cls='bp-elevated';cat='⚠ Elevated';}
+    return '<div class="bp-row '+cls+'"><span class="bp-val">'+sv+'/'+dv+'</span><span style="font-size:12px;">'+cat+'</span><span class="bp-date">'+(r.date||'')+'</span><button onclick="deleteBP('+i+')" style="background:none;border:none;cursor:pointer;font-size:14px;">🗑️</button></div>';
   }).join('');
 }
 
 // ─── Vaccination Record ───────────────────────────────────────────
 function saveVaccine(){
-  const name=document.getElementById('vacc-name').value.trim();const date=document.getElementById('vacc-date').value;const due=document.getElementById('vacc-due').value;
-  if(!name)return;
+  const name=document.getElementById('vacc-name').value.trim();
+  const date=document.getElementById('vacc-date-given').value;
+  const due=document.getElementById('vacc-next-due').value;
+  if(!name){showAlert('vacc-alert','⚠️ Enter the vaccine name.','error');return;}
   const list=JSON.parse(Store.get('hos_vaccines')||'[]');
-  list.push({name,date,due});
+  list.unshift({name,date,due});
   Store.set('hos_vaccines',JSON.stringify(list));
-  document.getElementById('vacc-name').value='';document.getElementById('vacc-date').value='';document.getElementById('vacc-due').value='';
+  document.getElementById('vacc-name').value='';document.getElementById('vacc-date-given').value='';document.getElementById('vacc-next-due').value='';
+  showAlert('vacc-alert','✅ Vaccine added.');
   renderVaccines();
 }
 function deleteVaccine(i){const list=JSON.parse(Store.get('hos_vaccines')||'[]');list.splice(i,1);Store.set('hos_vaccines',JSON.stringify(list));renderVaccines();}
 function renderVaccines(){
-  const el=document.getElementById('vaccine-list');if(!el)return;
+  const el=document.getElementById('vacc-list');if(!el)return;
   const list=JSON.parse(Store.get('hos_vaccines')||'[]');
   if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No vaccinations recorded.</p>';return;}
-  el.innerHTML=list.map((v,i)=>'<div class="vaccine-row"><span>💉 <strong>'+escHtml(v.name)+'</strong>'+(v.date?' — Given: '+v.date:'')+(v.due?' — Next: '+v.due:'')+'</span><button class="icon-btn" onclick="deleteVaccine('+i+')">🗑️</button></div>').join('');
+  const today=new Date().toISOString().split('T')[0];
+  el.innerHTML=list.map((v,i)=>{
+    const overdue=v.due&&v.due<=today;
+    return '<div class="vacc-row"'+(overdue?' style="border-color:#fca5a5;background:#fef2f2;"':'')+'><span class="vacc-name">💉 '+escHtml(v.name)+'</span><span class="vacc-date">'+(v.date?'Given '+v.date:'')+(v.due?(overdue?' · <strong style="color:#dc2626;">Due '+v.due+'</strong>':' · Next '+v.due):'')+'</span><button onclick="deleteVaccine('+i+')" style="background:none;border:none;cursor:pointer;font-size:14px;">🗑️</button></div>';
+  }).join('');
 }
 
 // ─── Accordion ────────────────────────────────────────────────────
 function toggleAccordion(el){
   const body=el.nextElementSibling;if(!body)return;
-  const open=body.style.display==='block';
-  body.style.display=open?'none':'block';
-  el.querySelector('.acc-arrow').textContent=open?'▼':'▲';
+  const open=body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  const arrow=el.querySelector('span:last-child');
+  if(arrow)arrow.textContent=open?'▼':'▲';
 }
 
 // ─── Mental Health Check-in ───────────────────────────────────────
 function mentalHealthCheck(){
-  const mood=document.getElementById('mood-select')?document.getElementById('mood-select').value:'';
-  const el=document.getElementById('mood-advice');if(!el)return;
-  const advice={
-    great:'🌟 Wonderful! Keep doing what\'s working — sleep, exercise, social connection, and purpose are the pillars of good mental health.',
-    good:'😊 Good to hear. Small daily habits keep the balance — short walks, good sleep, and connecting with someone you trust.',
-    okay:'🤔 Just okay is perfectly valid. Check in on your sleep and stress levels. A short walk or talking to someone can help shift things.',
-    low:'💙 Sorry to hear you\'re feeling low. Be gentle with yourself. Talk to someone you trust. If this persists more than two weeks, please see your GP.',
-    bad:'❤️ When things feel bad, reaching out matters. SADAG helpline: <strong>0800 456 789</strong> (free, 24/7). You don\'t have to face this alone.'
-  };
-  el.innerHTML='<div class="alert" style="margin-top:10px;">'+(advice[mood]||'')+'</div>';
+  let total=0;
+  for(let i=1;i<=5;i++){total+=parseInt(document.getElementById('mh-'+i).value)||3;}
+  const el=document.getElementById('mh-result');if(!el)return;
+  let bg,col,msg;
+  if(total>=20){bg='#dcfce7';col='#166534';msg='🌟 You\'re doing well! Keep up the sleep, movement, and connection with others.';}
+  else if(total>=14){bg='#fef3c7';col='#92400e';msg='🤔 Some ups and downs — that\'s normal. Check your sleep and stress, and talk to someone you trust.';}
+  else{bg='#fee2e2';col='#991b1b';msg='💙 You may be having a hard time. Please talk to your GP or call SADAG: <strong>0800 567 567</strong> (free, 24/7). You don\'t have to face this alone.';}
+  el.innerHTML='<div class="mh-score-display" style="background:'+bg+';color:'+col+';"><div style="font-size:26px;font-weight:700;">'+total+' / 25</div><div style="font-size:13px;margin-top:6px;line-height:1.6;">'+msg+'</div></div>';
 }
 </script>
 <script>
 // ─── Lab Results ──────────────────────────────────────────────────
 function saveLabResult(){
-  const name=document.getElementById('lab-name').value.trim();
-  const val=document.getElementById('lab-value').value.trim();
-  const ref=document.getElementById('lab-ref').value.trim();
+  const test=document.getElementById('lab-test').value.trim();
   const date=document.getElementById('lab-date').value;
-  if(!name||!val)return;
-  const list=JSON.parse(Store.get('hos_labs')||'[]');
-  list.unshift({name,val,ref,date,id:Date.now()});
-  Store.set('hos_labs',JSON.stringify(list));
-  closeModal('modal-lab');
-  document.getElementById('lab-name').value='';document.getElementById('lab-value').value='';document.getElementById('lab-ref').value='';document.getElementById('lab-date').value='';
-  renderLabResults();
+  const provider=document.getElementById('lab-provider').value;
+  const notes=document.getElementById('lab-notes').value.trim();
+  if(!test){alert('Please enter the test name.');return;}
+  const finish=photo=>{
+    const list=JSON.parse(Store.get('hos_labs')||'[]');
+    list.unshift({id:Date.now(),test,date,provider,notes,photo:photo||'',show:false});
+    Store.set('hos_labs',JSON.stringify(list));
+    closeModal('modal-lab');
+    ['lab-test','lab-notes','lab-date'].forEach(id=>{document.getElementById(id).value='';});
+    const ph=document.getElementById('lab-photo');if(ph)ph.value='';
+    renderLabResults();
+  };
+  const ph=document.getElementById('lab-photo');
+  if(ph&&ph.files&&ph.files[0]){const reader=new FileReader();reader.onload=e=>finish(e.target.result);reader.readAsDataURL(ph.files[0]);}
+  else finish('');
 }
-function deleteLabResult(id){const list=JSON.parse(Store.get('hos_labs')||'[]').filter(r=>r.id!==id);Store.set('hos_labs',JSON.stringify(list));renderLabResults();}
+function deleteLabResult(id){if(!confirm('Delete this lab result?'))return;const list=JSON.parse(Store.get('hos_labs')||'[]').filter(r=>r.id!==id);Store.set('hos_labs',JSON.stringify(list));renderLabResults();}
+function toggleLab(id){const list=JSON.parse(Store.get('hos_labs')||'[]');const r=list.find(x=>x.id===id);if(r)r.show=!r.show;Store.set('hos_labs',JSON.stringify(list));renderLabResults();}
 function renderLabResults(){
-  const el=document.getElementById('lab-results-list');if(!el)return;
+  const el=document.getElementById('lab-list');if(!el)return;
   const list=JSON.parse(Store.get('hos_labs')||'[]');
   if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No lab results saved.</p>';return;}
-  el.innerHTML=list.map(r=>'<div class="record-card"><div class="record-header"><strong>🧪 '+escHtml(r.name)+'</strong><span style="color:#94a3b8;font-size:11px;">'+(r.date||'')+'</span></div><div style="font-size:13px;color:#1e293b;">Result: <strong>'+escHtml(r.val)+'</strong>'+(r.ref?' (Ref: '+escHtml(r.ref)+')':'')+'</div><button class="icon-btn" style="margin-top:6px;" onclick="deleteLabResult('+r.id+')">🗑️ Delete</button></div>').join('');
+  el.innerHTML=list.map(r=>'<div class="record-entry"><div class="record-entry-header" onclick="toggleLab('+r.id+')"><div><div class="record-title">🧪 '+escHtml(r.test)+'</div><div class="record-date">'+(r.provider||'')+(r.date?' · '+r.date:'')+'</div></div><span>'+(r.show?'▲':'▼')+'</span></div><div class="record-body'+(r.show?' open':'')+'">'+(r.notes?escHtml(r.notes):'<em>No notes</em>')+(r.photo?'<br><img src="'+r.photo+'" style="max-width:100%;border-radius:8px;margin-top:8px;">':'')+'<br><button onclick="deleteLabResult('+r.id+')" style="margin-top:8px;background:#fee2e2;border:none;border-radius:8px;padding:5px 10px;color:#dc2626;font-size:12px;cursor:pointer;">🗑️ Delete</button></div></div>').join('');
 }
 
 // ─── Radiology Records ────────────────────────────────────────────
 function saveRadiology(){
-  const type=document.getElementById('rad-type').value.trim();
-  const body=document.getElementById('rad-body').value.trim();
-  const findings=document.getElementById('rad-findings').value.trim();
-  const date=document.getElementById('rad-date').value;
-  if(!type)return;
-  const list=JSON.parse(Store.get('hos_radiology')||'[]');
-  list.unshift({type,body,findings,date,id:Date.now(),show:false});
-  Store.set('hos_radiology',JSON.stringify(list));
-  closeModal('modal-radiology');
-  document.getElementById('rad-type').value='';document.getElementById('rad-body').value='';document.getElementById('rad-findings').value='';document.getElementById('rad-date').value='';
-  renderRadiology();
+  const type=document.getElementById('radio-type').value;
+  const date=document.getElementById('radio-date').value;
+  const provider=document.getElementById('radio-provider').value.trim();
+  const notes=document.getElementById('radio-notes').value.trim();
+  const finish=photo=>{
+    const list=JSON.parse(Store.get('hos_radiology')||'[]');
+    list.unshift({id:Date.now(),type,date,provider,notes,photo:photo||'',show:false});
+    Store.set('hos_radiology',JSON.stringify(list));
+    closeModal('modal-radio');
+    ['radio-provider','radio-notes','radio-date'].forEach(id=>{document.getElementById(id).value='';});
+    const ph=document.getElementById('radio-photo');if(ph)ph.value='';
+    renderRadiology();
+  };
+  const ph=document.getElementById('radio-photo');
+  if(ph&&ph.files&&ph.files[0]){const reader=new FileReader();reader.onload=e=>finish(e.target.result);reader.readAsDataURL(ph.files[0]);}
+  else finish('');
 }
-function deleteRadiology(id){const list=JSON.parse(Store.get('hos_radiology')||'[]').filter(r=>r.id!==id);Store.set('hos_radiology',JSON.stringify(list));renderRadiology();}
+function deleteRadiology(id){if(!confirm('Delete this report?'))return;const list=JSON.parse(Store.get('hos_radiology')||'[]').filter(r=>r.id!==id);Store.set('hos_radiology',JSON.stringify(list));renderRadiology();}
 function toggleRecord(id){const list=JSON.parse(Store.get('hos_radiology')||'[]');const r=list.find(x=>x.id===id);if(r)r.show=!r.show;Store.set('hos_radiology',JSON.stringify(list));renderRadiology();}
 function renderRadiology(){
-  const el=document.getElementById('radiology-list');if(!el)return;
+  const el=document.getElementById('radio-list');if(!el)return;
   const list=JSON.parse(Store.get('hos_radiology')||'[]');
   if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No radiology reports saved.</p>';return;}
-  el.innerHTML=list.map(r=>'<div class="record-card"><div class="record-header" onclick="toggleRecord('+r.id+')"><strong>🩻 '+escHtml(r.type)+(r.body?' — '+escHtml(r.body):'')+'</strong><span style="color:#94a3b8;font-size:11px;">'+(r.date||'')+'</span></div>'+(r.show&&r.findings?'<div style="margin-top:8px;font-size:13px;color:#374151;line-height:1.6;">'+escHtml(r.findings)+'</div>':'')+'<button class="icon-btn" style="margin-top:6px;" onclick="deleteRadiology('+r.id+')">🗑️ Delete</button></div>').join('');
+  el.innerHTML=list.map(r=>'<div class="record-entry"><div class="record-entry-header" onclick="toggleRecord('+r.id+')"><div><div class="record-title">📡 '+escHtml(r.type)+'</div><div class="record-date">'+(r.provider?escHtml(r.provider):'')+(r.date?' · '+r.date:'')+'</div></div><span>'+(r.show?'▲':'▼')+'</span></div><div class="record-body'+(r.show?' open':'')+'">'+(r.notes?escHtml(r.notes):'<em>No notes</em>')+(r.photo?'<br><img src="'+r.photo+'" style="max-width:100%;border-radius:8px;margin-top:8px;">':'')+'<br><button onclick="deleteRadiology('+r.id+')" style="margin-top:8px;background:#fee2e2;border:none;border-radius:8px;padding:5px 10px;color:#dc2626;font-size:12px;cursor:pointer;">🗑️ Delete</button></div></div>').join('');
 }
 
 // ─── Family / Dependants ──────────────────────────────────────────
-function calcAge(dob){if(!dob)return '';const d=new Date(dob),now=new Date();let age=now.getFullYear()-d.getFullYear();if(now<new Date(now.getFullYear(),d.getMonth(),d.getDate()))age--;return age+' yrs';}
-function openAddDependant(){openModal('modal-dependant');}
-function saveDependant(){
-  const name=document.getElementById('dep-name').value.trim();if(!name)return;
-  const dep={id:Date.now(),name,rel:document.getElementById('dep-rel').value.trim(),dob:document.getElementById('dep-dob').value,id_no:document.getElementById('dep-id').value.trim(),blood:document.getElementById('dep-blood').value,scheme:document.getElementById('dep-scheme').value.trim(),member:document.getElementById('dep-member').value.trim(),conditions:document.getElementById('dep-conditions').value.trim(),meds:document.getElementById('dep-meds').value.trim(),photo:''};
-  const list=JSON.parse(Store.get('hos_dependants')||'[]');list.push(dep);Store.set('hos_dependants',JSON.stringify(list));
-  closeModal('modal-dependant');
-  ['dep-name','dep-rel','dep-dob','dep-id','dep-blood','dep-scheme','dep-member','dep-conditions','dep-meds'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  renderDependants();
+function calcAge(dob){if(!dob)return '';const d=new Date(dob),now=new Date();let age=now.getFullYear()-d.getFullYear();if(now<new Date(now.getFullYear(),d.getMonth(),d.getDate()))age--;return age;}
+let _bookletPhotos=[];
+function openAddDependant(){
+  document.getElementById('dep-modal-title').textContent='👶 Add Dependant';
+  document.getElementById('dep-edit-id').value='';
+  ['dep-name','dep-dob','dep-allergies','dep-conditions','dep-meds','dep-birth','dep-aidnum','dep-notes'].forEach(id=>{document.getElementById(id).value='';});
+  document.getElementById('dep-sex').value='';document.getElementById('dep-blood').value='';
+  _bookletPhotos=[];renderBookletPhotos();
+  openModal('modal-dependant');
 }
-function deleteDependant(id){const list=JSON.parse(Store.get('hos_dependants')||'[]').filter(d=>d.id!==id);Store.set('hos_dependants',JSON.stringify(list));renderDependants();}
-function addBookletPhoto(id,input){
+function openEditDependant(id){
+  const list=JSON.parse(Store.get('hos_dependants')||'[]');
+  const d=list.find(x=>x.id===id);if(!d)return;
+  document.getElementById('dep-modal-title').textContent='✏️ Edit Dependant';
+  document.getElementById('dep-edit-id').value=d.id;
+  document.getElementById('dep-name').value=d.name||'';
+  document.getElementById('dep-sex').value=d.sex||'';
+  document.getElementById('dep-dob').value=d.dob||'';
+  document.getElementById('dep-blood').value=d.blood||'';
+  document.getElementById('dep-allergies').value=d.allergies||'';
+  document.getElementById('dep-conditions').value=d.conditions||'';
+  document.getElementById('dep-meds').value=d.meds||'';
+  document.getElementById('dep-birth').value=d.birth||'';
+  document.getElementById('dep-aidnum').value=d.aidnum||'';
+  document.getElementById('dep-notes').value=d.notes||'';
+  _bookletPhotos=(d.photos||[]).slice();renderBookletPhotos();
+  openModal('modal-dependant');
+}
+function addBookletPhoto(input){
   if(!input.files||!input.files[0])return;
   const reader=new FileReader();
-  reader.onload=e=>{const list=JSON.parse(Store.get('hos_dependants')||'[]');const d=list.find(x=>x.id===id);if(d){d.photo=e.target.result;Store.set('hos_dependants',JSON.stringify(list));renderDependants();}};
+  reader.onload=e=>{_bookletPhotos.push(e.target.result);renderBookletPhotos();};
   reader.readAsDataURL(input.files[0]);
+  input.value='';
+}
+function renderBookletPhotos(){
+  const el=document.getElementById('dep-booklet-photos');if(!el)return;
+  el.innerHTML=_bookletPhotos.map((ph,i)=>'<div style="position:relative;display:inline-block;"><img src="'+ph+'" class="booklet-thumb"><button onclick="removeBookletPhoto('+i+')" style="position:absolute;top:-6px;right:-6px;background:#dc2626;color:white;border:none;border-radius:50%;width:20px;height:20px;font-size:11px;cursor:pointer;">×</button></div>').join('');
+}
+function removeBookletPhoto(i){_bookletPhotos.splice(i,1);renderBookletPhotos();}
+function saveDependant(){
+  const name=document.getElementById('dep-name').value.trim();
+  if(!name){alert('Please enter the dependant\'s name.');return;}
+  const g=id=>document.getElementById(id).value.trim();
+  const editId=document.getElementById('dep-edit-id').value;
+  const list=JSON.parse(Store.get('hos_dependants')||'[]');
+  const dep={
+    id:editId?parseInt(editId):Date.now(),
+    name,sex:document.getElementById('dep-sex').value,dob:g('dep-dob'),blood:document.getElementById('dep-blood').value,
+    allergies:g('dep-allergies'),conditions:g('dep-conditions'),meds:g('dep-meds'),
+    birth:g('dep-birth'),aidnum:g('dep-aidnum'),notes:g('dep-notes'),photos:_bookletPhotos.slice()
+  };
+  if(editId){const idx=list.findIndex(x=>x.id===dep.id);if(idx>=0)list[idx]=dep;else list.push(dep);}
+  else list.push(dep);
+  Store.set('hos_dependants',JSON.stringify(list));
+  closeModal('modal-dependant');
+  renderDependants();renderEmergency();
+}
+function deleteDependant(id){
+  if(!confirm('Remove this dependant?'))return;
+  const list=JSON.parse(Store.get('hos_dependants')||'[]').filter(d=>d.id!==id);
+  Store.set('hos_dependants',JSON.stringify(list));
+  renderDependants();renderEmergency();
 }
 function renderDependants(){
   const el=document.getElementById('dependants-list');if(!el)return;
   const list=JSON.parse(Store.get('hos_dependants')||'[]');
   if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No dependants added yet.</p>';return;}
-  el.innerHTML=list.map(d=>'<div class="dependant-card"><div class="dep-header">'+(d.photo?'<img src="'+d.photo+'" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #e2e8f0;">':'<div style="width:44px;height:44px;border-radius:50%;background:#e0e7ff;display:flex;align-items:center;justify-content:center;font-size:20px;">👤</div>')+'<div><div style="font-weight:700;color:#1e293b;">'+escHtml(d.name)+'</div><div style="font-size:12px;color:#64748b;">'+(d.rel?escHtml(d.rel)+' · ':'')+calcAge(d.dob)+'</div></div></div>'+(d.conditions?'<div style="font-size:12px;color:#374151;margin-top:6px;">⚕️ '+escHtml(d.conditions)+'</div>':'')+(d.meds?'<div style="font-size:12px;color:#374151;">💊 '+escHtml(d.meds)+'</div>':'')+(d.scheme?'<div style="font-size:12px;color:#374151;">🛡️ '+escHtml(d.scheme)+(d.member?' #'+escHtml(d.member):'')+'</div>':'')+'<div style="display:flex;gap:8px;margin-top:8px;"><label class="btn" style="font-size:11px;padding:6px 10px;cursor:pointer;">📷 Photo<input type="file" accept="image/*" style="display:none;" onchange="addBookletPhoto('+d.id+',this)"></label><button class="btn" style="font-size:11px;padding:6px 10px;background:#fee2e2;color:#dc2626;border:none;" onclick="deleteDependant('+d.id+')">🗑️</button></div></div>').join('');
-}
-
-// ─── Pet Module ───────────────────────────────────────────────────
-function openAddPet(){openModal('modal-add-pet');}
-function savePet(){
-  const name=document.getElementById('pet-name').value.trim();if(!name)return;
-  const pet={id:Date.now(),name,species:document.getElementById('pet-species').value.trim(),breed:document.getElementById('pet-breed').value.trim(),dob:document.getElementById('pet-dob').value,microchip:document.getElementById('pet-microchip').value.trim(),vet:document.getElementById('pet-vet').value.trim(),vetPhone:document.getElementById('pet-vet-phone').value.trim(),insurance:document.getElementById('pet-insurance').value.trim(),conditions:document.getElementById('pet-conditions').value.trim(),meds:document.getElementById('pet-meds').value.trim(),vaccines:document.getElementById('pet-vaccines').value.trim()};
-  const list=JSON.parse(Store.get('hos_pets')||'[]');list.push(pet);Store.set('hos_pets',JSON.stringify(list));
-  closeModal('modal-add-pet');
-  ['pet-name','pet-species','pet-breed','pet-dob','pet-microchip','pet-vet','pet-vet-phone','pet-insurance','pet-conditions','pet-meds','pet-vaccines'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  renderPets();
-}
-function deletePet(id){const list=JSON.parse(Store.get('hos_pets')||'[]').filter(p=>p.id!==id);Store.set('hos_pets',JSON.stringify(list));renderPets();}
-function findNearestVet(){searchNearby('vet','Vet / Animal Clinic','🐾');}
-function renderPets(){
-  const el=document.getElementById('pet-list');if(!el)return;
-  const list=JSON.parse(Store.get('hos_pets')||'[]');
-  if(!list.length){el.innerHTML='<div style="text-align:center;color:#94a3b8;font-size:13px;padding:24px;">No pets added yet.<br>Tap <strong>+ Add Pet</strong> to get started.</div>';return;}
-  el.innerHTML=list.map(p=>{
-    const qrId='pet-qr-'+p.id;
-    const info=[p.species&&p.breed?p.species+' · '+p.breed:'',p.dob?'DOB: '+p.dob:'',p.microchip?'Microchip: '+p.microchip:'',p.vet?'Vet: '+p.vet+(p.vetPhone?' ('+p.vetPhone+')':''):'',p.conditions?'Conditions: '+p.conditions:'',p.meds?'Meds: '+p.meds:'',p.vaccines?'Vaccines: '+p.vaccines:'',p.insurance?'Insurance: '+p.insurance:''].filter(Boolean).join('\n');
-    return '<div class="pet-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div><div style="font-size:16px;font-weight:700;color:#1e293b;">🐾 '+escHtml(p.name)+'</div><div style="font-size:12px;color:#64748b;margin-top:2px;">'+(p.species?escHtml(p.species):'')+(p.breed?' · '+escHtml(p.breed):'')+'</div></div><button onclick="deletePet('+p.id+')" style="background:#fee2e2;border:none;border-radius:8px;padding:4px 10px;color:#dc2626;font-size:12px;cursor:pointer;">🗑️</button></div>'+(p.microchip?'<div style="font-size:12px;color:#374151;margin-top:6px;">📡 Microchip: <strong>'+escHtml(p.microchip)+'</strong></div>':'')+(p.vet?'<div style="font-size:12px;color:#374151;">🏥 Vet: <strong>'+escHtml(p.vet)+'</strong>'+(p.vetPhone?' — <a href="tel:'+escHtml(p.vetPhone)+'">'+escHtml(p.vetPhone)+'</a>':'')+'</div>':'')+(p.conditions?'<div style="font-size:12px;color:#374151;">⚕️ '+escHtml(p.conditions)+'</div>':'')+(p.meds?'<div style="font-size:12px;color:#374151;">💊 '+escHtml(p.meds)+'</div>':'')+(p.vaccines?'<div style="font-size:12px;color:#374151;">💉 '+escHtml(p.vaccines)+'</div>':'')+(p.insurance?'<div style="font-size:12px;color:#374151;">🛡️ '+escHtml(p.insurance)+'</div>':'')+'<div id="'+qrId+'" style="margin-top:10px;"></div></div>';
+  el.innerHTML=list.map(d=>{
+    const age=d.dob?calcAge(d.dob)+' yrs':'';
+    const photos=(d.photos||[]).map(ph=>'<img src="'+ph+'" class="booklet-thumb">').join('');
+    return '<div class="dep-card"><div class="dep-name">'+escHtml(d.name)+(d.sex?' ('+d.sex+')':'')+(age?' · '+age:'')+'</div><div class="dep-detail">🩸 '+(d.blood||'?')+(d.allergies?' · 🚫 '+escHtml(d.allergies):'')+'</div>'+(d.conditions?'<div class="dep-detail">🏥 '+escHtml(d.conditions)+'</div>':'')+(d.meds?'<div class="dep-detail">💊 '+escHtml(d.meds)+'</div>':'')+(d.birth?'<div class="dep-detail">👶 '+escHtml(d.birth)+'</div>':'')+(d.aidnum?'<div class="dep-detail">🛡️ Member no: '+escHtml(d.aidnum)+'</div>':'')+(d.notes?'<div class="dep-detail">📝 '+escHtml(d.notes)+'</div>':'')+(photos?'<div class="booklet-photos">'+photos+'</div>':'')+'<div class="dep-actions" style="margin-top:8px;"><button class="dep-edit" onclick="openEditDependant('+d.id+')">✏️ Edit</button><button class="dep-del" onclick="deleteDependant('+d.id+')">🗑️ Delete</button></div></div>';
   }).join('');
-  // Generate QR codes for each pet
-  list.forEach(p=>{
-    const info='PET HEALTH CARD\nName: '+p.name+'\n'+(p.species?'Species: '+p.species+'\n':'')+(p.breed?'Breed: '+p.breed+'\n':'')+(p.microchip?'Microchip: '+p.microchip+'\n':'')+(p.vet?'Vet: '+p.vet+(p.vetPhone?' '+p.vetPhone:'')+'  \n':'')+(p.conditions?'Conditions: '+p.conditions+'\n':'')+(p.meds?'Meds: '+p.meds+'\n':'');
-    const el=document.getElementById('pet-qr-'+p.id);
-    if(el&&window.QRCode){try{el.innerHTML='';new QRCode(el,{text:info,width:100,height:100});}catch(e){}}
-  });
 }
 </script>
 <script>
-// ─── Pre-Op Questionnaire ─────────────────────────────────────────
-function autoFillPreop(){
-  const raw=Store.get('hos_profile');const p=raw?JSON.parse(raw):{};
-  const set=(id,val)=>{const el=document.getElementById(id);if(el&&val)el.value=val;};
-  set('preop-name',p.name);
-  set('preop-id',p.id);
-  set('preop-dob',p.dob);
-  set('preop-blood',p.blood);
-  set('preop-weight',p.weight);
-  set('preop-height',p.height);
-  // BMI
-  if(p.weight&&p.height){const bmi=(parseFloat(p.weight)/((parseFloat(p.height)/100)**2)).toFixed(1);const el=document.getElementById('preop-bmi');if(el)el.value=bmi;}
-  // Allergies from tags
-  if(_allergies.length){const el=document.getElementById('preop-allergies');if(el)el.value=_allergies.join(', ');}
-  else if(p.allergies){const el=document.getElementById('preop-allergies');if(el)el.value=p.allergies;}
-  // Medications from tags
-  if(_meds.length){const el=document.getElementById('preop-meds');if(el)el.value=_meds.join(', ');}
-  else if(p.medications){const el=document.getElementById('preop-meds');if(el)el.value=p.medications;}
-  // Conditions from tags
-  if(_conds.length){const el=document.getElementById('preop-conditions');if(el)el.value=_conds.join(', ');}
-  else if(p.conditions){const el=document.getElementById('preop-conditions');if(el)el.value=p.conditions;}
-}
-
-function buildPreopText(){
-  const g=id=>{const el=document.getElementById(id);return el?el.value.trim():'';}
-  const ch=id=>{const el=document.getElementById(id);return el?el.checked:false;}
-  const procedure=g('preop-procedure')||'(Not specified)';
-  const procDate=g('preop-proc-date')||'(Not specified)';
-  const surgeon=g('preop-surgeon-name')||'(Not specified)';
-  const lines=[
-    '╔══════════════════════════════════════╗',
-    '   PRE-OPERATIVE HEALTH QUESTIONNAIRE   ',
-    '╚══════════════════════════════════════╝',
-    '',
-    'PROCEDURE: '+procedure,
-    'DATE: '+procDate,
-    'SURGEON: '+surgeon,
-    '',
-    '── PATIENT DETAILS ──',
-    'Name: '+g('preop-name'),
-    'SA ID: '+g('preop-id'),
-    'DOB: '+g('preop-dob'),
-    'Blood Type: '+g('preop-blood'),
-    'Weight: '+g('preop-weight')+'kg  Height: '+g('preop-height')+'cm  BMI: '+g('preop-bmi'),
-    '',
-    '── CURRENT MEDICATIONS ──',
-    g('preop-meds')||'None',
-    'Last dose details: '+g('preop-last-dose'),
-    'Blood thinners / anticoagulants: '+(ch('preop-anticoag')?'YES':'No'),
-    'Diabetes medication / insulin: '+(ch('preop-diabetes-med')?'YES':'No'),
-    'Herbal supplements: '+g('preop-herbal'),
-    '',
-    '── ALLERGIES ──',
-    'Allergies: '+(g('preop-allergies')||'None known'),
-    'Latex allergy: '+(ch('preop-latex')?'YES':'No'),
-    '',
-    '── MEDICAL HISTORY ──',
-    'Chronic conditions: '+g('preop-conditions'),
-    'Previous surgeries: '+g('preop-prev-surgery'),
-    'Previous anaesthetic problems: '+g('preop-anaes-problems'),
-    'Family anaesthetic problems (e.g. malignant hyperthermia): '+g('preop-family-anaes'),
-    '',
-    '── CARDIOVASCULAR & RESPIRATORY ──',
-    'Can climb 1 flight of stairs without stopping: '+(ch('preop-stairs')?'YES':'No'),
-    'Chest pain / angina: '+(ch('preop-chest-pain')?'YES':'No'),
-    'Palpitations: '+(ch('preop-palpitations')?'YES':'No'),
-    'Shortness of breath at rest: '+(ch('preop-sob')?'YES':'No'),
-    'Sleep apnoea / CPAP: '+(ch('preop-sleep-apnoea')?'YES':'No'),
-    'Smoking: '+g('preop-smoking'),
-    '',
-    '── STOP-BANG SLEEP APNOEA SCREEN ──',
-    'Snores loudly: '+(ch('sb-snore')?'YES':'No'),
-    'Tired / sleepy during the day: '+(ch('sb-tired')?'YES':'No'),
-    'Observed to stop breathing during sleep: '+(ch('sb-observed')?'YES':'No'),
-    'Treated for high blood pressure: '+(ch('sb-bp')?'YES':'No'),
-    'BMI > 35: '+(ch('sb-bmi')?'YES':'No'),
-    'Age > 50: '+(ch('sb-age')?'YES':'No'),
-    'Neck circumference > 40cm: '+(ch('sb-neck')?'YES':'No'),
-    'Male gender: '+(ch('sb-gender')?'YES':'No'),
-    '',
-    '── AIRWAY ASSESSMENT ──',
-    'Neck mobility problems: '+(ch('preop-neck')?'YES':'No'),
-    'Limited mouth opening: '+(ch('preop-mouth')?'YES':'No'),
-    'Loose / capped teeth / dentures: '+g('preop-teeth'),
-    '',
-    '── FASTING STATUS (day of procedure) ──',
-    'Last food: '+g('preop-last-food'),
-    'Last clear fluids: '+g('preop-last-fluids'),
-    '',
-    '── SOCIAL HISTORY ──',
-    'Alcohol (units/week): '+g('preop-alcohol'),
-    'Recreational drug use: '+g('preop-drugs'),
-    'Pregnancy status: '+g('preop-pregnancy'),
-    '',
-    '── CONSENT ──',
-    'I confirm these answers are accurate to the best of my knowledge.',
-    'Signature: '+g('preop-signature'),
-    'Date: '+new Date().toLocaleDateString('en-ZA'),
-    '',
-    'Generated by Health One-Stop App'
-  ];
-  return lines.join('\n');
-}
-
-function sendPreopWhatsApp(){
-  const phone=document.getElementById('preop-surgeon-phone')?document.getElementById('preop-surgeon-phone').value.trim().replace(/\D/g,''):'';
-  const text=buildPreopText();
-  const url='https://wa.me/'+(phone||'')+  '?text='+encodeURIComponent(text);
-  window.open(url,'_blank');
-}
-
-function sendPreopEmail(){
-  const email=document.getElementById('preop-surgeon-email')?document.getElementById('preop-surgeon-email').value.trim():'';
-  const procedure=document.getElementById('preop-procedure')?document.getElementById('preop-procedure').value.trim():'Procedure';
-  const text=buildPreopText();
-  const subject='Pre-Op Questionnaire — '+procedure;
-  window.location.href='mailto:'+email+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(text);
-}
-
-function printPreop(){
-  const text=buildPreopText();
-  const win=window.open('','_blank');
-  win.document.write('<html><head><title>Pre-Op Questionnaire</title><style>body{font-family:monospace;font-size:13px;padding:20px;white-space:pre-wrap;}</style></head><body>'+escHtml(text)+'</body></html>');
-  win.document.close();
-  win.print();
-}
-
-// ─── Sub-screen navigation ────────────────────────────────────────
-function showSubScreen(name){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
-  document.querySelector('.tab-bar').style.display='none';
-  if(name==='pets'){renderPets();setTimeout(()=>{autoFillPetQR();},300);}
-  if(name==='preop'){autoFillPreop();}
-}
-function backToMore(){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-more').classList.add('active');
-  document.querySelector('.tab-bar').style.display='flex';
-}
-function autoFillPetQR(){
-  // QR codes may need regeneration after DOM is ready
-  const list=JSON.parse(Store.get('hos_pets')||'[]');
-  if(!list.length||!window.QRCode)return;
-  renderPets();
-}
-
-// ─── Save / Load Profile ──────────────────────────────────────────
-function saveProfile(){
-  const get=id=>{const el=document.getElementById(id);return el?el.value.trim():'';}
-  const p={
-    name:get('prof-name'),dob:get('prof-dob'),id:get('prof-id'),blood:get('prof-blood'),
-    weight:get('prof-weight'),height:get('prof-height'),gender:get('prof-gender'),
-    phone:get('prof-phone'),emergency:get('prof-emergency'),emergencyPhone:get('prof-emergency-phone'),
-    aidScheme:get('prof-aid-scheme'),aidPlan:get('prof-aid-plan'),aidNumber:get('prof-aid-number'),
-    aidMemberNum:get('prof-aid-member'),hospital:get('prof-hospital'),gp:get('prof-gp'),
-    gpPhone:get('prof-gp-phone'),allergies:_allergies.join(', '),medications:_meds.join(', '),conditions:_conds.join(', '),
-    surgicalHistory:get('prof-surgical'),smoke:get('prof-smoke'),alcohol:get('prof-alcohol'),
-    mentalHealth:get('prof-mental')
-  };
-  Store.set('hos_profile',JSON.stringify(p));
-  renderHealthCard();renderCoverageGuide();renderEmergency();
-  showAlert('profile-alert','✅ Profile saved successfully!');
-}
-
-function loadProfile(){
-  const raw=Store.get('hos_profile');if(!raw)return;
-  const p=JSON.parse(raw);
-  const set=(id,val)=>{const el=document.getElementById(id);if(el&&val!==undefined)el.value=val;};
-  set('prof-name',p.name);set('prof-dob',p.dob);set('prof-id',p.id);set('prof-blood',p.blood);
-  set('prof-weight',p.weight);set('prof-height',p.height);set('prof-gender',p.gender);
-  set('prof-phone',p.phone);set('prof-emergency',p.emergency);set('prof-emergency-phone',p.emergencyPhone);
-  set('prof-aid-scheme',p.aidScheme);set('prof-aid-plan',p.aidPlan);set('prof-aid-number',p.aidNumber);
-  set('prof-aid-member',p.aidMemberNum);set('prof-hospital',p.hospital);set('prof-gp',p.gp);
-  set('prof-gp-phone',p.gpPhone);set('prof-surgical',p.surgicalHistory);
-  set('prof-smoke',p.smoke);set('prof-alcohol',p.alcohol);set('prof-mental',p.mentalHealth);
-  if(p.allergies)p.allergies.split(',').map(s=>s.trim()).filter(Boolean).forEach(a=>{if(!_allergies.includes(a))_allergies.push(a);});
-  if(p.medications)p.medications.split(',').map(s=>s.trim()).filter(Boolean).forEach(m=>{if(!_meds.includes(m))_meds.push(m);});
-  if(p.conditions)p.conditions.split(',').map(s=>s.trim()).filter(Boolean).forEach(c=>{if(!_conds.includes(c))_conds.push(c);});
-  renderAllergyTags();renderMedTags();renderCondTags();
-  renderHealthCard();renderCoverageGuide();renderEmergency();
-  calculateBMI();
-}
-</script>
-<script>
-// ─── Health Card Render ───────────────────────────────────────────
-function renderHealthCard(){
-  const raw=Store.get('hos_profile');const p=raw?JSON.parse(raw):{};
-  const set=(id,txt)=>{const el=document.getElementById(id);if(el)el.textContent=txt||'—';};
-  set('card-name',p.name);set('card-dob',p.dob);set('card-id',p.id);set('card-blood',p.blood);
-  set('card-phone',p.phone);set('card-scheme',p.aidScheme);set('card-plan',p.aidPlan);set('card-member',p.aidNumber||p.aidMemberNum);
-  set('card-emergency',p.emergency);set('card-emergency-phone',p.emergencyPhone);
-  set('card-gp',p.gp);set('card-gp-phone',p.gpPhone);set('card-hospital',p.hospital);
-  set('card-allergies',p.allergies||'None known');set('card-meds',p.medications||'None');set('card-conditions',p.conditions||'None');
-  // QR code
-  const qrEl=document.getElementById('card-qr');
-  if(qrEl&&window.QRCode){
-    qrEl.innerHTML='';
-    const txt=['HEALTH CARD','Name: '+p.name,'DOB: '+p.dob,'ID: '+p.id,'Blood: '+p.blood,'Scheme: '+p.aidScheme,'Member: '+(p.aidNumber||p.aidMemberNum),'Emergency: '+p.emergency+' '+p.emergencyPhone,'GP: '+p.gp+' '+p.gpPhone,'Allergies: '+p.allergies,'Meds: '+p.medications,'Conditions: '+p.conditions].filter(l=>!l.endsWith(': ')).join('\n');
-    try{new QRCode(qrEl,{text:txt||'Health One-Stop',width:120,height:120});}catch(e){}
-  }
-}
-
-// ─── Emergency Screen ─────────────────────────────────────────────
-function renderEmergency(){
-  const raw=Store.get('hos_profile');const p=raw?JSON.parse(raw):{};
-  const set=(id,txt)=>{const el=document.getElementById(id);if(el)el.textContent=txt||'';};
-  set('sos-name',p.name);set('sos-blood',p.blood);set('sos-allergies',p.allergies||'None known');
-  set('sos-meds',p.medications||'None');set('sos-conditions',p.conditions||'None');
-  set('sos-emergency',p.emergency);set('sos-emergency-phone',p.emergencyPhone);
-  set('sos-gp',p.gp);set('sos-gp-phone',p.gpPhone);
-  const callBtn=document.getElementById('sos-call-btn');
-  if(callBtn&&p.emergencyPhone)callBtn.href='tel:'+p.emergencyPhone.replace(/\s/g,'');
-}
-
-// ─── Location / Find Care ─────────────────────────────────────────
-function detectLocation(){
-  const el=document.getElementById('loc-status');if(el)el.textContent='📍 Detecting…';
-  if(!navigator.geolocation){if(el)el.textContent='❌ Geolocation not supported';return;}
-  navigator.geolocation.getCurrentPosition(pos=>{
-    window._userLat=pos.coords.latitude;window._userLon=pos.coords.longitude;
-    fetch('https://nominatim.openstreetmap.org/reverse?lat='+pos.coords.latitude+'&lon='+pos.coords.longitude+'&format=json')
-      .then(r=>r.json()).then(d=>{const suburb=d.address.suburb||d.address.city_district||d.address.town||d.address.city||'';if(el)el.textContent='📍 '+(suburb?suburb+', ':'')+(d.address.city||d.address.town||d.address.county||'Location detected');})
-      .catch(()=>{if(el)el.textContent='📍 Location detected';});
-  },()=>{if(el)el.textContent='❌ Location access denied — please allow location in browser settings.';});
-}
-
-// ─── Tab Switching ────────────────────────────────────────────────
-function switchTab(tab,btn){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  const target=document.getElementById('screen-'+tab);if(target)target.classList.add('active');
-  document.querySelector('.tab-bar').style.display='flex';
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  if(btn)btn.classList.add('active');
-  if(tab==='card')renderHealthCard();
-  if(tab==='emergency')renderEmergency();
-  if(tab==='care')renderCoverageGuide();
-  if(tab==='more'){renderDependants();renderBP();renderVaccines();renderLabResults();renderRadiology();}
-}
-
 // ─── Initialise App ───────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded',()=>{
+  populateSchemes();
   loadProfile();
+  if(typeof renderPmbChecker==='function')renderPmbChecker();
   loadPhoto();
   renderDependants();
   renderCoverageGuide();
@@ -1698,12 +1969,9 @@ window.addEventListener('DOMContentLoaded',()=>{
   renderLabResults();
   renderRadiology();
   renderPets();
-  // Welcome chat message
   setTimeout(()=>{addChatBubble('👋 Hello! I\'m your Health One-Stop AI assistant. Ask me about symptoms, medications, or finding care near you. <br><small style="color:#94a3b8;">⚠️ I provide general guidance only — not a substitute for a doctor.</small>','ai');},600);
-  // localStorage availability warning
   try{localStorage.setItem('__test__','1');localStorage.removeItem('__test__');}
   catch(e){setTimeout(()=>{addChatBubble('⚠️ <strong>Private browsing mode detected.</strong> Your data will not be saved between sessions. For full functionality, use a regular browser window.','ai');},1200);}
-  // Auto-detect location silently on Find Care tab open
   document.querySelectorAll('.tab-btn').forEach(t=>{t.addEventListener('click',function(){const tab=this.getAttribute('data-tab');if(tab==='care'&&!window._userLat)detectLocation();});});
 });
 </script>
@@ -1868,14 +2136,96 @@ function renderMedTags(){
 }
 function medKeyDown(e){if(e.key==='Enter'){e.preventDefault();const inp=document.getElementById('p-meds-input');if(inp&&inp.value.trim())addMed(inp.value.trim());}}
 
-function searchConds(val){
-  const q=(val||'').toLowerCase();
-  const box=document.getElementById('cond-suggestions');if(!box)return;
+// ─── Allergy Autocomplete (tags, same pattern as meds) ─────────────
+const ALLERGY_LIST=['Penicillin','Amoxicillin','Cephalosporins','Sulpha drugs (e.g. Bactrim)','Erythromycin / Macrolides','Quinolones (e.g. Ciprofloxacin)','Tetracyclines','Aspirin','NSAIDs (e.g. Ibuprofen, Voltaren)','Codeine','Morphine / Opioids','Tramadol','Paracetamol','Local anaesthetic','General anaesthetic reaction','X-ray contrast dye','Iodine','Latex / rubber gloves','Plasters / adhesive tape','ACE-inhibitor cough/swelling','Statins','Insulin','Vaccines (specify)','Peanuts','Tree nuts','Shellfish / prawns','Fish','Eggs','Cow\'s milk / dairy','Soy','Wheat / gluten','Banana','Strawberries','Food colourants / preservatives','Sulphites (wine, dried fruit)','MSG','Bee stings','Wasp stings','Pollen / hay fever','Grass','Dust mites','Mould','Cat hair','Dog hair','Feathers','No known allergies'];
+let allergyItems=[];
+function searchAllergies(val){
+  const q=(val||'').toLowerCase().trim();
+  const box=document.getElementById('allergy-suggestions');if(!box)return;
   if(q.length<2){box.style.display='none';box.innerHTML='';return;}
-  const m=COND_LIST.filter(x=>x.toLowerCase().includes(q)).slice(0,8);
+  const m=ALLERGY_LIST.filter(x=>x.toLowerCase().includes(q)).slice(0,8);
   if(!m.length){box.style.display='none';return;}
   box.style.display='block';
-  box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="addCond(\''+x.replace(/'/g,"\\'")+'\''+')" style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f1f5f9;font-size:14px;color:#1e293b;">'+x+'</div>').join('');
+  box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="addAllergy(\''+x.replace(/'/g,"\\'")+'\')" style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f1f5f9;font-size:14px;color:#1e293b;">'+x+'</div>').join('');
+}
+function addAllergy(name){
+  name=(name||'').trim();if(!name)return;
+  if(!allergyItems.includes(name))allergyItems.push(name);
+  const inp=document.getElementById('p-allergy-input');if(inp)inp.value='';
+  const box=document.getElementById('allergy-suggestions');if(box){box.style.display='none';box.innerHTML='';}
+  renderAllergyTags();
+  const hidden=document.getElementById('p-allergies');if(hidden)hidden.value=allergyItems.join(', ');
+}
+function removeAllergy(name){allergyItems=allergyItems.filter(a=>a!==name);renderAllergyTags();const h=document.getElementById('p-allergies');if(h)h.value=allergyItems.join(', ');}
+function renderAllergyTags(){
+  const el=document.getElementById('allergy-tags');if(!el)return;
+  el.innerHTML=allergyItems.map(a=>'<span class="tag" style="background:#fef2f2;color:#991b1b;border:1px solid #fecaca;padding:4px 10px;border-radius:20px;font-size:12px;display:inline-flex;align-items:center;gap:4px;">'+escHtml(a)+'<button onclick="removeAllergy(\''+a.replace(/'/g,"\\'")+'\')" style="background:none;border:none;cursor:pointer;color:#64748b;font-size:12px;padding:0 0 0 4px;">×</button></span>').join('');
+}
+function allergyKeyDown(e){if(e.key==='Enter'){e.preventDefault();const inp=document.getElementById('p-allergy-input');if(inp&&inp.value.trim())addAllergy(inp.value.trim());}}
+
+// ─── Medication Barcode Scanner ────────────────────────────────────
+// Learns barcode→medicine pairs and remembers them on THIS phone, so the
+// next scan of the same box auto-fills instantly. No data leaves the phone.
+let _bcScanner=null,_lastBarcode='';
+function getBarcodeMap(){try{return JSON.parse(Store.get('hos_barcodes')||'{}');}catch(e){return {};}}
+function saveBarcodeMap(m){Store.set('hos_barcodes',JSON.stringify(m));}
+function bcStatus(msg,kind){
+  const el=document.getElementById('barcode-status');if(!el)return;
+  const c={ok:['#f0fdf4','#86efac','#166534'],warn:['#fef9c3','#fde047','#713f12'],err:['#fef2f2','#fecaca','#991b1b']}[kind||'ok'];
+  el.style.display='block';el.style.background=c[0];el.style.border='1.5px solid '+c[1];el.style.color=c[2];el.innerHTML=msg;
+}
+async function openBarcodeScanner(){
+  openModal('modal-barcode');
+  document.getElementById('barcode-result').innerHTML='<div style="text-align:center;color:#64748b;font-size:13px;padding:14px;"><span class="spinner-dark"></span> Starting camera…</div>';
+  try{
+    if(!window.Html5Qrcode){await new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
+    _bcScanner=new Html5Qrcode('barcode-reader');
+    const cfg={fps:10,qrbox:{width:250,height:160},formatsToSupport:[Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.EAN_8,Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.UPC_E,Html5QrcodeSupportedFormats.CODE_128,Html5QrcodeSupportedFormats.CODE_39]};
+    await _bcScanner.start({facingMode:'environment'},cfg,onBarcodeDetected,()=>{});
+    document.getElementById('barcode-result').innerHTML='';
+  }catch(e){
+    document.getElementById('barcode-result').innerHTML='<div style="background:#fef2f2;border:1.5px solid #fecaca;color:#991b1b;border-radius:10px;padding:12px;font-size:13px;line-height:1.6;">⚠️ Could not open the camera. Please allow camera access, or type the medication name instead. On some phones the camera only works when the app is opened over https.</div>';
+  }
+}
+async function stopBcEngine(){if(_bcScanner){try{await _bcScanner.stop();_bcScanner.clear();}catch(e){}_bcScanner=null;}}
+async function closeBarcodeScanner(){await stopBcEngine();closeModal('modal-barcode');}
+async function onBarcodeDetected(text){
+  if(!text||text===_lastBarcode)return;
+  _lastBarcode=text;
+  await stopBcEngine();
+  const map=getBarcodeMap();
+  const known=map[text];
+  if(known){
+    addMed(known);
+    document.getElementById('barcode-result').innerHTML='<div style="background:#f0fdf4;border:1.5px solid #86efac;color:#166534;border-radius:10px;padding:13px;font-size:14px;line-height:1.6;">✅ Added <strong>'+escHtml(known)+'</strong> from your saved barcodes.</div><button class="btn btn-primary" style="margin-top:10px;" onclick="closeBarcodeScanner()">Done</button>';
+    bcStatus('✅ Added <strong>'+escHtml(known)+'</strong> (recognised barcode '+escHtml(text)+').','ok');
+    setTimeout(()=>{closeBarcodeScanner();},1400);
+  }else{
+    document.getElementById('barcode-result').innerHTML=
+      '<div style="background:#eff6ff;border:1.5px solid #bfdbfe;color:#1e40af;border-radius:10px;padding:13px;font-size:13px;line-height:1.6;">📦 Barcode <strong>'+escHtml(text)+'</strong> read.<br>This box is not saved yet — tell the app which medicine it is and it will remember it next time.</div>'+
+      '<div class="form-group" style="margin-top:12px;"><label>Medicine name on this box</label><input type="text" id="bc-name" placeholder="e.g. Adco-Dol, Panado, Lipitor 20mg" autocomplete="off"></div>'+
+      '<button class="btn btn-primary" onclick="confirmBarcodeMed(\''+text.replace(/'/g,"\\'")+'\')">💾 Save & Add to my medicines</button>'+
+      '<button class="btn btn-outline" style="margin-top:8px;" onclick="closeBarcodeScanner()">Cancel</button>';
+  }
+}
+function confirmBarcodeMed(barcode){
+  const nameEl=document.getElementById('bc-name');const name=nameEl?nameEl.value.trim():'';
+  if(!name){if(nameEl)nameEl.style.border='1.5px solid #dc2626';return;}
+  const map=getBarcodeMap();map[barcode]=name;saveBarcodeMap(map);
+  addMed(name);
+  bcStatus('✅ Saved <strong>'+escHtml(name)+'</strong> for barcode '+escHtml(barcode)+'. Next scan of this box adds it automatically.','ok');
+  closeBarcodeScanner();
+}
+
+function searchConds(val){
+  const q=(val||'').toLowerCase().trim();
+  const box=document.getElementById('cond-suggestions');if(!box)return;
+  if(q.length<2){box.style.display='none';box.innerHTML='';return;}
+  // Match on plain-language name OR ICD-10 code (e.g. "i10" or "hypertension")
+  const m=ICD10_CONDITIONS.filter(x=>x.n.toLowerCase().includes(q)||x.c.toLowerCase().replace('.','').includes(q.replace('.',''))).slice(0,8);
+  if(!m.length){box.style.display='none';return;}
+  box.style.display='block';
+  box.innerHTML=m.map(x=>{const label=x.n+' ('+x.c+')';const cdlTag=x.cdl?'<span style="background:#dcfce7;color:#166534;font-size:10px;font-weight:700;padding:2px 6px;border-radius:8px;margin-left:6px;">PMB</span>':'';return '<div class="suggestion-item" onclick="addCond(\''+label.replace(/'/g,"\\'")+'\''+')" style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f1f5f9;font-size:14px;color:#1e293b;display:flex;align-items:center;justify-content:space-between;"><span><span style="font-weight:600;color:#2563eb;font-size:12px;">'+x.c+'</span> &nbsp;'+x.n+'</span>'+cdlTag+'</div>';}).join('');
 }
 function addCond(name){
   if(!condItems.includes(name))condItems.push(name);
@@ -1891,22 +2241,93 @@ function renderCondTags(){
 }
 function condKeyDown(e){if(e.key==='Enter'){e.preventDefault();const inp=document.getElementById('p-cond-input');if(inp&&inp.value.trim())addCond(inp.value.trim());}}
 
-// ─── Init override: ensure correct startup sequence ───────────────
-window.addEventListener('load',()=>{
-  loadProfile();
-  loadPhoto();
-  renderDependants();
-  renderBP();
-  renderVaccines();
-  renderLabResults();
-  renderRadiology();
-  renderPets();
-  // Chat greeting
-  setTimeout(()=>{
-    const wrap=document.getElementById('chat-messages');
-    if(wrap&&!wrap.children.length)addChatBubble('👋 Hello! I\'m your Health One-Stop AI assistant. Ask me about symptoms, medications, or finding care near you.<br><small style="color:#94a3b8;">⚠️ General guidance only — not a substitute for a doctor.</small>','ai');
-  },800);
-});
+// ─── PMB Checker ───────────────────────────────────────────────────
+function toggleAccordionCard(h,bodyId){const b=document.getElementById(bodyId);if(!b)return;const s=h.querySelector('span');const open=b.style.display==='none';b.style.display=open?'block':'none';if(s)s.textContent=open?'Hide ▲':'Show ▼';}
+function togglePmb(h){const b=document.getElementById('pmb-body');const s=h.querySelector('span');const open=b.style.display==='none';b.style.display=open?'block':'none';if(s)s.textContent=open?'Hide ▲':'Show ▼';if(open)renderMyPmbConditions();}
+// Conditions that may be PMB in specific circumstances (not on the chronic CDL,
+// but covered as a PMB diagnosis/treatment pair in defined situations) → yellow.
+const PMB_YELLOW=['I63','G45','I21','A15','B18.1','B18.2','C80','D57','F32','F43.1','K74','N04'];
+function pmbVerdict(item){
+  // item = {c,n,cdl}
+  if(item.cdl)return {level:'green',title:'Covered — Chronic Disease List',msg:'This is one of the chronic conditions every registered SA scheme must cover as a PMB, on <strong>any</strong> option. Registration on the scheme\'s chronic programme is usually required.'};
+  if(PMB_YELLOW.includes(item.c))return {level:'yellow',title:'May be covered as a PMB',msg:'This can qualify as a PMB in defined circumstances (for example acute or in-hospital treatment), but is not a guaranteed chronic benefit. Confirm with your scheme.'};
+  return {level:'red',title:'Not a guaranteed PMB',msg:'This is not on the chronic PMB list. Day-to-day cover depends on your specific option\'s benefits. Some related complications may still be covered — check with your scheme.'};
+}
+const PMB_COLORS={green:['#f0fdf4','#86efac','#166534','#16a34a'],yellow:['#fef9c3','#fde047','#854d0e','#eab308'],red:['#fef2f2','#fecaca','#991b1b','#dc2626']};
+function pmbCardHtml(item){
+  const v=pmbVerdict(item);const c=PMB_COLORS[v.level];
+  return '<div style="background:'+c[0]+';border:1.5px solid '+c[1]+';border-radius:12px;padding:14px;">'+
+    '<div style="font-weight:700;font-size:15px;color:'+c[2]+';margin-bottom:4px;"><span style="display:inline-block;width:11px;height:11px;border-radius:3px;background:'+c[3]+';margin-right:7px;"></span>'+escHtml(item.n)+' <span style="font-weight:600;font-size:12px;color:'+c[2]+';opacity:0.8;">('+item.c+')</span></div>'+
+    '<div style="font-weight:600;font-size:13px;color:'+c[2]+';margin:2px 0 6px;">'+v.title+'</div>'+
+    '<div style="font-size:12.5px;color:'+c[2]+';line-height:1.6;">'+v.msg+'</div></div>';
+}
+function searchPmb(val){
+  const q=(val||'').toLowerCase().trim();
+  const box=document.getElementById('pmb-suggestions');const res=document.getElementById('pmb-result');if(!box)return;
+  if(q.length<2){box.style.display='none';box.innerHTML='';return;}
+  const m=ICD10_CONDITIONS.filter(x=>x.n.toLowerCase().includes(q)||x.c.toLowerCase().replace('.','').includes(q.replace('.',''))).slice(0,8);
+  if(!m.length){box.style.display='none';return;}
+  box.style.display='block';
+  box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="pickPmb(\''+x.c.replace(/'/g,"\\'")+'\')" style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f1f5f9;font-size:14px;color:#1e293b;"><span style="font-weight:600;color:#2563eb;font-size:12px;">'+x.c+'</span> &nbsp;'+x.n+'</div>').join('');
+}
+function pickPmb(code){
+  const item=ICD10_CONDITIONS.find(x=>x.c===code);if(!item)return;
+  document.getElementById('pmb-suggestions').style.display='none';
+  document.getElementById('pmb-input').value=item.n;
+  document.getElementById('pmb-result').innerHTML=pmbCardHtml(item);
+}
+function renderMyPmbConditions(){
+  const wrap=document.getElementById('pmb-my-conditions');if(!wrap)return;
+  const raw=Store.get('hos_profile');const p=raw?JSON.parse(raw):{};
+  const conds=(p.conditions||'').split(',').map(s=>s.trim()).filter(Boolean);
+  if(!conds.length){wrap.innerHTML='';return;}
+  // Match each saved condition back to the dataset (by code in brackets or by name)
+  const matched=conds.map(txt=>{
+    const codeM=txt.match(/\(([A-Z]\d[\dA-Z.]*)\)/i);
+    if(codeM){const byCode=ICD10_CONDITIONS.find(x=>x.c.toLowerCase()===codeM[1].toLowerCase());if(byCode)return byCode;}
+    const low=txt.toLowerCase();
+    return ICD10_CONDITIONS.find(x=>low.includes(x.n.toLowerCase())||x.n.toLowerCase().includes(low.replace(/\(.*\)/,'').trim()))||null;
+  }).filter(Boolean);
+  if(!matched.length){wrap.innerHTML='';return;}
+  const seen=new Set();const uniq=matched.filter(x=>{if(seen.has(x.c))return false;seen.add(x.c);return true;});
+  wrap.innerHTML='<div style="font-size:12px;font-weight:700;color:#1e293b;margin-bottom:8px;">📋 Your saved conditions</div>'+uniq.map(pmbCardHtml).join('<div style="height:8px;"></div>');
+}
+function renderPmbChecker(){
+  const country=document.getElementById('p-country')?document.getElementById('p-country').value:'South Africa';
+  const card=document.getElementById('pmb-card');const note=document.getElementById('pmb-country-note');
+  if(!card)return;
+  if(country==='Namibia'){
+    if(note)note.innerHTML='⚠️ PMB rules shown here are for <strong>South African</strong> schemes. Namibian funds (NAMAF) set their own minimum benefits — confirm directly with your fund.';
+  }else{
+    if(note)note.innerHTML='PMB rules apply to South African schemes (Medical Schemes Act). General guide — always confirm with your scheme. Council for Medical Schemes: 0861 123 267.';
+  }
+  renderMyPmbConditions();
+  renderGovClinicLinks();
+}
+
+// ─── Government / Public Clinic Contacts ───────────────────────────
+const SA_HEALTH_DEPTS=[
+  ['Eastern Cape','0800 032 364'],['Free State','051 408 1700'],['Gauteng','0800 203 886'],
+  ['KwaZulu-Natal','033 395 2111'],['Limpopo','015 293 6000'],['Mpumalanga','013 766 3429'],
+  ['North West','018 391 4000'],['Northern Cape','053 830 2100'],['Western Cape','0860 142 142']
+];
+const NA_HEALTH=[
+  ['MoHSS Head Office (Windhoek)','+264 61 203 9111'],
+  ['Windhoek Central Hospital','+264 61 203 9111'],
+  ['Katutura Hospital','+264 61 203 5111'],
+  ['Oshakati Intermediate Hospital','+264 65 223 4000'],
+  ['Rundu Hospital','+264 66 265 5000']
+];
+function renderGovClinicLinks(){
+  const el=document.getElementById('gov-clinic-links');if(!el)return;
+  const country=document.getElementById('p-country')?document.getElementById('p-country').value:'South Africa';
+  if(country==='Namibia'){
+    el.innerHTML='<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#166534;line-height:1.9;"><strong>Public health contacts — Namibia</strong><br>Ministry of Health &amp; Social Services runs free/low-cost clinics across all 14 regions.<br>'+NA_HEALTH.map(r=>'<a href="tel:'+r[1].replace(/[\s+]/g,'')+'" style="color:#166534;font-weight:600;">📞 '+r[0]+' — '+r[1]+'</a>').join('<br>')+'<br><span style="color:#15803d;">Phone your nearest clinic to confirm opening hours.</span></div>';
+  }else{
+    el.innerHTML='<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#166534;line-height:1.9;"><strong>Provincial Health Departments — South Africa</strong><br>For clinic info, hours &amp; complaints, call your province:<br>'+SA_HEALTH_DEPTS.map(r=>'<a href="tel:'+r[1].replace(/[\s]/g,'')+'" style="color:#166534;font-weight:600;">📞 '+r[0]+' — '+r[1]+'</a>').join('<br>')+'<br><span style="color:#15803d;">National DoH switchboard: <a href="tel:0123958000" style="color:#166534;font-weight:700;">012 395 8000</a></span></div>';
+  }
+}
+
 </script>
 <script>
 // ─── Pet Module: CORRECTED (uses actual modal field IDs) ──────────
@@ -1972,6 +2393,7 @@ function renderPets(){
       (p.vaccines?'<div style="font-size:12px;color:#374151;">💉 '+escHtml(p.vaccines)+'</div>':'')+
       (p.insurance&&p.insurance!=='None'?'<div style="font-size:12px;color:#374151;">🛡️ Insurance: '+escHtml(p.insurance)+'</div>':'')+
       (p.notes?'<div style="font-size:12px;color:#64748b;margin-top:4px;">📝 '+escHtml(p.notes)+'</div>':'')+
+      '<div class="pet-actions"><button class="pet-vet" onclick="findNearestVet()">📍 Find Nearest Vet</button></div>'+
       '<div id="'+qrId+'" style="margin-top:10px;"></div>'+
     '</div>';
   }).join('');
@@ -1987,6 +2409,11 @@ function renderPets(){
 
 function findNearestVet(){searchNearby('vet','Vet / Animal Clinic','🐾');}
 </script>
+
+<!-- Copyright footer — subtle but present for IP protection -->
+<div style="text-align:center;padding:12px 16px 4px;font-size:10px;color:#cbd5e1;font-family:'Poppins',sans-serif;">
+  © 2026 Dr JA Geldenhuys · Health One Stop · All rights reserved
+</div>
 
 </body>
 </html>
