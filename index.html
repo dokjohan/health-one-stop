@@ -363,7 +363,24 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
       </div>
       <button type="button" class="btn btn-outline" onclick="openBarcodeScanner()" style="margin-top:8px;font-size:13px;padding:10px;width:100%;">📷 Scan Medication Barcode</button>
       <div id="barcode-status" style="display:none;margin-top:8px;font-size:12px;line-height:1.6;padding:10px 12px;border-radius:10px;"></div>
+      <p style="font-size:11px;color:#94a3b8;margin-top:8px;">Tap ✏️ on a medication to add its dose and how often it's taken — totally optional.</p>
       <div id="meds-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
+      <div id="med-edit-panel" style="display:none;margin-top:10px;padding:12px;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;">
+        <div style="font-size:13px;font-weight:600;color:#1e293b;margin-bottom:8px;" id="med-edit-name"></div>
+        <div class="form-group" style="margin-bottom:8px;"><label style="font-size:12px;">Dose (optional)</label><input type="text" id="med-edit-dose" placeholder="e.g. 500mg"></div>
+        <div class="form-group" style="margin-bottom:8px;"><label style="font-size:12px;">How often? (optional)</label>
+          <select id="med-edit-freq" onchange="onMedFreqChange()">
+            <option value="">— Not specified —</option>
+            <option>Once daily</option><option>Twice daily</option><option>3x daily</option><option>4x daily</option>
+            <option>Every 2nd day</option><option>Weekly</option><option>Monthly</option>
+            <option>Every 2 months</option><option>Every 3 months</option><option>Every 4 months</option><option>Every 5 months</option><option>Every 6 months</option>
+            <option value="Other">Other (type below)</option>
+          </select>
+        </div>
+        <input type="text" id="med-edit-freq-custom" placeholder="e.g. Only when needed for pain" style="display:none;margin-bottom:10px;">
+        <button class="btn btn-primary" style="margin-top:0;" onclick="saveMedEdit()">💾 Save</button>
+        <button class="btn btn-outline" style="margin-top:8px;" onclick="closeMedEdit()">Cancel</button>
+      </div>
       <input type="hidden" id="p-meds">
     </div>
     <div class="form-group"><label>Blood Type</label>
@@ -372,6 +389,9 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
         <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
         <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
       </select>
+    </div>
+    <div class="form-group"><label>Previous Operations <span style="font-size:11px;color:#94a3b8;font-weight:400;">(with year, if known)</span></label>
+      <textarea id="p-prevops" rows="2" style="resize:vertical;" placeholder="e.g. Appendix 2015, Caesarean 2020 — or None"></textarea>
     </div>
   </div>
   <!-- PMB CHECKER -->
@@ -659,6 +679,18 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <div id="bp-list" style="margin-top:12px;"></div>
   </div>
 
+  <!-- Blood Sugar Log -->
+  <div class="card">
+    <div class="card-title">🍬 Blood Sugar Log</div>
+    <div class="form-group"><label>Blood Sugar (mmol/L)</label><input type="number" step="0.1" id="sugar-value" placeholder="e.g. 5.5" inputmode="decimal" min="1" max="40"></div>
+    <div class="form-group"><label>Reading Type</label><select id="sugar-type"><option value="Fasting">Fasting</option><option value="Random">Random</option></select></div>
+    <div class="form-group"><label>Time of Day</label><select id="sugar-tod"><option value="Morning">Morning</option><option value="Midday">Midday</option><option value="Evening">Evening</option></select></div>
+    <div class="form-group"><label>Date</label><input type="date" id="sugar-date"></div>
+    <button class="btn btn-primary" onclick="saveSugar()">💾 Save Reading</button>
+    <div id="sugar-alert"></div>
+    <div id="sugar-list" style="margin-top:12px;"></div>
+  </div>
+
   <!-- Vaccination Record -->
   <div class="card">
     <div class="card-title">💉 Vaccination Record</div>
@@ -821,6 +853,12 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <div class="form-group"><label>Shortness of breath at rest or minimal exertion?</label>
       <select id="po-sob"><option value="No">No</option><option value="Yes — at rest">Yes — at rest</option><option value="Yes — with mild activity">Yes — with mild activity</option></select>
     </div>
+    <div class="form-group"><label>Ever fainted, blacked out, or felt about to faint (syncope)?</label>
+      <select id="po-syncope"><option value="No">No</option><option value="Yes — once">Yes — once</option><option value="Yes — recurrent">Yes — recurrent (more than once)</option><option value="Yes — on standing">Yes — on standing up</option><option value="Yes — on exertion">Yes — during exercise/exertion</option></select>
+    </div>
+    <div class="form-group"><label>Leg/calf pain or cramping when walking that eases with rest (claudication)?</label>
+      <select id="po-claudication"><option value="No">No</option><option value="Yes — mild, long distance only">Yes — mild, only over long distances</option><option value="Yes — moderate, short distance">Yes — moderate, over short distances</option><option value="Yes — severe/pain at rest">Yes — severe, or pain even at rest</option></select>
+    </div>
     <p style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin:10px 0 6px;">STOP-BANG Sleep Apnoea Screening</p>
     <div class="stopbang-item"><div class="stopbang-q"><strong>S</strong> — Do you Snore loudly?</div><div class="stopbang-toggle"><label><input type="radio" name="sb-s" value="No" checked><span>No</span></label><label><input type="radio" name="sb-s" value="Yes"><span>Yes</span></label></div></div>
     <div class="stopbang-item"><div class="stopbang-q"><strong>T</strong> — Do you often feel Tired or sleepy during the day?</div><div class="stopbang-toggle"><label><input type="radio" name="sb-t" value="No" checked><span>No</span></label><label><input type="radio" name="sb-t" value="Yes"><span>Yes</span></label></div></div>
@@ -838,24 +876,57 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     </div>
   </div>
 
-  <!-- Section 7: Airway -->
+  <!-- Section 7: Liver & Kidney Function -->
   <div class="preop-section">
-    <div class="preop-section-title">😮 7. Airway Assessment</div>
+    <div class="preop-section-title">🧪 7. Liver &amp; Kidney Function</div>
+    <div class="form-group"><label>Known liver disease (e.g. hepatitis, cirrhosis, fatty liver)?</label>
+      <select id="po-liver"><option value="No">No</option><option value="Yes — hepatitis">Yes — hepatitis</option><option value="Yes — cirrhosis">Yes — cirrhosis</option><option value="Yes — fatty liver">Yes — fatty liver</option><option value="Yes — other">Yes — other liver condition</option></select>
+    </div>
+    <div class="form-group"><label>Yellow skin/eyes (jaundice) or tea/dark-coloured urine, ever?</label>
+      <select id="po-jaundice"><option value="No">No</option><option value="Yes — in the past">Yes — in the past</option><option value="Yes — currently">Yes — currently</option></select>
+    </div>
+    <div class="form-group"><label>Known kidney disease, reduced kidney function, or dialysis?</label>
+      <select id="po-kidney"><option value="No">No</option><option value="Yes — reduced function, no dialysis">Yes — reduced function, not on dialysis</option><option value="Yes — on dialysis">Yes — on dialysis</option></select>
+    </div>
+    <div class="form-group"><label>Noticeable swelling of legs/ankles, or marked change (increase/decrease) in urine output?</label>
+      <select id="po-fluid"><option value="No">No</option><option value="Yes — swelling">Yes — swelling</option><option value="Yes — reduced urine output">Yes — reduced urine output</option><option value="Yes — both">Yes — both</option></select>
+    </div>
+  </div>
+
+  <!-- Section 8: Musculoskeletal -->
+  <div class="preop-section">
+    <div class="preop-section-title">🦴 8. Musculoskeletal</div>
+    <div class="form-group"><label>Arthritis (joint inflammation/pain/stiffness)?</label>
+      <select id="po-arthritis"><option value="No">No</option><option value="Yes — osteoarthritis">Yes — osteoarthritis</option><option value="Yes — rheumatoid arthritis">Yes — rheumatoid arthritis</option><option value="Yes — other type">Yes — other type</option></select>
+    </div>
+    <div class="form-group"><label>Which joints are affected? (if applicable)</label><input type="text" id="po-arthritis-joints" placeholder="e.g. Neck, hips, knees — or None"></div>
+    <div class="form-group"><label>Unexplained muscle wasting or weakness (atrophy)?</label>
+      <select id="po-muscle-atrophy"><option value="No">No</option><option value="Yes — generalised">Yes — generalised</option><option value="Yes — one limb/area only">Yes — one limb/area only</option></select>
+    </div>
+    <div class="form-group"><label>Unusual muscle bulk/growth not from normal exercise (e.g. medication or hormone related)?</label>
+      <select id="po-muscle-growth"><option value="No">No</option><option value="Yes">Yes</option></select>
+    </div>
+    <div class="form-group"><label>Joint replacements, metal implants, or limited mobility affecting positioning for surgery?</label><input type="text" id="po-mobility" placeholder="e.g. Right hip replacement 2019, limited neck movement — or None"></div>
+  </div>
+
+  <!-- Section 9: Airway -->
+  <div class="preop-section">
+    <div class="preop-section-title">😮 9. Airway Assessment</div>
     <div class="form-group"><label>Neck movement problems?</label><select id="po-neck"><option value="No">No</option><option value="Yes — limited movement">Yes — limited movement</option></select></div>
     <div class="form-group"><label>Difficulty opening mouth wide?</label><select id="po-mouth"><option value="No">No</option><option value="Yes">Yes</option></select></div>
     <div class="form-group"><label>Loose, capped, crowned, or false teeth / dentures?</label><input type="text" id="po-teeth" placeholder="e.g. Upper denture, 2 crowned molars — or None"></div>
   </div>
 
-  <!-- Section 8: Fasting -->
+  <!-- Section 10: Fasting -->
   <div class="preop-section">
-    <div class="preop-section-title">🍽️ 8. Fasting Status (fill on day of procedure)</div>
+    <div class="preop-section-title">🍽️ 10. Fasting Status (fill on day of procedure)</div>
     <div class="form-group"><label>Last solid food — time</label><input type="time" id="po-last-food"></div>
     <div class="form-group"><label>Last clear fluids (water, black tea) — time</label><input type="time" id="po-last-fluids"></div>
   </div>
 
-  <!-- Section 9: Social History -->
+  <!-- Section 11: Social History -->
   <div class="preop-section">
-    <div class="preop-section-title">🧾 9. Social History</div>
+    <div class="preop-section-title">🧾 11. Social History</div>
     <div class="form-group"><label>Alcohol use</label>
       <select id="po-alcohol"><option value="None">None</option><option value="Occasional (social)">Occasional (social)</option><option value="Moderate (1-14 units/week)">Moderate (1–14 units/week)</option><option value="Heavy (more than 14 units/week)">Heavy (more than 14 units/week)</option></select>
     </div>
@@ -867,9 +938,9 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     </div>
   </div>
 
-  <!-- Section 10: Declaration -->
+  <!-- Section 12: Declaration -->
   <div class="preop-section">
-    <div class="preop-section-title">✅ 10. Declaration</div>
+    <div class="preop-section-title">✅ 12. Declaration</div>
     <p style="font-size:13px;color:#475569;margin-bottom:12px;line-height:1.6;">I confirm that the information above is true and accurate to the best of my knowledge.</p>
     <div class="form-group"><label>Your Name (as signature)</label><input type="text" id="po-signature" placeholder="Type your full name"></div>
     <div class="form-group"><label>Date Completed</label><input type="date" id="po-sign-date"></div>
@@ -952,7 +1023,29 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <div class="form-group"><label>Blood Type</label><select id="dep-blood"><option value="">Unknown</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select></div>
     <div class="form-group"><label>Allergies</label><input type="text" id="dep-allergies" placeholder="e.g. Penicillin, Peanuts, Latex"></div>
     <div class="form-group"><label>Chronic Conditions</label><input type="text" id="dep-conditions" placeholder="e.g. Asthma, Epilepsy"></div>
-    <div class="form-group"><label>Current Medications</label><input type="text" id="dep-meds" placeholder="e.g. Salbutamol inhaler"></div>
+    <div class="form-group">
+      <label>Current Medications</label>
+      <div class="input-row"><input type="text" id="dep-meds-input" placeholder="e.g. Salbutamol inhaler" autocomplete="off" onkeydown="depMedKeyDown(event)"></div>
+      <p style="font-size:11px;color:#94a3b8;margin-top:6px;">Tap ✏️ on a medication to add its dose and how often it's taken — totally optional.</p>
+      <div id="dep-meds-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
+      <div id="dep-med-edit-panel" style="display:none;margin-top:10px;padding:12px;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;">
+        <div style="font-size:13px;font-weight:600;color:#1e293b;margin-bottom:8px;" id="dep-med-edit-name"></div>
+        <div class="form-group" style="margin-bottom:8px;"><label style="font-size:12px;">Dose (optional)</label><input type="text" id="dep-med-edit-dose" placeholder="e.g. 5ml"></div>
+        <div class="form-group" style="margin-bottom:8px;"><label style="font-size:12px;">How often? (optional)</label>
+          <select id="dep-med-edit-freq" onchange="onDepMedFreqChange()">
+            <option value="">— Not specified —</option>
+            <option>Once daily</option><option>Twice daily</option><option>3x daily</option><option>4x daily</option>
+            <option>Every 2nd day</option><option>Weekly</option><option>Monthly</option>
+            <option>Every 2 months</option><option>Every 3 months</option><option>Every 4 months</option><option>Every 5 months</option><option>Every 6 months</option>
+            <option value="Other">Other (type below)</option>
+          </select>
+        </div>
+        <input type="text" id="dep-med-edit-freq-custom" placeholder="e.g. Only when needed" style="display:none;margin-bottom:10px;">
+        <button class="btn btn-primary" style="margin-top:0;" onclick="saveDepMedEdit()">💾 Save</button>
+        <button class="btn btn-outline" style="margin-top:8px;" onclick="closeDepMedEdit()">Cancel</button>
+      </div>
+      <input type="hidden" id="dep-meds">
+    </div>
     <div class="form-group" id="dep-birth-group"><label>Birth Complications</label><textarea id="dep-birth" rows="3" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;resize:vertical;" placeholder="e.g. Premature birth (32 weeks), NICU stay, jaundice"></textarea></div>
     <div class="form-group"><label>Medical Aid Membership No.</label><input type="text" id="dep-aidnum" placeholder="If on parent's scheme"></div>
     <div class="form-group"><label>Notes</label><textarea id="dep-notes" rows="2" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;resize:vertical;" placeholder="Any other important info"></textarea></div>
@@ -1064,7 +1157,7 @@ window.switchTab=function(name,btn){
     if(name==='card'){try{renderHealthCard();}catch(e){}}
     if(name==='emergency'){try{renderEmergency();}catch(e){}}
     if(name==='care'){try{renderCoverageGuide();}catch(e){}}
-    if(name==='more'){try{renderBP();}catch(e){}try{renderVaccines();}catch(e){}try{renderLabResults();}catch(e){}try{renderRadiology();}catch(e){}}
+    if(name==='more'){try{renderBP();}catch(e){}try{renderSugar();}catch(e){}try{renderVaccines();}catch(e){}try{renderLabResults();}catch(e){}try{renderRadiology();}catch(e){}}
     try{renderAdSlot(name);}catch(e){}
   }catch(e){}
 };
@@ -1093,7 +1186,12 @@ const AD_INVENTORY=[
   // TEMPLATE — duplicate this block for each real advertiser, then set active:true
   {id:'template',active:false,countries:['ZA'],pages:['care'],sponsor:'Example Pharmacy',
    title:'📢 Example Pharmacy — Free Delivery',title2:'',sub:'Short one-line description of the offer.',
-   link:'https://example.com'}
+   link:'https://example.com'},
+  // TEST AD — Dr JA Geldenhuys & Dr E Burner, added 27 Jun 2026 for testing the ad slot
+  {id:'geldenhuys-burner',active:true,countries:['ZA'],pages:['care'],sponsor:'Dr JA Geldenhuys & Dr E Burner',
+   title:'📢 Dr JA Geldenhuys & Dr E Burner — Medical Drs & Occupational Health',title2:'',
+   sub:'18 Matzikama Street, Vredendal, 8160 — GP consultations & Occupational Health (incl. ionising radiation). Tap to call.',
+   link:'tel:+27272131053'}
 ];
 function adCountryCode(){
   const c=(typeof getCountry==='function')?getCountry():'South Africa';
@@ -1123,8 +1221,15 @@ function dismissAd(){
 }
 
 // ─── Country (SA / Namibia) ────────────────────────────────────────
+// SA schemes per 2025 CMS register. Open = anyone can join; Restricted = via employer/industry.
+// NOTE: the 19 original names are kept EXACTLY as before so saved profiles, PLAN_OPTIONS and COV_DB keep working.
+const SA_OPEN_SCHEMES=['Bestmed','Bonitas','Cape Medical Plan','CompCare','Discovery Health','Fedhealth','Genesis Medical','Keyhealth','Makoti Medical Scheme','Medihelp','MediMed','Medshield','Momentum Health','Sizwe Hosmed','Suremed Health','Thebemed'];
+const SA_RESTRICTED_SCHEMES=['AECI Medical Aid Society','Alliance-Midmed','Anglo Medical Scheme','Anglovaal Group Medical Scheme','Bankmed','Barloworld Medical Scheme','BMW Employees Medical Aid Society','BP Medical Aid Society','Building & Construction Industry Medical Aid Fund','CAMAF (Chartered Accountants)','Consumer Goods Medical Scheme','De Beers Benefit Society','Engen Medical Benefit Fund','Fishmed (Fishing Industry)','Foodmed','GEMS','Glencore Medical Scheme','Golden Arrow Employees Medical Benefit Fund','Horizon Medical Scheme','Impala Medical Plan','Imperial and Motus Medical Aid','LA Health','Libcare Medical Scheme','Lonmin Medical Scheme','Malcor Medical Scheme','Massmart Health Plan','MBMed Medical Aid Fund','Medipos Medical Scheme','Motohealth Care','MultiChoice Medical Aid Scheme','Netcare Medical Scheme','Old Mutual Staff Medical Aid Fund','Parmed Medical Aid Scheme','PG Group Medical Scheme','Pick n Pay Medical Scheme','Platinum Health','Polmed','Profmed','Rand Water Medical Scheme','Remedi Medical Aid Scheme','Retail Medical Scheme','Rhodes University Medical Scheme','SABC Medical Aid Scheme','SABMAS (SA Breweries)','SAMWUMED','Sasolmed','Sedmed','Sisonke Health Medical Scheme','TFG Medical Aid Scheme','Transmed Medical Fund','Tsogo Sun Group Medical Scheme','Umvuzo Health','University of KwaZulu-Natal Medical Scheme','Witbank Coalfields Medical Aid Scheme','Wooltru Healthcare Fund'];
+// Health INSURANCE products — NOT medical schemes: no PMB rights, demarcation products.
+const SA_HEALTH_INSURANCE=['Unity Health (health insurance)','EssentialMed (health insurance)','Day1 Health (health insurance)','Other health insurance (type name in Plan box)'];
+function isHealthInsurance(scheme){return SA_HEALTH_INSURANCE.includes(scheme);}
 const COUNTRY_SCHEMES={
-  'South Africa':['Discovery Health','Bonitas','Momentum Health','Medihelp','Medshield','GEMS','Bestmed','Fedhealth','Keyhealth','Profmed','Sizwe Hosmed','Umvuzo Health','Polmed','Bankmed','LA Health','SAMWUMED','Thebemed','Suremed Health','Genesis Medical','None / Uninsured'],
+  'South Africa':SA_OPEN_SCHEMES.concat(SA_RESTRICTED_SCHEMES,SA_HEALTH_INSURANCE,['None / Uninsured']),
   'Namibia':['Namibia Health Plan (NHP)','Namibia Medical Care (NMC)','Nammed','Renaissance Health (RMA)','Heritage Health','GemHealth','Napotel','PSEMAS (Government Employees)','None / Uninsured']
 };
 function getCountry(){const el=document.getElementById('p-country');return el&&el.value?el.value:'South Africa';}
@@ -1133,7 +1238,16 @@ function populateSchemes(keep){
   const country=document.getElementById('p-country')?document.getElementById('p-country').value:'South Africa';
   const list=COUNTRY_SCHEMES[country]||COUNTRY_SCHEMES['South Africa'];
   const current=keep||sel.value;
-  sel.innerHTML='<option value="">— Select Scheme —</option>'+list.map(s=>'<option>'+s+'</option>').join('');
+  const opt=s=>'<option>'+s+'</option>';
+  if(country==='Namibia'){
+    sel.innerHTML='<option value="">— Select Scheme —</option>'+list.map(opt).join('');
+  }else{
+    sel.innerHTML='<option value="">— Select Scheme —</option>'
+      +'<optgroup label="Open schemes — anyone can join">'+SA_OPEN_SCHEMES.map(opt).join('')+'</optgroup>'
+      +'<optgroup label="Restricted — through employer / industry">'+SA_RESTRICTED_SCHEMES.map(opt).join('')+'</optgroup>'
+      +'<optgroup label="Health insurance — not a medical aid">'+SA_HEALTH_INSURANCE.map(opt).join('')+'</optgroup>'
+      +opt('None / Uninsured');
+  }
   if(current&&list.includes(current))sel.value=current;
 }
 // Plan / option names per scheme (well-known options — names shift slightly each
@@ -1220,6 +1334,7 @@ function saveProfile(){
     conditions:document.getElementById('p-conditions').value.trim(),
     meds:document.getElementById('p-meds').value.trim(),
     blood:document.getElementById('p-blood').value,
+    prevOps:document.getElementById('p-prevops')?document.getElementById('p-prevops').value.trim():'',
     ecName:document.getElementById('p-ec-name').value.trim(),
     ecRel:document.getElementById('p-ec-rel').value.trim(),
     ecNum:document.getElementById('p-ec-num').value.trim(),
@@ -1252,8 +1367,9 @@ function loadProfile(){
   condItems=p.conditions?p.conditions.split(',').map(c=>c.trim()).filter(Boolean):[];
   renderCondTags();
   document.getElementById('p-meds').value=p.meds||'';
-  if(p.meds){medItems=p.meds.split(',').map(m=>m.trim()).filter(Boolean);renderMedTags();}
+  if(p.meds){medItems=p.meds.split(',').map(m=>m.trim()).filter(Boolean).map(parseMedString);renderMedTags();closeMedEdit();}
   document.getElementById('p-blood').value=p.blood||'';
+  if(document.getElementById('p-prevops'))document.getElementById('p-prevops').value=p.prevOps||'';
   document.getElementById('p-ec-name').value=p.ecName||'';
   document.getElementById('p-ec-rel').value=p.ecRel||'';
   document.getElementById('p-ec-num').value=p.ecNum||'';
@@ -1387,6 +1503,7 @@ function renderCoverageGuide(){
   const wrap=document.getElementById('coverage-guide-wrap');if(!wrap)return;
   const raw=Store.get('hos_profile');const p=raw?JSON.parse(raw):{};const scheme=p.aidScheme||'';const plan=p.aidPlan||'';
   if(!scheme||scheme==='None / Uninsured'){wrap.innerHTML='<div class="card" style="border-left:4px solid #2563eb;padding:14px 18px;"><div style="font-size:13px;color:#64748b;line-height:1.7;">🛡️ <strong>Coverage guide:</strong> Save your medical aid scheme in <strong>Profile</strong> to see coverage here.</div></div>';return;}
+  if(typeof isHealthInsurance==='function'&&isHealthInsurance(scheme)){wrap.innerHTML='<div class="card" style="border-left:4px solid #eab308;padding:14px 18px;"><div style="font-size:13px;color:#713f12;line-height:1.7;">⚠️ <strong>'+escHtml(scheme)+'</strong> is a <strong>health insurance product, not a medical aid</strong>. Benefits are set by your policy, not by the Medical Schemes Act — PMBs and prescribed benefits do <strong>not</strong> apply. Check your policy schedule or call your insurer to confirm what is covered.</div></div>';return;}
   const types=['gp','specialist','hospital','pharmacy','dentist','optom','physio','psych','dietician'];
   const rows=types.map(t=>{const st=getCovStatus(scheme,plan,t);let badge='<span class="cov-result-badge" style="background:#f1f5f9;color:#64748b;">— Unknown</span>';if(st==='covered')badge='<span class="cov-result-badge cov-r-green">✓ Covered</span>';else if(st==='partial'||st==='check')badge='<span class="cov-result-badge cov-r-amber">⚠️ Check benefits</span>';return'<tr><td>'+COV_ICONS[t]+' '+COV_LABELS[t]+'</td><td>'+badge+'</td></tr>';}).join('');
   const planTxt=plan?'<div style="font-size:12px;color:#64748b;margin-bottom:8px;">Plan: <strong style="color:#1e293b;">'+escHtml(plan)+'</strong></div>':'';
@@ -1471,7 +1588,7 @@ function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 
 // ─── Backup & Restore ─────────────────────────────────────────────
-const BACKUP_KEYS=['hos_profile','hos_photo','hos_dependants','hos_pets','hos_bp','hos_vaccines','hos_labs','hos_radiology','hos_barcodes'];
+const BACKUP_KEYS=['hos_profile','hos_photo','hos_dependants','hos_pets','hos_bp','hos_sugar','hos_vaccines','hos_labs','hos_radiology','hos_barcodes'];
 function exportBackup(){
   const data={app:'MyHealthOneStop',version:11,date:new Date().toISOString()};
   BACKUP_KEYS.forEach(k=>{const v=Store.get(k);if(v)data[k]=v;});
@@ -1848,6 +1965,45 @@ function saveBP(){
   renderBP();
 }
 function deleteBP(i){const log=JSON.parse(Store.get('hos_bp')||'[]');log.splice(i,1);Store.set('hos_bp',JSON.stringify(log));renderBP();}
+// ─── Blood Sugar Log ──────────────────────────────────────────────
+function saveSugar(){
+  const val=parseFloat(document.getElementById('sugar-value').value);
+  const type=document.getElementById('sugar-type').value;
+  const tod=document.getElementById('sugar-tod').value;
+  const date=document.getElementById('sugar-date').value||new Date().toISOString().split('T')[0];
+  if(!val){showAlert('sugar-alert','⚠️ Enter a blood sugar value.','error');return;}
+  const log=JSON.parse(Store.get('hos_sugar')||'[]');
+  log.unshift({val,type,tod,date});
+  if(log.length>30)log.length=30;
+  Store.set('hos_sugar',JSON.stringify(log));
+  document.getElementById('sugar-value').value='';
+  showAlert('sugar-alert','✅ Reading saved.');
+  renderSugar();
+}
+function deleteSugar(i){const log=JSON.parse(Store.get('hos_sugar')||'[]');log.splice(i,1);Store.set('hos_sugar',JSON.stringify(log));renderSugar();}
+function renderSugar(){
+  const el=document.getElementById('sugar-list');if(!el)return;
+  const log=JSON.parse(Store.get('hos_sugar')||'[]');
+  if(!log.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No readings yet.</p>';return;}
+  el.innerHTML=log.map((r,i)=>{
+    const v=parseFloat(r.val);
+    const isFasting=(r.type==='Fasting');
+    let cls='bp-normal',cat='✓ Normal';
+    if(isFasting){
+      if(v<4.0){cls='bp-elevated';cat='⚠ Low';}
+      else if(v<5.6){cls='bp-normal';cat='✓ Normal';}
+      else if(v<7.0){cls='bp-elevated';cat='⚠ Raised';}
+      else{cls='bp-high';cat='🔴 High — see a doctor';}
+    }else{
+      if(v<4.0){cls='bp-elevated';cat='⚠ Low';}
+      else if(v<7.8){cls='bp-normal';cat='✓ Normal';}
+      else if(v<11.1){cls='bp-elevated';cat='⚠ Raised';}
+      else{cls='bp-high';cat='🔴 High — see a doctor';}
+    }
+    const typeLabel=(r.type||'')+(r.tod?' · '+r.tod:'');
+    return '<div class="bp-row '+cls+'"><span class="bp-val">'+v+' mmol/L</span><span style="font-size:12px;">'+cat+'<br>'+typeLabel+'</span><span class="bp-date">'+(r.date||'')+'</span><button onclick="deleteSugar('+i+')" style="background:none;border:none;cursor:pointer;font-size:14px;">🗑️</button></div>';
+  }).join('');
+}
 function renderBP(){
   const el=document.getElementById('bp-list');if(!el)return;
   const log=JSON.parse(Store.get('hos_bp')||'[]');
@@ -1988,6 +2144,7 @@ function openAddDependant(){
   document.getElementById('dep-sex').value='';document.getElementById('dep-blood').value='';
   document.getElementById('dep-relationship').value='';
   _bookletPhotos=[];renderBookletPhotos();
+  depMedItems=[];renderDepMedTags();closeDepMedEdit();
   toggleDepFields();
   openModal('modal-dependant');
 }
@@ -2004,6 +2161,7 @@ function openEditDependant(id){
   document.getElementById('dep-allergies').value=d.allergies||'';
   document.getElementById('dep-conditions').value=d.conditions||'';
   document.getElementById('dep-meds').value=d.meds||'';
+  depMedItems=(d.meds||'').split(',').map(m=>m.trim()).filter(Boolean).map(parseMedString);renderDepMedTags();closeDepMedEdit();
   document.getElementById('dep-birth').value=d.birth||'';
   document.getElementById('dep-aidnum').value=d.aidnum||'';
   document.getElementById('dep-notes').value=d.notes||'';
@@ -2065,11 +2223,11 @@ function shareMyDetails(){_shareTarget={type:'self'};openModal('modal-share');}
 function shareDependant(id){_shareTarget={type:'dependant',id};openModal('modal-share');}
 function buildShareSummary(){
   if(!_shareTarget)return '';
-  let name='',dob='',said='',blood='',allergies='',conditions='',meds='',aidScheme='',aidNum='',ecName='',ecRel='',ecNum='',relLabel='';
+  let name='',dob='',said='',blood='',allergies='',conditions='',meds='',aidScheme='',aidNum='',ecName='',ecRel='',ecNum='',relLabel='',prevOps='';
   if(_shareTarget.type==='self'){
     const raw=Store.get('hos_profile');if(!raw)return '';
     const p=JSON.parse(raw);
-    name=p.name||'';dob=p.dob||'';said=p.said||'';blood=p.blood||'';allergies=p.allergies||'';conditions=p.conditions||'';meds=p.meds||'';aidScheme=p.aidScheme||'';aidNum=p.aidNum||'';ecName=p.ecName||'';ecRel=p.ecRel||'';ecNum=p.ecNum||'';
+    name=p.name||'';dob=p.dob||'';said=p.said||'';blood=p.blood||'';allergies=p.allergies||'';conditions=p.conditions||'';meds=p.meds||'';aidScheme=p.aidScheme||'';aidNum=p.aidNum||'';ecName=p.ecName||'';ecRel=p.ecRel||'';ecNum=p.ecNum||'';prevOps=p.prevOps||'';
   }else{
     const list=JSON.parse(Store.get('hos_dependants')||'[]');
     const d=list.find(x=>x.id===_shareTarget.id);if(!d)return '';
@@ -2079,8 +2237,10 @@ function buildShareSummary(){
   const dobFmt=dob?new Date(dob).toLocaleDateString('en-ZA'):'Not recorded';
   const lines=['🏥 MEDICAL SUMMARY'+relLabel,'','Name: '+(name||'—'),'Date of Birth: '+dobFmt];
   if(said)lines.push('ID Number: '+said);
-  lines.push('Blood Type: '+(blood||'Unknown'),'','🚫 Allergies: '+(allergies||'None recorded'),'🏥 Chronic Conditions: '+(conditions||'None recorded'),'💊 Current Medications: '+(meds||'None recorded'),'');
-  if(aidScheme){lines.push('🩺 Medical Aid: '+aidScheme+(aidNum?' (Member No: '+aidNum+')':''),'');}
+  lines.push('Blood Type: '+(blood||'Unknown'),'','🚫 Allergies: '+(allergies||'None recorded'),'🏥 Chronic Conditions: '+(conditions||'None recorded'),'💊 Current Medications: '+(meds||'None recorded'));
+  if(prevOps)lines.push('⚕️ Previous Operations: '+prevOps);
+  lines.push('');
+  if(aidScheme){const aidLabel=(typeof isHealthInsurance==='function'&&isHealthInsurance(aidScheme))?'🩺 Health Insurance: ':'🩺 Medical Aid: ';lines.push(aidLabel+aidScheme+(aidNum?' (Member No: '+aidNum+')':''),'');}
   if(ecName){lines.push('👤 Emergency Contact: '+ecName+(ecRel?' ('+ecRel+')':'')+(ecNum?' — '+ecNum:''),'');}
   lines.push('— Shared via My Health One Stop app —');
   return lines.join('\n');
@@ -2109,6 +2269,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   renderDependants();
   renderCoverageGuide();
   renderBP();
+  renderSugar();
   renderVaccines();
   renderLabResults();
   renderRadiology();
@@ -2135,6 +2296,7 @@ function autoFillPreop(){
   set('po-allergies',p.allergies);
   const meds=p.meds||'';set('po-meds',meds);
   set('po-conditions',p.conditions);
+  set('po-prev-surg',p.prevOps);
   // Default sign date to today
   const today=new Date().toISOString().split('T')[0];
   set('po-sign-date',today);
@@ -2193,6 +2355,8 @@ function buildPreopText(){
     'Climbs stairs without stopping: '+getVal('po-stairs'),
     'Chest pain / palpitations: '+getVal('po-chest'),
     'Shortness of breath: '+getVal('po-sob'),
+    'Fainting / blackouts (syncope): '+getVal('po-syncope'),
+    'Leg pain on walking, eases with rest (claudication): '+getVal('po-claudication'),
     'STOP-BANG:',
     '  S — Snores loudly: '+getSBVal('sb-s'),
     '  T — Tired / sleepy daytime: '+getSBVal('sb-t'),
@@ -2205,21 +2369,34 @@ function buildPreopText(){
     'CPAP for sleep apnoea: '+getVal('po-cpap'),
     'Smoking: '+getVal('po-smoking'),
     '',
-    '── 7. AIRWAY ──',
+    '── 7. LIVER & KIDNEY FUNCTION ──',
+    'Known liver disease: '+getVal('po-liver'),
+    'Jaundice / dark urine, ever: '+getVal('po-jaundice'),
+    'Known kidney disease / dialysis: '+getVal('po-kidney'),
+    'Leg swelling or change in urine output: '+getVal('po-fluid'),
+    '',
+    '── 8. MUSCULOSKELETAL ──',
+    'Arthritis: '+getVal('po-arthritis'),
+    'Joints affected: '+getVal('po-arthritis-joints'),
+    'Muscle wasting / weakness (atrophy): '+getVal('po-muscle-atrophy'),
+    'Unusual muscle bulk/growth: '+getVal('po-muscle-growth'),
+    'Joint replacements / implants / mobility limits: '+getVal('po-mobility'),
+    '',
+    '── 9. AIRWAY ──',
     'Neck movement problem: '+getVal('po-neck'),
     'Mouth opening difficulty: '+getVal('po-mouth'),
     'Teeth / dentures: '+getVal('po-teeth'),
     '',
-    '── 8. FASTING STATUS (day of procedure) ──',
+    '── 10. FASTING STATUS (day of procedure) ──',
     'Last solid food: '+getVal('po-last-food'),
     'Last clear fluids: '+getVal('po-last-fluids'),
     '',
-    '── 9. SOCIAL HISTORY ──',
+    '── 11. SOCIAL HISTORY ──',
     'Alcohol: '+getVal('po-alcohol'),
     'Recreational drugs: '+getVal('po-drugs'),
     'Pregnancy / breastfeeding: '+getVal('po-pregnancy'),
     '',
-    '── 10. DECLARATION ──',
+    '── 12. DECLARATION ──',
     'I confirm this information is accurate to the best of my knowledge.',
     'Signed: '+getVal('po-signature'),
     'Date: '+getVal('po-sign-date'),
@@ -2254,8 +2431,31 @@ function printPreop(){
 
 // ─── Medication & Conditions: correct IDs for Part 4's HTML ──────
 // Part 4 uses p-meds-input, meds-tags, p-cond-input, cond-tags
+// Each medication is {name, dose, freq} — dose/freq are optional and stored
+// inside the saved text as "Name (dose · freq)" so every other screen that
+// just displays the medication string (health card, share, pre-op form)
+// keeps working without any changes.
 let medItems=[];
 let condItems=[];
+
+function medItemToString(it){
+  const extra=[it.dose,it.freq].filter(Boolean);
+  return it.name+(extra.length?' ('+extra.join(' · ')+')':'');
+}
+function medItemsToHidden(items){return items.map(medItemToString).join(', ');}
+function parseMedString(s){
+  s=(s||'').trim();
+  const m=s.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+  if(!m)return{name:s,dose:'',freq:''};
+  const name=m[1].trim();
+  const parts=m[2].split('·').map(p=>p.trim()).filter(Boolean);
+  if(parts.length>=2)return{name,dose:parts[0],freq:parts[1]};
+  if(parts.length===1){
+    const freqLike=/daily|every|weekly|monthly|month|week|day/i.test(parts[0]);
+    return freqLike?{name,dose:'',freq:parts[0]}:{name,dose:parts[0],freq:''};
+  }
+  return{name,dose:'',freq:''};
+}
 
 function searchMeds(val){
   const q=(val||'').toLowerCase();
@@ -2267,18 +2467,102 @@ function searchMeds(val){
   box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="addMed(\''+x.replace(/'/g,"\\'")+'\')" style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f1f5f9;font-size:14px;color:#1e293b;">'+x+'</div>').join('');
 }
 function addMed(name){
-  if(!medItems.includes(name))medItems.push(name);
+  name=(name||'').trim();if(!name)return;
+  if(!medItems.some(it=>it.name.toLowerCase()===name.toLowerCase()))medItems.push({name,dose:'',freq:''});
   const inp=document.getElementById('p-meds-input');if(inp)inp.value='';
   const box=document.getElementById('med-suggestions');if(box){box.style.display='none';box.innerHTML='';}
   renderMedTags();
-  const hidden=document.getElementById('p-meds');if(hidden)hidden.value=medItems.join(', ');
+  const hidden=document.getElementById('p-meds');if(hidden)hidden.value=medItemsToHidden(medItems);
 }
-function removeMed(name){medItems=medItems.filter(m=>m!==name);renderMedTags();const h=document.getElementById('p-meds');if(h)h.value=medItems.join(', ');}
+function removeMed(i){medItems.splice(i,1);renderMedTags();const h=document.getElementById('p-meds');if(h)h.value=medItemsToHidden(medItems);if(_medEditIndex===i)closeMedEdit();}
 function renderMedTags(){
   const el=document.getElementById('meds-tags');if(!el)return;
-  el.innerHTML=medItems.map(m=>'<span class="tag" style="background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;padding:4px 10px;border-radius:20px;font-size:12px;display:inline-flex;align-items:center;gap:4px;">'+escHtml(m)+'<button onclick="removeMed(\''+m.replace(/'/g,"\\'")+'\''+')" style="background:none;border:none;cursor:pointer;color:#64748b;font-size:12px;padding:0 0 0 4px;">×</button></span>').join('');
+  el.innerHTML=medItems.map((it,i)=>{
+    const label=medItemToString(it);
+    return '<span class="tag" style="background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;padding:4px 10px;border-radius:20px;font-size:12px;display:inline-flex;align-items:center;gap:4px;">'+escHtml(label)+'<button onclick="openMedEdit('+i+')" title="Add dose / frequency" style="background:none;border:none;cursor:pointer;color:#2563eb;font-size:12px;padding:0 0 0 4px;">✏️</button><button onclick="removeMed('+i+')" style="background:none;border:none;cursor:pointer;color:#64748b;font-size:12px;padding:0 0 0 2px;">×</button></span>';
+  }).join('');
 }
 function medKeyDown(e){if(e.key==='Enter'){e.preventDefault();const inp=document.getElementById('p-meds-input');if(inp&&inp.value.trim())addMed(inp.value.trim());}}
+
+// ─── Medication dose / frequency edit panel (main profile) ───────
+let _medEditIndex=-1;
+function openMedEdit(i){
+  const it=medItems[i];if(!it)return;
+  _medEditIndex=i;
+  document.getElementById('med-edit-name').textContent=it.name;
+  document.getElementById('med-edit-dose').value=it.dose||'';
+  const sel=document.getElementById('med-edit-freq');
+  const custom=document.getElementById('med-edit-freq-custom');
+  const presets=Array.from(sel.options).map(o=>o.value).filter(v=>v&&v!=='Other');
+  if(it.freq&&presets.includes(it.freq)){sel.value=it.freq;custom.style.display='none';custom.value='';}
+  else if(it.freq){sel.value='Other';custom.style.display='block';custom.value=it.freq;}
+  else{sel.value='';custom.style.display='none';custom.value='';}
+  document.getElementById('med-edit-panel').style.display='block';
+}
+function onMedFreqChange(){
+  document.getElementById('med-edit-freq-custom').style.display=(document.getElementById('med-edit-freq').value==='Other')?'block':'none';
+}
+function closeMedEdit(){_medEditIndex=-1;const p=document.getElementById('med-edit-panel');if(p)p.style.display='none';}
+function saveMedEdit(){
+  if(_medEditIndex<0||!medItems[_medEditIndex])return;
+  const dose=document.getElementById('med-edit-dose').value.trim();
+  let freq=document.getElementById('med-edit-freq').value;
+  if(freq==='Other')freq=document.getElementById('med-edit-freq-custom').value.trim();
+  medItems[_medEditIndex].dose=dose;
+  medItems[_medEditIndex].freq=freq;
+  renderMedTags();
+  const hidden=document.getElementById('p-meds');if(hidden)hidden.value=medItemsToHidden(medItems);
+  closeMedEdit();
+}
+
+// ─── Dependant medications: parallel set to the main profile's ──────
+let depMedItems=[];
+function addDepMed(name){
+  name=(name||'').trim();if(!name)return;
+  if(!depMedItems.some(it=>it.name.toLowerCase()===name.toLowerCase()))depMedItems.push({name,dose:'',freq:''});
+  const inp=document.getElementById('dep-meds-input');if(inp)inp.value='';
+  renderDepMedTags();
+  const hidden=document.getElementById('dep-meds');if(hidden)hidden.value=medItemsToHidden(depMedItems);
+}
+function removeDepMed(i){depMedItems.splice(i,1);renderDepMedTags();const h=document.getElementById('dep-meds');if(h)h.value=medItemsToHidden(depMedItems);if(_depMedEditIndex===i)closeDepMedEdit();}
+function renderDepMedTags(){
+  const el=document.getElementById('dep-meds-tags');if(!el)return;
+  el.innerHTML=depMedItems.map((it,i)=>{
+    const label=medItemToString(it);
+    return '<span class="tag" style="background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;padding:4px 10px;border-radius:20px;font-size:12px;display:inline-flex;align-items:center;gap:4px;">'+escHtml(label)+'<button onclick="openDepMedEdit('+i+')" title="Add dose / frequency" style="background:none;border:none;cursor:pointer;color:#2563eb;font-size:12px;padding:0 0 0 4px;">✏️</button><button onclick="removeDepMed('+i+')" style="background:none;border:none;cursor:pointer;color:#64748b;font-size:12px;padding:0 0 0 2px;">×</button></span>';
+  }).join('');
+}
+function depMedKeyDown(e){if(e.key==='Enter'){e.preventDefault();const inp=document.getElementById('dep-meds-input');if(inp&&inp.value.trim())addDepMed(inp.value.trim());}}
+
+let _depMedEditIndex=-1;
+function openDepMedEdit(i){
+  const it=depMedItems[i];if(!it)return;
+  _depMedEditIndex=i;
+  document.getElementById('dep-med-edit-name').textContent=it.name;
+  document.getElementById('dep-med-edit-dose').value=it.dose||'';
+  const sel=document.getElementById('dep-med-edit-freq');
+  const custom=document.getElementById('dep-med-edit-freq-custom');
+  const presets=Array.from(sel.options).map(o=>o.value).filter(v=>v&&v!=='Other');
+  if(it.freq&&presets.includes(it.freq)){sel.value=it.freq;custom.style.display='none';custom.value='';}
+  else if(it.freq){sel.value='Other';custom.style.display='block';custom.value=it.freq;}
+  else{sel.value='';custom.style.display='none';custom.value='';}
+  document.getElementById('dep-med-edit-panel').style.display='block';
+}
+function onDepMedFreqChange(){
+  document.getElementById('dep-med-edit-freq-custom').style.display=(document.getElementById('dep-med-edit-freq').value==='Other')?'block':'none';
+}
+function closeDepMedEdit(){_depMedEditIndex=-1;const p=document.getElementById('dep-med-edit-panel');if(p)p.style.display='none';}
+function saveDepMedEdit(){
+  if(_depMedEditIndex<0||!depMedItems[_depMedEditIndex])return;
+  const dose=document.getElementById('dep-med-edit-dose').value.trim();
+  let freq=document.getElementById('dep-med-edit-freq').value;
+  if(freq==='Other')freq=document.getElementById('dep-med-edit-freq-custom').value.trim();
+  depMedItems[_depMedEditIndex].dose=dose;
+  depMedItems[_depMedEditIndex].freq=freq;
+  renderDepMedTags();
+  const hidden=document.getElementById('dep-meds');if(hidden)hidden.value=medItemsToHidden(depMedItems);
+  closeDepMedEdit();
+}
 
 // ─── Allergy Autocomplete (tags, same pattern as meds) ─────────────
 const ALLERGY_LIST=['Penicillin','Amoxicillin','Cephalosporins','Sulpha drugs (e.g. Bactrim)','Erythromycin / Macrolides','Quinolones (e.g. Ciprofloxacin)','Tetracyclines','Aspirin','NSAIDs (e.g. Ibuprofen, Voltaren)','Codeine','Morphine / Opioids','Tramadol','Paracetamol','Local anaesthetic','General anaesthetic reaction','X-ray contrast dye','Iodine','Latex / rubber gloves','Plasters / adhesive tape','ACE-inhibitor cough/swelling','Statins','Insulin','Vaccines (specify)','Peanuts','Tree nuts','Shellfish / prawns','Fish','Eggs','Cow\'s milk / dairy','Soy','Wheat / gluten','Banana','Strawberries','Food colourants / preservatives','Sulphites (wine, dried fruit)','MSG','Bee stings','Wasp stings','Pollen / hay fever','Grass','Dust mites','Mould','Cat hair','Dog hair','Feathers','No known allergies'];
@@ -2454,7 +2738,10 @@ function renderPmbChecker(){
   const country=document.getElementById('p-country')?document.getElementById('p-country').value:'South Africa';
   const card=document.getElementById('pmb-card');const note=document.getElementById('pmb-country-note');
   if(!card)return;
-  if(country==='Namibia'){
+  const _praw=Store.get('hos_profile');const _pp=_praw?JSON.parse(_praw):{};
+  if(typeof isHealthInsurance==='function'&&isHealthInsurance(_pp.aidScheme)){
+    if(note)note.innerHTML='⚠️ <strong>You have selected a health insurance product, not a medical aid.</strong> PMB law applies only to registered medical schemes — insurance policies do NOT have to cover PMB conditions. The results below show what a medical scheme would have to cover; check your own policy wording for what YOUR product pays.';
+  }else if(country==='Namibia'){
     if(note)note.innerHTML='⚠️ PMB rules shown here are for <strong>South African</strong> schemes. Namibian funds (NAMAF) set their own minimum benefits — confirm directly with your fund.';
   }else{
     if(note)note.innerHTML='PMB rules apply to South African schemes (Medical Schemes Act). General guide — always confirm with your scheme. Council for Medical Schemes: 0861 123 267.';
