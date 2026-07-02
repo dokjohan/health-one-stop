@@ -297,6 +297,13 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
 <!-- SCREEN 1 — PROFILE -->
 <div class="screen active" id="screen-profile">
   <div id="profile-alert"></div>
+  <!-- SHARE THIS APP -->
+  <div class="card" style="border-left:4px solid #16a34a;padding:14px 18px;">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:170px;font-size:13px;color:#334155;line-height:1.5;"><strong>📲 Know someone who needs this app?</strong><br>Share it with a patient, colleague, friend or family member.</div>
+      <button class="btn btn-primary" style="width:auto;flex-shrink:0;margin-top:0;padding:11px 18px;" onclick="shareApp()">📤 Share this app</button>
+    </div>
+  </div>
   <div class="card">
     <div class="profile-photo-area">
       <input type="file" id="photo-input" accept="image/*" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px;" onchange="savePhoto(this)">
@@ -1070,6 +1077,18 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <button class="btn btn-primary" style="margin-bottom:10px;" onclick="doShareWhatsApp()">💬 Share via WhatsApp</button>
     <button class="btn btn-outline" onclick="doShareEmail()">✉️ Share via Email</button>
     <button class="modal-close-btn" onclick="closeModal('modal-share')">Cancel</button>
+  </div>
+</div>
+
+<!-- SHARE THIS APP MODAL -->
+<div class="modal-overlay" id="modal-share-app" onclick="if(event.target===this)closeModal('modal-share-app')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📲 Share This App</div>
+    <p style="font-size:13px;color:#64748b;margin-bottom:16px;">Send the app link to a patient, colleague, friend or family member. Only the link is shared — none of your personal information.</p>
+    <button class="btn btn-primary" style="margin-bottom:10px;" onclick="doShareAppWhatsApp()">💬 Share via WhatsApp</button>
+    <button class="btn btn-outline" onclick="doShareAppEmail()">✉️ Share via Email</button>
+    <button class="modal-close-btn" onclick="closeModal('modal-share-app')">Cancel</button>
   </div>
 </div>
 
@@ -2245,6 +2264,16 @@ function buildShareSummary(){
   lines.push('— Shared via My Health One Stop app —');
   return lines.join('\n');
 }
+// ─── Share This App ────────────────────────────────────────────────
+const APP_SHARE_URL='https://www.myhealthonestop.com';
+function appShareText(){return 'My Health One Stop — a free health app that keeps your allergies, medications, medical aid details and emergency contacts on your phone, with a QR code for emergencies. It even has a pre-operative questionnaire you can send to your surgeon and anaesthetist. Try it: '+APP_SHARE_URL;}
+function shareApp(){
+  if(navigator.share){navigator.share({title:'My Health One Stop',text:appShareText()}).catch(()=>{});return;}
+  openModal('modal-share-app');
+}
+function doShareAppWhatsApp(){window.open('https://wa.me/?text='+encodeURIComponent(appShareText()),'_blank');closeModal('modal-share-app');}
+function doShareAppEmail(){window.location.href='mailto:?subject='+encodeURIComponent('My Health One Stop — free health app')+'&body='+encodeURIComponent(appShareText());closeModal('modal-share-app');}
+
 function doShareWhatsApp(){
   const text=buildShareSummary();
   if(!text){alert('No saved details found to share yet.');return;}
@@ -2858,7 +2887,7 @@ function findNearestVet(){searchNearby('vet','Vet / Animal Clinic','🐾');}
 <!-- Copyright footer — subtle but present for IP protection -->
 <div style="text-align:center;padding:12px 16px 4px;font-size:10px;color:#cbd5e1;font-family:'Poppins',sans-serif;">
   © 2026 Dr JA Geldenhuys · My Health One Stop · All rights reserved<br>
-  <span id="app-version" style="font-size:10px;color:#cbd5e1;">Version 2026.07.02</span>
+  <span id="app-version" style="font-size:10px;color:#cbd5e1;">Version 2026.07.02b</span>
 </div>
 
 </body>
