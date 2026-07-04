@@ -303,6 +303,10 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
       <div style="flex:1;min-width:170px;font-size:13px;color:#334155;line-height:1.5;"><strong>📲 Know someone who needs this app?</strong><br>Share it with a patient, colleague, friend or family member.</div>
       <button class="btn btn-primary" style="width:auto;flex-shrink:0;margin-top:0;padding:11px 18px;" onclick="shareApp()">📤 Share this app</button>
     </div>
+    <div style="margin-top:10px;padding-top:10px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:170px;font-size:13px;color:#334155;line-height:1.5;"><strong>🏠 Use it like a real app</strong><br>Save it to your phone's home screen — one tap to open, no browser needed.</div>
+      <button class="btn btn-outline" style="width:auto;flex-shrink:0;margin-top:0;padding:11px 18px;" onclick="openInstallGuide()">🏠 Show me how</button>
+    </div>
   </div>
   <div class="card">
     <div class="profile-photo-area">
@@ -407,8 +411,8 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <div id="pmb-body" style="display:none;margin-top:12px;">
       <p style="font-size:13px;color:#64748b;line-height:1.6;margin-bottom:12px;">Prescribed Minimum Benefits (PMBs) are conditions every registered medical aid must cover <strong>by law</strong> — on every option, regardless of how basic the plan is. Check a condition below.</p>
       <div style="position:relative;">
-        <div class="input-row"><input type="text" id="pmb-input" placeholder="e.g. Hypertension, depression, or I10…" autocomplete="off" oninput="searchPmb(this.value)"></div>
-        <div id="pmb-suggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:white;border:1.5px solid #2563eb;border-top:none;border-radius:0 0 10px 10px;z-index:500;max-height:200px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
+        <div class="input-row"><input type="text" id="pmb-input" placeholder="🔍 e.g. Hypertension, depression, or I10…" autocomplete="off" oninput="searchPmb(this.value)" style="min-height:54px;padding:15px 16px;font-size:16px;border-width:2px;border-radius:12px;"></div>
+        <div id="pmb-suggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:white;border:2px solid #2563eb;border-top:none;border-radius:0 0 12px 12px;z-index:500;max-height:280px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
       </div>
       <div id="pmb-result" style="margin-top:12px;"></div>
       <div id="pmb-my-conditions" style="margin-top:12px;"></div>
@@ -1092,6 +1096,37 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   </div>
 </div>
 
+<!-- INSTALL / ADD TO HOME SCREEN MODAL -->
+<div class="modal-overlay" id="modal-install" onclick="if(event.target===this)closeModal('modal-install')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🏠 Put the App on Your Home Screen</div>
+    <p style="font-size:13px;color:#64748b;margin-bottom:14px;line-height:1.6;">This saves an icon on your phone, just like a normal app. Your information stays saved on your phone.</p>
+    <div id="install-steps">
+      <div id="install-ios" style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:14px 16px;margin-bottom:10px;">
+        <div style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:8px;">🍎 iPhone / iPad (Safari)</div>
+        <ol style="font-size:13px;color:#334155;line-height:2;margin:0;padding-left:20px;">
+          <li>Open <strong>www.myhealthonestop.com</strong> in <strong>Safari</strong></li>
+          <li>Tap the <strong>Share</strong> button <span style="display:inline-block;border:1.5px solid #94a3b8;border-radius:5px;padding:0 6px;font-size:12px;">⬆️</span> at the bottom</li>
+          <li>Scroll down and tap <strong>"Add to Home Screen"</strong></li>
+          <li>Tap <strong>Add</strong> — done!</li>
+        </ol>
+      </div>
+      <div id="install-android" style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:14px 16px;margin-bottom:10px;">
+        <div style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:8px;">🤖 Android (Chrome)</div>
+        <ol style="font-size:13px;color:#334155;line-height:2;margin:0;padding-left:20px;">
+          <li>Open <strong>www.myhealthonestop.com</strong> in <strong>Chrome</strong></li>
+          <li>Tap the <strong>menu</strong> button <span style="display:inline-block;border:1.5px solid #94a3b8;border-radius:5px;padding:0 6px;font-size:12px;">⋮</span> at the top right</li>
+          <li>Tap <strong>"Add to Home screen"</strong> (or <strong>"Install app"</strong>)</li>
+          <li>Tap <strong>Add</strong> — done!</li>
+        </ol>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#94a3b8;line-height:1.6;margin-bottom:6px;">💡 Once added, tap the icon on your home screen to open the app instantly — even in an emergency.</p>
+    <button class="modal-close-btn" onclick="closeModal('modal-install')">Close</button>
+  </div>
+</div>
+
 <!-- LAB RESULT MODAL -->
 <div class="modal-overlay" id="modal-lab" onclick="if(event.target===this)closeModal('modal-lab')">
   <div class="modal-sheet">
@@ -1609,7 +1644,7 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
 // ─── Backup & Restore ─────────────────────────────────────────────
 const BACKUP_KEYS=['hos_profile','hos_photo','hos_dependants','hos_pets','hos_bp','hos_sugar','hos_vaccines','hos_labs','hos_radiology','hos_barcodes'];
 function exportBackup(){
-  const data={app:'MyHealthOneStop',version:11,date:new Date().toISOString()};
+  const data={app:'MyHealthOneStop',version:12,date:new Date().toISOString()};
   BACKUP_KEYS.forEach(k=>{const v=Store.get(k);if(v)data[k]=v;});
   const blob=new Blob([JSON.stringify(data)],{type:'application/json'});
   const a=document.createElement('a');
@@ -2266,7 +2301,14 @@ function buildShareSummary(){
 }
 // ─── Share This App ────────────────────────────────────────────────
 const APP_SHARE_URL='https://www.myhealthonestop.com';
-function appShareText(){return 'My Health One Stop — a free health app that keeps your allergies, medications, medical aid details and emergency contacts on your phone, with a QR code for emergencies. It even has a pre-operative questionnaire you can send to your surgeon and anaesthetist. Try it: '+APP_SHARE_URL;}
+function appShareText(){return 'My Health One Stop — a free health app that keeps your allergies, medications, medical aid details and emergency contacts on your phone, with a QR code for emergencies. It even has a pre-operative questionnaire you can send to your surgeon and anaesthetist. Try it: '+APP_SHARE_URL+'\n\n📲 Tip: open the link, then add it to your home screen so it works like a normal app — on iPhone: Safari Share button → "Add to Home Screen". On Android: Chrome menu (⋮) → "Add to Home screen".';}
+// ─── Install / Add to Home Screen guide ────────────────────────────
+function openInstallGuide(){
+  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+  const ios=document.getElementById('install-ios');const and=document.getElementById('install-android');
+  if(ios&&and){if(isIOS){ios.parentNode.insertBefore(ios,and);}else{and.parentNode.insertBefore(and,ios);}}
+  openModal('modal-install');
+}
 function shareApp(){
   if(navigator.share){navigator.share({title:'My Health One Stop',text:appShareText()}).catch(()=>{});return;}
   openModal('modal-share-app');
@@ -2739,7 +2781,7 @@ function searchPmb(val){
   const m=ICD10_CONDITIONS.filter(x=>x.n.toLowerCase().includes(q)||x.c.toLowerCase().replace('.','').includes(q.replace('.',''))).slice(0,8);
   if(!m.length){box.style.display='none';return;}
   box.style.display='block';
-  box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="pickPmb(\''+x.c.replace(/'/g,"\\'")+'\')" style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f1f5f9;font-size:14px;color:#1e293b;"><span style="font-weight:600;color:#2563eb;font-size:12px;">'+x.c+'</span> &nbsp;'+x.n+'</div>').join('');
+  box.innerHTML=m.map(x=>'<div class="suggestion-item" onclick="pickPmb(\''+x.c.replace(/'/g,"\\'")+'\')" style="padding:13px 16px;cursor:pointer;border-bottom:1px solid #f1f5f9;font-size:15px;color:#1e293b;"><span style="font-weight:600;color:#2563eb;font-size:13px;">'+x.c+'</span> &nbsp;'+x.n+'</div>').join('');
 }
 function pickPmb(code){
   const item=ICD10_CONDITIONS.find(x=>x.c===code);if(!item)return;
@@ -2887,7 +2929,7 @@ function findNearestVet(){searchNearby('vet','Vet / Animal Clinic','🐾');}
 <!-- Copyright footer — subtle but present for IP protection -->
 <div style="text-align:center;padding:12px 16px 4px;font-size:10px;color:#cbd5e1;font-family:'Poppins',sans-serif;">
   © 2026 Dr JA Geldenhuys · My Health One Stop · All rights reserved<br>
-  <span id="app-version" style="font-size:10px;color:#cbd5e1;">Version 2026.07.02b</span>
+  <span id="app-version" style="font-size:10px;color:#cbd5e1;">Version 2026.07.04</span>
 </div>
 
 </body>
