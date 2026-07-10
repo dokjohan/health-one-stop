@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>MyHealthOneStop</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -306,6 +306,10 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <div style="margin-top:10px;padding-top:10px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
       <div style="flex:1;min-width:170px;font-size:13px;color:#334155;line-height:1.5;"><strong>🏠 Use it like a real app</strong><br>Save it to your phone's home screen — one tap to open, no browser needed.</div>
       <button class="btn btn-outline" style="width:auto;flex-shrink:0;margin-top:0;padding:11px 18px;" onclick="openInstallGuide()">🏠 Show me how</button>
+    </div>
+    <div style="margin-top:10px;padding-top:10px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:170px;font-size:13px;color:#334155;line-height:1.5;"><strong>📖 New here?</strong><br>See everything this app can do, in one short list.</div>
+      <button class="btn btn-outline" style="width:auto;flex-shrink:0;margin-top:0;padding:11px 18px;" onclick="openModal('modal-whatsinapp')">📖 What's in this app?</button>
     </div>
   </div>
   <div class="card">
@@ -669,6 +673,14 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     </div>
     <div class="nav-card-arrow">›</div>
   </div>
+  <div class="nav-card" onclick="showSubScreen('pregnancy')" ontouchstart="">
+    <div class="nav-card-icon">🤰</div>
+    <div class="nav-card-text">
+      <div class="nav-card-title">Bump to Baby Diary</div>
+      <div class="nav-card-sub">A fun, private pregnancy record you can keep as a baby album</div>
+    </div>
+    <div class="nav-card-arrow">›</div>
+  </div>
 
   <!-- BMI Calculator -->
   <div class="card">
@@ -748,6 +760,18 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:10px;">📡 Radiology Reports</div>
     <button class="btn btn-outline" style="margin-bottom:12px;" onclick="openModal('modal-radio')">+ Add Radiology Report</button>
     <div id="radio-list"></div>
+  </div>
+
+  <!-- Funeral & Memorial Services -->
+  <div class="card">
+    <div class="card-title">🕊️ Funeral &amp; Memorial Services</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6;">Information and contacts to help a family during a difficult time — cover options, arranging a service, and finding help nearby.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <a href="https://www.avbob.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🕊️</div><div class="svc-text"><div class="svc-name">AVBOB</div><div class="svc-sub">Funeral cover &amp; services — nationwide</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://www.doves.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🕊️</div><div class="svc-text"><div class="svc-name">Doves Group</div><div class="svc-sub">Funeral homes &amp; memorial services — nationwide</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://www.google.com/maps/search/funeral+home+near+me" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">📍</div><div class="svc-text"><div class="svc-name">Find one near me</div><div class="svc-sub">Opens Google Maps to search your area</div></div><div class="svc-arrow">›</div></a>
+    </div>
+    <p style="font-size:11px;color:#94a3b8;margin-top:10px;line-height:1.5;">This section is for information only — always confirm cover details and pricing directly with the provider.</p>
   </div>
 
   <!-- Backup & Restore -->
@@ -970,6 +994,87 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   <div style="height:20px;"></div>
 </div>
 
+<!-- SCREEN 9 — BUMP TO BABY DIARY (PREGNANCY TRACKER) -->
+<div class="screen" id="screen-pregnancy">
+  <div class="back-bar">
+    <button class="back-btn" onclick="backToMore()">← Back</button>
+    <span class="sub-title">🤰 Bump to Baby Diary</span>
+  </div>
+  <div class="preop-autofill-note">💛 A fun, private record just for you — fill it in whenever you like, and keep it as a baby album. Everything is saved only on this phone.</div>
+
+  <!-- Your Family So Far -->
+  <div class="preop-section">
+    <div class="preop-section-title">👨‍👩‍👧 Your Family So Far</div>
+    <div class="form-group"><label>Children You Already Have</label><input type="number" id="preg-children-count" placeholder="e.g. 0, 1, 2..." inputmode="numeric" min="0" max="20"></div>
+    <div class="form-group"><label>Their Names / Ages (optional)</label><textarea id="preg-children-notes" rows="2" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;resize:vertical;" placeholder="e.g. Emma (5), Liam (3)"></textarea></div>
+    <button class="btn btn-primary" onclick="savePregnancyBasics()">💾 Save</button>
+  </div>
+
+  <!-- This Pregnancy -->
+  <div class="preop-section">
+    <div class="preop-section-title">🤰 This Pregnancy</div>
+    <div class="form-group"><label>Due Date</label><input type="date" id="preg-due-date"></div>
+    <div class="form-group"><label>First Kick Date</label><input type="date" id="preg-first-kick"></div>
+    <div class="form-group"><label>Baby Name Ideas</label><textarea id="preg-baby-names" rows="2" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;resize:vertical;" placeholder="e.g. Noah, Grace, or names you're considering"></textarea></div>
+    <button class="btn btn-primary" onclick="savePregnancyBasics()">💾 Save</button>
+  </div>
+
+  <!-- Feelings Diary -->
+  <div class="preop-section">
+    <div class="preop-section-title">💭 How You're Feeling — Diary</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:10px;line-height:1.6;">Jot down how you're feeling, milestones, or funny moments — as often as you like.</p>
+    <div class="form-group"><label>Date</label><input type="date" id="preg-feeling-date"></div>
+    <div class="form-group"><label>Entry</label><textarea id="preg-feeling-text" rows="2" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;resize:vertical;" placeholder="e.g. Felt the first real kick today, so excited!"></textarea></div>
+    <button class="btn btn-primary" onclick="addPregnancyFeeling()">➕ Add Entry</button>
+    <div id="preg-feelings-list" style="margin-top:12px;"></div>
+  </div>
+
+  <!-- Clinic / Doctor Visits -->
+  <div class="preop-section">
+    <div class="preop-section-title">🏥 Clinic / Doctor Visit Log</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:10px;line-height:1.6;">Keep track of progress at each check-up.</p>
+    <div class="form-group"><label>Date</label><input type="date" id="preg-clinic-date"></div>
+    <div class="form-group"><label>Notes (weight, bump size, blood pressure, anything the clinic/doctor said)</label><textarea id="preg-clinic-text" rows="2" style="width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;color:#1e293b;background:white;outline:none;resize:vertical;" placeholder="e.g. 24 weeks, heartbeat strong, all normal"></textarea></div>
+    <button class="btn btn-primary" onclick="addPregnancyClinicVisit()">➕ Add Visit</button>
+    <div id="preg-clinic-list" style="margin-top:12px;"></div>
+  </div>
+
+  <!-- First Ultrasound -->
+  <div class="preop-section">
+    <div class="preop-section-title">🖼️ First Ultrasound Photo</div>
+    <div id="preg-first-us-preview" style="margin-bottom:10px;"></div>
+    <input type="file" id="preg-first-us-input" accept="image/*" capture="environment" style="font-size:13px;font-family:'Poppins',sans-serif;width:100%;" onchange="handlePregnancyFirstUltrasound(this)">
+  </div>
+
+  <!-- Follow-up Ultrasounds -->
+  <div class="preop-section">
+    <div class="preop-section-title">🖼️ Follow-Up Ultrasound Photos</div>
+    <div id="preg-followups-gallery" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;"></div>
+    <input type="file" id="preg-followup-input" accept="image/*" capture="environment" style="font-size:13px;font-family:'Poppins',sans-serif;width:100%;" onchange="handlePregnancyFollowUp(this)">
+  </div>
+
+  <!-- After Birth -->
+  <div class="preop-section">
+    <div class="preop-section-title">👶 After Birth</div>
+    <div id="preg-baby-photo-preview" style="margin-bottom:10px;"></div>
+    <input type="file" id="preg-baby-photo-input" accept="image/*" capture="environment" style="font-size:13px;font-family:'Poppins',sans-serif;width:100%;margin-bottom:12px;" onchange="handlePregnancyBabyPhoto(this)">
+    <div class="form-group"><label>Baby's Name</label><input type="text" id="preg-baby-final-name" placeholder="e.g. Noah Geldenhuys"></div>
+    <div class="form-group"><label>Date of Birth</label><input type="date" id="preg-baby-dob"></div>
+    <div class="form-group"><label>Birth Weight (optional)</label><input type="text" id="preg-baby-weight" placeholder="e.g. 3.2 kg"></div>
+    <button class="btn btn-primary" onclick="savePregnancyBirth()">💾 Save</button>
+  </div>
+
+  <!-- Send / Print -->
+  <div class="card">
+    <div class="card-title">📤 Share Your Diary</div>
+    <p style="font-size:13px;color:#64748b;margin-bottom:14px;line-height:1.6;">Share this diary with family, or print/save it as a keepsake for the baby album. Photos are included when you print.</p>
+    <button class="btn btn-whatsapp" style="margin-bottom:10px;" onclick="sharePregnancyWhatsApp()">📱 Share via WhatsApp</button>
+    <button class="btn btn-primary" style="margin-bottom:10px;" onclick="sharePregnancyEmail()">📧 Share via Email</button>
+    <button class="btn btn-outline" onclick="printPregnancy()">🖨️ Print / Save as PDF</button>
+  </div>
+  <div style="height:20px;"></div>
+</div>
+
 <!-- TAB BAR -->
 <div id="global-ad-slot" class="global-ad-slot" style="display:none;"></div>
 <div class="tab-bar" id="main-tab-bar">
@@ -1127,6 +1232,30 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   </div>
 </div>
 
+<!-- WHAT'S IN THIS APP MODAL -->
+<div class="modal-overlay" id="modal-whatsinapp" onclick="if(event.target===this)closeModal('modal-whatsinapp')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📖 What's in this app</div>
+    <p style="font-size:13px;color:#64748b;margin-bottom:12px;line-height:1.6;">Everything is free and stored on your own phone.</p>
+    <ul style="font-size:13px;color:#334155;line-height:1.9;margin:0 0 14px;padding-left:20px;">
+      <li><strong>My Card</strong> — your virtual health card with a QR code for emergencies</li>
+      <li><strong>Find Care</strong> — nearby doctors, pharmacies, specialists, hospitals &amp; blood donation</li>
+      <li><strong>AI Chat</strong> — quick help for everyday problems like colds, minor injuries &amp; remedies</li>
+      <li><strong>SOS</strong> — one-tap emergency contacts and numbers</li>
+      <li><strong>Family &amp; Pets</strong> — add dependants (children, parents, spouse) and pet health records</li>
+      <li><strong>Pre-Op Questionnaire</strong> — fill in before surgery, send straight to your surgeon/anaesthetist</li>
+      <li><strong>Bump to Baby Diary</strong> — a fun, private pregnancy record you can keep as a baby album</li>
+      <li><strong>Health tracking</strong> — BMI, blood pressure, blood sugar, vaccinations, lab &amp; radiology results</li>
+      <li><strong>Medical aid &amp; coverage</strong> — PMB checker, condition lookup, medication list</li>
+      <li><strong>Funeral &amp; Memorial Services</strong> — information and contacts, kept in More</li>
+      <li><strong>Mental Health Check-in</strong> — a quick private self check with support numbers</li>
+      <li><strong>Backup &amp; Restore</strong> — save all your data to a file so nothing is lost between updates</li>
+    </ul>
+    <button class="modal-close-btn" onclick="closeModal('modal-whatsinapp')">Close</button>
+  </div>
+</div>
+
 <!-- LAB RESULT MODAL -->
 <div class="modal-overlay" id="modal-lab" onclick="if(event.target===this)closeModal('modal-lab')">
   <div class="modal-sheet">
@@ -1195,7 +1324,12 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
 
 <script>
 // ─── Safe Storage ──────────────────────────────────────────────────
-const Store=(()=>{let _m={},_ok=false;try{localStorage.setItem('_t','1');localStorage.removeItem('_t');_ok=true;}catch(e){}return{get(k){if(_ok){try{return localStorage.getItem(k);}catch(e){}}return _m[k]??null;},set(k,v){if(_ok){try{localStorage.setItem(k,v);return;}catch(e){}} _m[k]=v;},isLocal(){return !_ok;}};})();
+const Store=(()=>{let _m={},_ok=false;try{localStorage.setItem('_t','1');localStorage.removeItem('_t');_ok=true;}catch(e){}return{get(k){if(_ok){try{return localStorage.getItem(k);}catch(e){}}return _m[k]??null;},set(k,v){if(_ok){try{localStorage.setItem(k,v);return true;}catch(e){}} _m[k]=v;return false;},remove(k){if(_ok){try{localStorage.removeItem(k);}catch(e){}}delete _m[k];},keys(){if(_ok){try{return Object.keys(localStorage);}catch(e){}}return Object.keys(_m);},isLocal(){return !_ok;}};})();
+// Safe JSON parse — a corrupted stored value falls back instead of blanking the screen
+function safeParse(s,fallback){if(s==null)return fallback;try{const v=JSON.parse(s);return v==null?fallback:v;}catch(e){return fallback;}}
+// Shrink an uploaded photo before saving (phone photos are far bigger than storage allows)
+function resizePhoto(file,maxDim,cb){const reader=new FileReader();reader.onload=e=>{const img=new Image();img.onload=()=>{let w=img.width,ht=img.height;const sc=Math.min(1,maxDim/Math.max(w,ht));w=Math.round(w*sc);ht=Math.round(ht*sc);const cv=document.createElement('canvas');cv.width=w;cv.height=ht;cv.getContext('2d').drawImage(img,0,0,w,ht);cb(cv.toDataURL('image/jpeg',0.82));};img.onerror=()=>cb(e.target.result);img.src=e.target.result;};reader.readAsDataURL(file);}
+function warnIfNotSaved(ok){if(!ok)alert('\u26A0\uFE0F Could not save permanently \u2014 this phone\u2019s storage for the app is full. Try deleting old photos or records, then save again.');return ok;}
 
 // ─── Tab Navigation ────────────────────────────────────────────────
 window.switchTab=function(name,btn){
@@ -1226,6 +1360,7 @@ function showSubScreen(name){
   window.scrollTo(0,0);
   if(name==='preop')autoFillPreop();
   if(name==='pets')renderPets();
+  if(name==='pregnancy')renderPregnancy();
 }
 function backToMore(){
   switchTab('more',document.querySelector('[data-tab="more"]'));
@@ -1402,7 +1537,7 @@ function saveProfile(){
 function loadProfile(){
   const raw=Store.get('hos_profile');
   if(!raw)return;
-  const p=JSON.parse(raw);
+  const p=safeParse(raw,{});
   document.getElementById('p-name').value=p.name||'';
   if(document.getElementById('p-country'))document.getElementById('p-country').value=p.country||'South Africa';
   populateSchemes(p.aidScheme||'');
@@ -1432,7 +1567,7 @@ function loadProfile(){
 }
 function refreshHeader(){
   const raw=Store.get('hos_profile');if(!raw)return;
-  const p=JSON.parse(raw);
+  const p=safeParse(raw,{});
   if(p.name)document.getElementById('header-sub').textContent='Hi '+p.name.split(' ')[0]+'! How can I help?';
 }
 
@@ -1441,33 +1576,33 @@ function renderHealthCard(){
   const raw=Store.get('hos_profile');
   const container=document.getElementById('card-content');
   if(!raw){container.innerHTML='<div class="card"><div class="no-data">💳 Fill in your profile first.</div></div>';return;}
-  const p=JSON.parse(raw);
+  const p=safeParse(raw,{});
   const dobFmt=p.dob?new Date(p.dob).toLocaleDateString('en-ZA'):'Not set';
-  const allergyHtml=p.allergies?p.allergies.split(',').map(a=>'<span class="tag tag-red">'+a.trim()+'</span>').join(''):'<span style="color:#94a3b8;font-size:13px">None recorded</span>';
-  const condHtml=p.conditions?p.conditions.split(',').map(c=>'<span class="tag tag-blue">'+c.trim()+'</span>').join(''):'<span style="color:#94a3b8;font-size:13px">None recorded</span>';
+  const allergyHtml=p.allergies?p.allergies.split(',').map(a=>'<span class="tag tag-red">'+escHtml(a.trim())+'</span>').join(''):'<span style="color:#94a3b8;font-size:13px">None recorded</span>';
+  const condHtml=p.conditions?p.conditions.split(',').map(c=>'<span class="tag tag-blue">'+escHtml(c.trim())+'</span>').join(''):'<span style="color:#94a3b8;font-size:13px">None recorded</span>';
   let trackerHtml='';
   if(p.meds){
     const today=new Date().toDateString();
-    const taken=JSON.parse(Store.get('meds_taken_'+today)||'[]');
+    const taken=safeParse(Store.get('meds_taken_'+today),[]);
     const medList=p.meds.split(',').map(m=>m.trim()).filter(Boolean);
-    const rows=medList.map(m=>{const t=taken.includes(m);const s=m.replace(/'/g,"\\'");return '<div class="med-track-item '+(t?'taken':'')+'" onclick="toggleMedTaken(\''+s+'\')">'+'<div class="mt-check">'+(t?'✅':'⬜')+'</div><div class="mt-name">'+m+'</div><div class="mt-status '+(t?'done':'todo')+'">'+(t?'Taken today':'Not yet')+'</div></div>';}).join('');
+    const rows=medList.map(m=>{const t=taken.includes(m);return '<div class="med-track-item '+(t?'taken':'')+'" data-med="'+escHtml(m)+'" onclick="toggleMedTaken(this.dataset.med)">'+'<div class="mt-check">'+(t?'✅':'⬜')+'</div><div class="mt-name">'+escHtml(m)+'</div><div class="mt-status '+(t?'done':'todo')+'">'+(t?'Taken today':'Not yet')+'</div></div>';}).join('');
     trackerHtml='<div class="card"><div class="card-title">💊 Today\'s Medication Tracker</div><p style="font-size:13px;color:#64748b;margin-bottom:14px;">Tap each to mark as taken. Resets daily at midnight.</p><div style="background:#eff6ff;border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;"><span style="font-size:22px;">📋</span><span style="font-size:14px;font-weight:600;color:#1e40af;">'+taken.length+' of '+medList.length+' taken today</span></div>'+rows+'</div>';
   }
   let coverageHtml='';
   if(p.aidScheme&&p.aidScheme!=='None / Uninsured'){
     const data=getMedAidCoverage(p.aidScheme,p.aidPlan);
     const rows=data.map(r=>'<div class="coverage-row"><div class="cov-icon">'+r.icon+'</div><div class="cov-label"><strong>'+r.service+'</strong>'+r.detail+'</div><div class="cov-badge '+r.level+'">'+r.label+'</div></div>').join('');
-    coverageHtml='<div class="card"><div class="card-title">💚 Medical Aid Coverage</div><div class="aid-badge">✅ '+p.aidScheme+(p.aidPlan?' — '+p.aidPlan:'')+'</div><div class="info-grid"><div class="info-box"><div class="lbl">Membership No.</div><div class="val">'+(p.aidNum||'—')+'</div></div><div class="info-box"><div class="lbl">Plan / Option</div><div class="val">'+(p.aidPlan||'—')+'</div></div></div><p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.5;">General guide. Log in to your scheme for exact benefits.</p>'+rows+'<a href="'+getSchemeWebsite(p.aidScheme)+'" target="_blank" rel="noopener" class="btn btn-outline" style="margin-top:14px;font-size:13px;padding:11px;display:block;text-align:center;text-decoration:none;">🔍 View My '+p.aidScheme+' Benefits</a></div>';
+    coverageHtml='<div class="card"><div class="card-title">💚 Medical Aid Coverage</div><div class="aid-badge">✅ '+escHtml(p.aidScheme)+(p.aidPlan?' — '+escHtml(p.aidPlan):'')+'</div><div class="info-grid"><div class="info-box"><div class="lbl">Membership No.</div><div class="val">'+escHtml(p.aidNum||'—')+'</div></div><div class="info-box"><div class="lbl">Plan / Option</div><div class="val">'+escHtml(p.aidPlan||'—')+'</div></div></div><p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.5;">General guide. Log in to your scheme for exact benefits.</p>'+rows+'<a href="'+getSchemeWebsite(p.aidScheme)+'" target="_blank" rel="noopener" class="btn btn-outline" style="margin-top:14px;font-size:13px;padding:11px;display:block;text-align:center;text-decoration:none;">🔍 View My '+escHtml(p.aidScheme)+' Benefits</a></div>';
   }
   const photoB64=Store.get('hos_photo')||'';
   const photoOnCard=photoB64?'<div style="position:absolute;top:14px;right:14px;width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,0.7);overflow:hidden;flex-shrink:0;"><img src="'+photoB64+'" style="width:100%;height:100%;object-fit:cover;"></div>':'<div class="card-logo">My Health<br>One Stop</div>';
-  container.innerHTML='<div class="health-card">'+photoOnCard+'<div class="card-chip">💳</div><div class="card-name">'+(p.name||'—')+'</div><div class="card-id">'+(p.country==='Namibia'?'ID':'SA ID')+': '+(p.said||'—')+'</div><div class="card-row"><div class="card-field"><label>DATE OF BIRTH</label><div class="val">'+dobFmt+'</div></div><div class="card-field"><label>BLOOD TYPE</label><div class="val">'+(p.blood||'?')+'</div></div>'+(p.aidScheme?'<div class="card-field"><label>MEDICAL AID</label><div class="val">'+p.aidScheme+'</div></div>':'')+'</div></div>'+trackerHtml+coverageHtml+'<div class="card"><div class="card-title">🚨 Medical Alerts</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:0 0 8px;">Allergies</div><div>'+allergyHtml+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Chronic Conditions</div><div>'+condHtml+'</div>'+(p.meds?'<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Medications</div><p style="font-size:13px;color:#444;">'+p.meds+'</p>':'')+'</div><div class="card"><div class="card-title">📱 My QR Code</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Healthcare providers can scan this for your key medical info.</p><div class="qr-container"><div id="qrcode"></div><div class="qr-label">Scan to view patient info</div></div></div><div class="card"><div class="card-title">📤 Share My Details</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Send your medical summary to a family member, carer, or old age home via WhatsApp or email.</p><button class="btn btn-primary" onclick="shareMyDetails()">📤 Share My Details</button></div>';
+  container.innerHTML='<div class="health-card">'+photoOnCard+'<div class="card-chip">💳</div><div class="card-name">'+escHtml(p.name||'—')+'</div><div class="card-id">'+(p.country==='Namibia'?'ID':'SA ID')+': '+escHtml(p.said||'—')+'</div><div class="card-row"><div class="card-field"><label>DATE OF BIRTH</label><div class="val">'+dobFmt+'</div></div><div class="card-field"><label>BLOOD TYPE</label><div class="val">'+escHtml(p.blood||'?')+'</div></div>'+(p.aidScheme?'<div class="card-field"><label>MEDICAL AID</label><div class="val">'+escHtml(p.aidScheme)+'</div></div>':'')+'</div></div>'+trackerHtml+coverageHtml+'<div class="card"><div class="card-title">🚨 Medical Alerts</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:0 0 8px;">Allergies</div><div>'+allergyHtml+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Chronic Conditions</div><div>'+condHtml+'</div>'+(p.meds?'<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Medications</div><p style="font-size:13px;color:#444;">'+escHtml(p.meds)+'</p>':'')+'</div><div class="card"><div class="card-title">📱 My QR Code</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Healthcare providers can scan this for your key medical info.</p><div class="qr-container"><div id="qrcode"></div><div class="qr-label">Scan to view patient info</div></div></div><div class="card"><div class="card-title">📤 Share My Details</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Send your medical summary to a family member, carer, or old age home via WhatsApp or email.</p><button class="btn btn-primary" onclick="shareMyDetails()">📤 Share My Details</button></div>';
   const qrData=JSON.stringify({name:p.name,said:p.said,dob:p.dob,blood:p.blood,allergies:p.allergies,conditions:p.conditions,aid:p.aidScheme,aidNum:p.aidNum,ec:p.ecName+' '+p.ecNum});
   setTimeout(()=>{const el=document.getElementById('qrcode');if(el&&typeof QRCode!=='undefined'){el.innerHTML='';try{new QRCode(el,{text:qrData,width:200,height:200,colorDark:'#1e3a8a',colorLight:'#ffffff'});}catch(e){el.innerHTML='<div style="font-size:12px;color:#991b1b;padding:10px;text-align:center;">⚠️ Could not generate the QR code. Tap Save Profile again — if it keeps failing, try removing some text from Allergies/Conditions, as a very long list can be too much data for the QR code.</div>';}}},200);
 }
 function toggleMedTaken(med){
   const today=new Date().toDateString();const key='meds_taken_'+today;
-  let taken=JSON.parse(Store.get(key)||'[]');
+  let taken=safeParse(Store.get(key),[]);
   if(taken.includes(med)){taken=taken.filter(m=>m!==med);}else{taken.push(med);}
   Store.set(key,JSON.stringify(taken));renderHealthCard();
 }
@@ -1492,11 +1627,11 @@ function getSchemeWebsite(scheme){
 function renderEmergency(){
   const raw=Store.get('hos_profile');const c=document.getElementById('emergency-content');
   if(!raw){c.innerHTML='<div class="no-data">Save your profile to see your emergency info here.</div>';return;}
-  const p=JSON.parse(raw);
+  const p=safeParse(raw,{});
   const photoB64=Store.get('hos_photo')||'';
   const photoHtml=photoB64?'<div style="display:flex;justify-content:center;margin-bottom:14px;"><div class="em-photo-circle"><img src="'+photoB64+'" alt="Patient photo"></div></div>':'';
-  c.innerHTML=photoHtml+'<div class="info-grid"><div class="info-box"><div class="lbl">Patient Name</div><div class="val">'+(p.name||'—')+'</div></div><div class="info-box"><div class="lbl">Blood Type</div><div class="val" style="color:#dc2626;font-size:18px;">'+(p.blood||'?')+'</div></div></div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;margin:10px 0 6px;">🚫 Allergies</div><div>'+(p.allergies?p.allergies.split(',').map(a=>'<span class="tag tag-red">'+a.trim()+'</span>').join(''):'<span style="color:#94a3b8;font-size:13px">None</span>')+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;margin:14px 0 6px;">💊 Medications</div><p style="font-size:13px;color:#444;">'+(p.meds||'None recorded')+'</p>'+(p.ecName?'<div class="emergency-item" style="margin-top:12px;"><div class="em-icon">👤</div><div class="em-info"><div class="em-name">'+p.ecName+(p.ecRel?' ('+p.ecRel+')':'')+'</div><div class="em-num">'+(p.ecNum||'No number')+'</div></div>'+(p.ecNum?'<a href="tel:'+p.ecNum.replace(/\s/g,'')+'" class="em-call-btn" onclick="handleEmergencyCall(\''+p.ecNum.replace(/\s/g,'')+'\',event)">📞 Call</a>':'')+'</div>':'');
-  const famRaw=Store.get('hos_dependants');const family=famRaw?JSON.parse(famRaw):[];
+  c.innerHTML=photoHtml+'<div class="info-grid"><div class="info-box"><div class="lbl">Patient Name</div><div class="val">'+escHtml(p.name||'—')+'</div></div><div class="info-box"><div class="lbl">Blood Type</div><div class="val" style="color:#dc2626;font-size:18px;">'+escHtml(p.blood||'?')+'</div></div></div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;margin:10px 0 6px;">🚫 Allergies</div><div>'+(p.allergies?p.allergies.split(',').map(a=>'<span class="tag tag-red">'+escHtml(a.trim())+'</span>').join(''):'<span style="color:#94a3b8;font-size:13px">None</span>')+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;margin:14px 0 6px;">💊 Medications</div><p style="font-size:13px;color:#444;">'+escHtml(p.meds||'None recorded')+'</p>'+(p.ecName?'<div class="emergency-item" style="margin-top:12px;"><div class="em-icon">👤</div><div class="em-info"><div class="em-name">'+escHtml(p.ecName)+(p.ecRel?' ('+escHtml(p.ecRel)+')':'')+'</div><div class="em-num">'+escHtml(p.ecNum||'No number')+'</div></div>'+(p.ecNum?'<a href="tel:'+escHtml(p.ecNum.replace(/\s/g,''))+'" class="em-call-btn" onclick="handleEmergencyCall(\''+escHtml(p.ecNum.replace(/\s/g,''))+'\',event)">📞 Call</a>':'')+'</div>':'');
+  const famRaw=Store.get('hos_dependants');const family=safeParse(famRaw,[]);
   const famCard=document.getElementById('family-emergency-card');const famContent=document.getElementById('family-emergency-content');
   if(family.length&&famCard&&famContent){famCard.style.display='block';famContent.innerHTML=family.map(dep=>{const age=dep.dob?calcAge(dep.dob):'';return '<div class="dep-card"><div class="dep-name">'+escHtml(dep.name||'—')+(dep.sex?' ('+dep.sex+')':'')+(age?' · Age '+age:'')+'</div><div class="dep-detail">🩸 Blood: '+(dep.blood||'?')+(dep.allergies?' · 🚫 Allergies: '+escHtml(dep.allergies):'')+'</div>'+(dep.conditions?'<div class="dep-detail">🏥 Conditions: '+escHtml(dep.conditions)+'</div>':'')+(dep.meds?'<div class="dep-detail">💊 Meds: '+escHtml(dep.meds)+'</div>':'')+'</div>';}).join('');}
   else if(famCard){famCard.style.display='none';}
@@ -1521,7 +1656,7 @@ function detectLocation(){
     document.getElementById('loc-display').textContent='Finding your address…';
     updateNearbyLinks(lat,lon,'');
     let locationName='';
-    try{const res=await fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lon+'&format=json',{headers:{'Accept-Language':'en'}});const data=await res.json();const addr=data.address||{};const suburb=addr.suburb||addr.neighbourhood||addr.town||addr.village||'';const city=addr.city||addr.municipality||addr.county||'';const province=addr.state||'';locationName=[suburb||city,province].filter(Boolean).join(', ')||city||'';document.getElementById('loc-display').textContent=[suburb,city,province].filter(Boolean).join(', ')||'Location found';document.getElementById('loc-coords').textContent=(addr.country?addr.country+' · ':'')+lat+', '+lon;updateNearbyLinks(lat,lon,locationName);const raw=Store.get('hos_profile');if(raw){const p=JSON.parse(raw);p.lastLat=lat;p.lastLon=lon;p.lastLocName=locationName;Store.set('hos_profile',JSON.stringify(p));}}catch(e){document.getElementById('loc-display').textContent='Location detected';}
+    try{const res=await fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lon+'&format=json',{headers:{'Accept-Language':'en'}});const data=await res.json();const addr=data.address||{};const suburb=addr.suburb||addr.neighbourhood||addr.town||addr.village||'';const city=addr.city||addr.municipality||addr.county||'';const province=addr.state||'';locationName=[suburb||city,province].filter(Boolean).join(', ')||city||'';document.getElementById('loc-display').textContent=[suburb,city,province].filter(Boolean).join(', ')||'Location found';document.getElementById('loc-coords').textContent=(addr.country?addr.country+' · ':'')+lat+', '+lon;updateNearbyLinks(lat,lon,locationName);const raw=Store.get('hos_profile');if(raw){const p=safeParse(raw,{});p.lastLat=lat;p.lastLon=lon;p.lastLocName=locationName;Store.set('hos_profile',JSON.stringify(p));}}catch(e){document.getElementById('loc-display').textContent='Location detected';}
     statusEl.style.display='none';resultEl.style.display='block';
     showMiniMap(lat,lon);
     if(detectBtn){detectBtn.innerHTML='📡 Detect My Location';detectBtn.disabled=false;}
@@ -1555,7 +1690,7 @@ function getCovStatus(scheme,plan,type){if(!scheme||scheme==='None / Uninsured')
 function covBadgeHtml(status){if(!status)return'';if(status==='covered')return'<span class="cov-result-badge cov-r-green">✓ Likely covered</span>';return'<span class="cov-result-badge cov-r-amber">⚠️ Check benefits</span>';}
 function renderCoverageGuide(){
   const wrap=document.getElementById('coverage-guide-wrap');if(!wrap)return;
-  const raw=Store.get('hos_profile');const p=raw?JSON.parse(raw):{};const scheme=p.aidScheme||'';const plan=p.aidPlan||'';
+  const raw=Store.get('hos_profile');const p=safeParse(raw,{});const scheme=p.aidScheme||'';const plan=p.aidPlan||'';
   if(!scheme||scheme==='None / Uninsured'){wrap.innerHTML='<div class="card" style="border-left:4px solid #2563eb;padding:14px 18px;"><div style="font-size:13px;color:#64748b;line-height:1.7;">🛡️ <strong>Coverage guide:</strong> Save your medical aid scheme in <strong>Profile</strong> to see coverage here.</div></div>';return;}
   if(typeof isHealthInsurance==='function'&&isHealthInsurance(scheme)){wrap.innerHTML='<div class="card" style="border-left:4px solid #eab308;padding:14px 18px;"><div style="font-size:13px;color:#713f12;line-height:1.7;">⚠️ <strong>'+escHtml(scheme)+'</strong> is a <strong>health insurance product, not a medical aid</strong>. Benefits are set by your policy, not by the Medical Schemes Act — PMBs and prescribed benefits do <strong>not</strong> apply. Check your policy schedule or call your insurer to confirm what is covered.</div></div>';return;}
   const types=['gp','specialist','hospital','pharmacy','dentist','optom','physio','psych','dietician'];
@@ -1629,7 +1764,7 @@ function searchNearby(type,label,icon){
     const results=data.elements.map(el=>{const elLat=el.lat||(el.center&&el.center.lat);const elLon=el.lon||(el.center&&el.center.lon);const t=el.tags||{};const name=t.name||t['name:en']||t['operator']||'';if(!elLat||!elLon||!name)return null;const key=name.toLowerCase().trim();if(seen.has(key))return null;seen.add(key);return{name,elLat,elLon,dist:calcDistance(lat,lon,elLat,elLon),phone:t.phone||t['contact:phone']||t['contact:mobile']||'',addr:[t['addr:housenumber'],t['addr:street'],t['addr:suburb']||t['addr:city']].filter(Boolean).join(' '),hours:t.opening_hours||''};}).filter(Boolean).sort((a,b)=>a.dist-b.dist).slice(0,30);
     const radSel='<div class="radius-row"><label>Radius:</label><select id="search-radius" onchange="searchNearby(\''+type+'\',\''+label+'\',\''+icon+'\')"><option value="5000"'+(radius===5000?' selected':'')+'>5 km</option><option value="10000"'+(radius===10000?' selected':'')+'>10 km</option><option value="30000"'+(radius===30000?' selected':'')+'>30 km</option><option value="50000"'+(radius===50000?' selected':'')+'>50 km</option><option value="100000"'+(radius===100000?' selected':'')+'>100 km</option></select></div>';
     if(!results.length){body.innerHTML=gmBtnTop+radSel+'<div class="search-empty">😔 No results within '+(radius/1000)+'km in OpenStreetMap. Try a larger radius, or use Google Maps above.</div><div class="search-credit">Data © OpenStreetMap contributors</div>';return;}
-    const rawP=Store.get('hos_profile');const pObj=rawP?JSON.parse(rawP):{};const covStatus=getCovStatus(pObj.aidScheme||'',pObj.aidPlan||'',type);const covBadge=covBadgeHtml(covStatus);
+    const rawP=Store.get('hos_profile');const pObj=safeParse(rawP,{});const covStatus=getCovStatus(pObj.aidScheme||'',pObj.aidPlan||'',type);const covBadge=covBadgeHtml(covStatus);
     let html=gmBtnTop+radSel+'<p style="font-size:12px;color:#64748b;margin-bottom:12px;">Found <strong>'+results.length+'</strong> result(s) within '+(radius/1000)+'km (backup results from OpenStreetMap)</p>';
     html+='<div style="background:#fef9c3;border:1.5px solid #fde047;border-radius:10px;padding:10px 12px;font-size:12px;color:#713f12;line-height:1.6;margin-bottom:10px;">⚠️ <strong>Please note:</strong> these listings come from public map data and are not always up to date or correctly categorised — some results may be a different type of provider. <strong>Phone first to confirm</strong> before visiting.'+(type==='specialist'||type==='podiatrist'||type==='chiro'?' For an exact '+escHtml(label)+' search, use the green <strong>Google Maps</strong> button below — Google\'s listings are usually the most current.':'')+'</div>';
     results.forEach(r=>{const distStr=r.dist<1?(r.dist*1000).toFixed(0)+'m':r.dist.toFixed(1)+'km';const appleUrl='https://maps.apple.com/?daddr='+r.elLat+','+r.elLon+'&dirflg=d';const gDirUrl='https://www.google.com/maps/dir/?api=1&destination='+r.elLat+','+r.elLon;html+='<div class="result-card"><div class="result-name">'+icon+' '+escHtml(r.name)+'</div>'+(covBadge?'<div>'+covBadge+'</div>':'')+'<div class="result-dist">📍 '+distStr+' away</div>'+(r.addr?'<div class="result-addr">'+escHtml(r.addr)+'</div>':'')+(r.hours?'<div class="result-addr">🕐 '+escHtml(r.hours)+'</div>':'')+'<div class="result-actions">'+(r.phone?'<a href="tel:'+r.phone.replace(/[\s\-()]/g,'')+'" class="result-actions btn-call">📞 Call</a>':'')+'<a href="'+appleUrl+'" target="_blank" rel="noopener" class="result-actions btn-dir">🍎 Maps</a><a href="'+gDirUrl+'" target="_blank" rel="noopener" class="result-actions btn-dir" style="background:#fef9c3;color:#713f12;">📍 Google</a></div></div>';});
@@ -1642,9 +1777,9 @@ function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 
 // ─── Backup & Restore ─────────────────────────────────────────────
-const BACKUP_KEYS=['hos_profile','hos_photo','hos_dependants','hos_pets','hos_bp','hos_sugar','hos_vaccines','hos_labs','hos_radiology','hos_barcodes'];
+const BACKUP_KEYS=['hos_profile','hos_photo','hos_dependants','hos_pets','hos_bp','hos_sugar','hos_vaccines','hos_labs','hos_radiology','hos_barcodes','hos_pregnancy'];
 function exportBackup(){
-  const data={app:'MyHealthOneStop',version:12,date:new Date().toISOString()};
+  const data={app:'MyHealthOneStop',version:13,date:new Date().toISOString()};
   BACKUP_KEYS.forEach(k=>{const v=Store.get(k);if(v)data[k]=v;});
   const blob=new Blob([JSON.stringify(data)],{type:'application/json'});
   const a=document.createElement('a');
@@ -1977,9 +2112,7 @@ function confirmCardEntry(){
 // ─── Profile Photo ────────────────────────────────────────────────
 function savePhoto(input){
   if(!input.files||!input.files[0])return;
-  const reader=new FileReader();
-  reader.onload=e=>{Store.set('hos_photo',e.target.result);loadPhoto();};
-  reader.readAsDataURL(input.files[0]);
+  resizePhoto(input.files[0],500,dataUrl=>{warnIfNotSaved(Store.set('hos_photo',dataUrl));loadPhoto();});
 }
 function loadPhoto(){
   const data=Store.get('hos_photo');if(!data)return;
@@ -2010,7 +2143,7 @@ function saveBP(){
   const dia=parseInt(document.getElementById('bp-diastolic').value);
   const date=document.getElementById('bp-date').value||new Date().toISOString().split('T')[0];
   if(!sys||!dia){showAlert('bp-alert','⚠️ Enter both numbers.','error');return;}
-  const log=JSON.parse(Store.get('hos_bp')||'[]');
+  const log=safeParse(Store.get('hos_bp'),[]);
   log.unshift({sys,dia,date});
   if(log.length>30)log.length=30;
   Store.set('hos_bp',JSON.stringify(log));
@@ -2018,7 +2151,7 @@ function saveBP(){
   showAlert('bp-alert','✅ Reading saved.');
   renderBP();
 }
-function deleteBP(i){const log=JSON.parse(Store.get('hos_bp')||'[]');log.splice(i,1);Store.set('hos_bp',JSON.stringify(log));renderBP();}
+function deleteBP(i){const log=safeParse(Store.get('hos_bp'),[]);log.splice(i,1);Store.set('hos_bp',JSON.stringify(log));renderBP();}
 // ─── Blood Sugar Log ──────────────────────────────────────────────
 function saveSugar(){
   const val=parseFloat(document.getElementById('sugar-value').value);
@@ -2026,7 +2159,7 @@ function saveSugar(){
   const tod=document.getElementById('sugar-tod').value;
   const date=document.getElementById('sugar-date').value||new Date().toISOString().split('T')[0];
   if(!val){showAlert('sugar-alert','⚠️ Enter a blood sugar value.','error');return;}
-  const log=JSON.parse(Store.get('hos_sugar')||'[]');
+  const log=safeParse(Store.get('hos_sugar'),[]);
   log.unshift({val,type,tod,date});
   if(log.length>30)log.length=30;
   Store.set('hos_sugar',JSON.stringify(log));
@@ -2034,10 +2167,10 @@ function saveSugar(){
   showAlert('sugar-alert','✅ Reading saved.');
   renderSugar();
 }
-function deleteSugar(i){const log=JSON.parse(Store.get('hos_sugar')||'[]');log.splice(i,1);Store.set('hos_sugar',JSON.stringify(log));renderSugar();}
+function deleteSugar(i){const log=safeParse(Store.get('hos_sugar'),[]);log.splice(i,1);Store.set('hos_sugar',JSON.stringify(log));renderSugar();}
 function renderSugar(){
   const el=document.getElementById('sugar-list');if(!el)return;
-  const log=JSON.parse(Store.get('hos_sugar')||'[]');
+  const log=safeParse(Store.get('hos_sugar'),[]);
   if(!log.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No readings yet.</p>';return;}
   el.innerHTML=log.map((r,i)=>{
     const v=parseFloat(r.val);
@@ -2060,7 +2193,7 @@ function renderSugar(){
 }
 function renderBP(){
   const el=document.getElementById('bp-list');if(!el)return;
-  const log=JSON.parse(Store.get('hos_bp')||'[]');
+  const log=safeParse(Store.get('hos_bp'),[]);
   if(!log.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No readings yet.</p>';return;}
   el.innerHTML=log.map((r,i)=>{
     const sv=parseInt(r.sys),dv=parseInt(r.dia);
@@ -2079,17 +2212,17 @@ function saveVaccine(){
   const date=document.getElementById('vacc-date-given').value;
   const due=document.getElementById('vacc-next-due').value;
   if(!name){showAlert('vacc-alert','⚠️ Enter the vaccine name.','error');return;}
-  const list=JSON.parse(Store.get('hos_vaccines')||'[]');
+  const list=safeParse(Store.get('hos_vaccines'),[]);
   list.unshift({name,date,due});
   Store.set('hos_vaccines',JSON.stringify(list));
   document.getElementById('vacc-name').value='';document.getElementById('vacc-date-given').value='';document.getElementById('vacc-next-due').value='';
   showAlert('vacc-alert','✅ Vaccine added.');
   renderVaccines();
 }
-function deleteVaccine(i){const list=JSON.parse(Store.get('hos_vaccines')||'[]');list.splice(i,1);Store.set('hos_vaccines',JSON.stringify(list));renderVaccines();}
+function deleteVaccine(i){const list=safeParse(Store.get('hos_vaccines'),[]);list.splice(i,1);Store.set('hos_vaccines',JSON.stringify(list));renderVaccines();}
 function renderVaccines(){
   const el=document.getElementById('vacc-list');if(!el)return;
-  const list=JSON.parse(Store.get('hos_vaccines')||'[]');
+  const list=safeParse(Store.get('hos_vaccines'),[]);
   if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No vaccinations recorded.</p>';return;}
   const today=new Date().toISOString().split('T')[0];
   el.innerHTML=list.map((v,i)=>{
@@ -2128,23 +2261,23 @@ function saveLabResult(){
   const notes=document.getElementById('lab-notes').value.trim();
   if(!test){alert('Please enter the test name.');return;}
   const finish=photo=>{
-    const list=JSON.parse(Store.get('hos_labs')||'[]');
+    const list=safeParse(Store.get('hos_labs'),[]);
     list.unshift({id:Date.now(),test,date,provider,notes,photo:photo||'',show:false});
-    Store.set('hos_labs',JSON.stringify(list));
+    warnIfNotSaved(Store.set('hos_labs',JSON.stringify(list)));
     closeModal('modal-lab');
     ['lab-test','lab-notes','lab-date'].forEach(id=>{document.getElementById(id).value='';});
     const ph=document.getElementById('lab-photo');if(ph)ph.value='';
     renderLabResults();
   };
   const ph=document.getElementById('lab-photo');
-  if(ph&&ph.files&&ph.files[0]){const reader=new FileReader();reader.onload=e=>finish(e.target.result);reader.readAsDataURL(ph.files[0]);}
+  if(ph&&ph.files&&ph.files[0]){resizePhoto(ph.files[0],1200,finish);}
   else finish('');
 }
-function deleteLabResult(id){if(!confirm('Delete this lab result?'))return;const list=JSON.parse(Store.get('hos_labs')||'[]').filter(r=>r.id!==id);Store.set('hos_labs',JSON.stringify(list));renderLabResults();}
-function toggleLab(id){const list=JSON.parse(Store.get('hos_labs')||'[]');const r=list.find(x=>x.id===id);if(r)r.show=!r.show;Store.set('hos_labs',JSON.stringify(list));renderLabResults();}
+function deleteLabResult(id){if(!confirm('Delete this lab result?'))return;const list=safeParse(Store.get('hos_labs'),[]).filter(r=>r.id!==id);Store.set('hos_labs',JSON.stringify(list));renderLabResults();}
+function toggleLab(id){const list=safeParse(Store.get('hos_labs'),[]);const r=list.find(x=>x.id===id);if(r)r.show=!r.show;Store.set('hos_labs',JSON.stringify(list));renderLabResults();}
 function renderLabResults(){
   const el=document.getElementById('lab-list');if(!el)return;
-  const list=JSON.parse(Store.get('hos_labs')||'[]');
+  const list=safeParse(Store.get('hos_labs'),[]);
   if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No lab results saved.</p>';return;}
   el.innerHTML=list.map(r=>'<div class="record-entry"><div class="record-entry-header" onclick="toggleLab('+r.id+')"><div><div class="record-title">🧪 '+escHtml(r.test)+'</div><div class="record-date">'+(r.provider||'')+(r.date?' · '+r.date:'')+'</div></div><span>'+(r.show?'▲':'▼')+'</span></div><div class="record-body'+(r.show?' open':'')+'">'+(r.notes?escHtml(r.notes):'<em>No notes</em>')+(r.photo?'<br><img src="'+r.photo+'" style="max-width:100%;border-radius:8px;margin-top:8px;">':'')+'<br><button onclick="deleteLabResult('+r.id+')" style="margin-top:8px;background:#fee2e2;border:none;border-radius:8px;padding:5px 10px;color:#dc2626;font-size:12px;cursor:pointer;">🗑️ Delete</button></div></div>').join('');
 }
@@ -2156,23 +2289,23 @@ function saveRadiology(){
   const provider=document.getElementById('radio-provider').value.trim();
   const notes=document.getElementById('radio-notes').value.trim();
   const finish=photo=>{
-    const list=JSON.parse(Store.get('hos_radiology')||'[]');
+    const list=safeParse(Store.get('hos_radiology'),[]);
     list.unshift({id:Date.now(),type,date,provider,notes,photo:photo||'',show:false});
-    Store.set('hos_radiology',JSON.stringify(list));
+    warnIfNotSaved(Store.set('hos_radiology',JSON.stringify(list)));
     closeModal('modal-radio');
     ['radio-provider','radio-notes','radio-date'].forEach(id=>{document.getElementById(id).value='';});
     const ph=document.getElementById('radio-photo');if(ph)ph.value='';
     renderRadiology();
   };
   const ph=document.getElementById('radio-photo');
-  if(ph&&ph.files&&ph.files[0]){const reader=new FileReader();reader.onload=e=>finish(e.target.result);reader.readAsDataURL(ph.files[0]);}
+  if(ph&&ph.files&&ph.files[0]){resizePhoto(ph.files[0],1200,finish);}
   else finish('');
 }
-function deleteRadiology(id){if(!confirm('Delete this report?'))return;const list=JSON.parse(Store.get('hos_radiology')||'[]').filter(r=>r.id!==id);Store.set('hos_radiology',JSON.stringify(list));renderRadiology();}
-function toggleRecord(id){const list=JSON.parse(Store.get('hos_radiology')||'[]');const r=list.find(x=>x.id===id);if(r)r.show=!r.show;Store.set('hos_radiology',JSON.stringify(list));renderRadiology();}
+function deleteRadiology(id){if(!confirm('Delete this report?'))return;const list=safeParse(Store.get('hos_radiology'),[]).filter(r=>r.id!==id);Store.set('hos_radiology',JSON.stringify(list));renderRadiology();}
+function toggleRecord(id){const list=safeParse(Store.get('hos_radiology'),[]);const r=list.find(x=>x.id===id);if(r)r.show=!r.show;Store.set('hos_radiology',JSON.stringify(list));renderRadiology();}
 function renderRadiology(){
   const el=document.getElementById('radio-list');if(!el)return;
-  const list=JSON.parse(Store.get('hos_radiology')||'[]');
+  const list=safeParse(Store.get('hos_radiology'),[]);
   if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No radiology reports saved.</p>';return;}
   el.innerHTML=list.map(r=>'<div class="record-entry"><div class="record-entry-header" onclick="toggleRecord('+r.id+')"><div><div class="record-title">📡 '+escHtml(r.type)+'</div><div class="record-date">'+(r.provider?escHtml(r.provider):'')+(r.date?' · '+r.date:'')+'</div></div><span>'+(r.show?'▲':'▼')+'</span></div><div class="record-body'+(r.show?' open':'')+'">'+(r.notes?escHtml(r.notes):'<em>No notes</em>')+(r.photo?'<br><img src="'+r.photo+'" style="max-width:100%;border-radius:8px;margin-top:8px;">':'')+'<br><button onclick="deleteRadiology('+r.id+')" style="margin-top:8px;background:#fee2e2;border:none;border-radius:8px;padding:5px 10px;color:#dc2626;font-size:12px;cursor:pointer;">🗑️ Delete</button></div></div>').join('');
 }
@@ -2203,7 +2336,7 @@ function openAddDependant(){
   openModal('modal-dependant');
 }
 function openEditDependant(id){
-  const list=JSON.parse(Store.get('hos_dependants')||'[]');
+  const list=safeParse(Store.get('hos_dependants'),[]);
   const d=list.find(x=>x.id===id);if(!d)return;
   document.getElementById('dep-modal-title').textContent='✏️ Edit Dependant';
   document.getElementById('dep-edit-id').value=d.id;
@@ -2225,9 +2358,7 @@ function openEditDependant(id){
 }
 function addBookletPhoto(input){
   if(!input.files||!input.files[0])return;
-  const reader=new FileReader();
-  reader.onload=e=>{_bookletPhotos.push(e.target.result);renderBookletPhotos();};
-  reader.readAsDataURL(input.files[0]);
+  resizePhoto(input.files[0],1200,dataUrl=>{_bookletPhotos.push(dataUrl);renderBookletPhotos();});
   input.value='';
 }
 function renderBookletPhotos(){
@@ -2240,7 +2371,7 @@ function saveDependant(){
   if(!name){alert('Please enter the dependant\'s name.');return;}
   const g=id=>document.getElementById(id).value.trim();
   const editId=document.getElementById('dep-edit-id').value;
-  const list=JSON.parse(Store.get('hos_dependants')||'[]');
+  const list=safeParse(Store.get('hos_dependants'),[]);
   const dep={
     id:editId?parseInt(editId):Date.now(),
     name,relationship:document.getElementById('dep-relationship').value,sex:document.getElementById('dep-sex').value,dob:g('dep-dob'),blood:document.getElementById('dep-blood').value,
@@ -2255,13 +2386,13 @@ function saveDependant(){
 }
 function deleteDependant(id){
   if(!confirm('Remove this dependant?'))return;
-  const list=JSON.parse(Store.get('hos_dependants')||'[]').filter(d=>d.id!==id);
+  const list=safeParse(Store.get('hos_dependants'),[]).filter(d=>d.id!==id);
   Store.set('hos_dependants',JSON.stringify(list));
   renderDependants();renderEmergency();
 }
 function renderDependants(){
   const el=document.getElementById('dependants-list');if(!el)return;
-  const list=JSON.parse(Store.get('hos_dependants')||'[]');
+  const list=safeParse(Store.get('hos_dependants'),[]);
   if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No dependants added yet.</p>';return;}
   el.innerHTML=list.map(d=>{
     const age=d.dob?calcAge(d.dob)+' yrs':'';
@@ -2280,12 +2411,12 @@ function buildShareSummary(){
   let name='',dob='',said='',blood='',allergies='',conditions='',meds='',aidScheme='',aidNum='',ecName='',ecRel='',ecNum='',relLabel='',prevOps='';
   if(_shareTarget.type==='self'){
     const raw=Store.get('hos_profile');if(!raw)return '';
-    const p=JSON.parse(raw);
+    const p=safeParse(raw,{});
     name=p.name||'';dob=p.dob||'';said=p.said||'';blood=p.blood||'';allergies=p.allergies||'';conditions=p.conditions||'';meds=p.meds||'';aidScheme=p.aidScheme||'';aidNum=p.aidNum||'';ecName=p.ecName||'';ecRel=p.ecRel||'';ecNum=p.ecNum||'';prevOps=p.prevOps||'';
   }else{
-    const list=JSON.parse(Store.get('hos_dependants')||'[]');
+    const list=safeParse(Store.get('hos_dependants'),[]);
     const d=list.find(x=>x.id===_shareTarget.id);if(!d)return '';
-    const rawP=Store.get('hos_profile');const mp=rawP?JSON.parse(rawP):{};
+    const rawP=Store.get('hos_profile');const mp=safeParse(rawP,{});
     name=d.name||'';dob=d.dob||'';blood=d.blood||'';allergies=d.allergies||'';conditions=d.conditions||'';meds=d.meds||'';aidScheme=mp.aidScheme||'';aidNum=d.aidnum||mp.aidNum||'';ecName=mp.ecName||'';ecRel=mp.ecRel||'';ecNum=mp.ecNum||'';relLabel=d.relationship?' ('+d.relationship+')':'';
   }
   const dobFmt=dob?new Date(dob).toLocaleDateString('en-ZA'):'Not recorded';
@@ -2329,10 +2460,224 @@ function doShareEmail(){
   window.location.href='mailto:?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(text);
   closeModal('modal-share');
 }
+
+// ─── Bump to Baby Diary (Pregnancy Tracker) ────────────────────────
+function getPregnancy(){
+  return safeParse(Store.get('hos_pregnancy'),{childrenCount:'',childrenNotes:'',dueDate:'',firstKick:'',babyNames:'',feelings:[],clinicLog:[],firstUltrasound:null,followUps:[],babyPhoto:null,babyFinalName:'',babyDob:'',babyWeight:''});
+}
+function savePregnancyData(obj){warnIfNotSaved(Store.set('hos_pregnancy',JSON.stringify(obj)));}
+function renderPregnancy(){
+  const p=getPregnancy();
+  const setVal=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
+  setVal('preg-children-count',p.childrenCount);
+  setVal('preg-children-notes',p.childrenNotes);
+  setVal('preg-due-date',p.dueDate);
+  setVal('preg-first-kick',p.firstKick);
+  setVal('preg-baby-names',p.babyNames);
+  setVal('preg-baby-final-name',p.babyFinalName);
+  setVal('preg-baby-dob',p.babyDob);
+  setVal('preg-baby-weight',p.babyWeight);
+  renderPregnancyFeelings();
+  renderPregnancyClinicLog();
+  renderPregnancyFirstUltrasound();
+  renderPregnancyFollowUps();
+  renderPregnancyBabyPhoto();
+}
+function fmtPregDate(d){return d?new Date(d).toLocaleDateString('en-ZA'):'';}
+function savePregnancyBasics(){
+  const p=getPregnancy();
+  p.childrenCount=(document.getElementById('preg-children-count')||{}).value||'';
+  p.childrenNotes=(document.getElementById('preg-children-notes')||{}).value||'';
+  p.dueDate=(document.getElementById('preg-due-date')||{}).value||'';
+  p.firstKick=(document.getElementById('preg-first-kick')||{}).value||'';
+  p.babyNames=(document.getElementById('preg-baby-names')||{}).value||'';
+  savePregnancyData(p);
+  alert('💾 Saved!');
+}
+function savePregnancyBirth(){
+  const p=getPregnancy();
+  p.babyFinalName=(document.getElementById('preg-baby-final-name')||{}).value||'';
+  p.babyDob=(document.getElementById('preg-baby-dob')||{}).value||'';
+  p.babyWeight=(document.getElementById('preg-baby-weight')||{}).value||'';
+  savePregnancyData(p);
+  alert('💾 Saved!');
+}
+function addPregnancyFeeling(){
+  const date=(document.getElementById('preg-feeling-date')||{}).value||'';
+  const text=(document.getElementById('preg-feeling-text')||{}).value||'';
+  if(!text.trim()){alert('Write something for this entry first.');return;}
+  const p=getPregnancy();
+  p.feelings=p.feelings||[];
+  p.feelings.unshift({date,text:text.trim()});
+  savePregnancyData(p);
+  document.getElementById('preg-feeling-text').value='';
+  renderPregnancyFeelings();
+}
+function deletePregnancyFeeling(idx){
+  const p=getPregnancy();
+  p.feelings.splice(idx,1);
+  savePregnancyData(p);
+  renderPregnancyFeelings();
+}
+function renderPregnancyFeelings(){
+  const el=document.getElementById('preg-feelings-list');if(!el)return;
+  const p=getPregnancy();const list=p.feelings||[];
+  if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No entries yet.</p>';return;}
+  el.innerHTML=list.map((f,i)=>'<div class="dep-card"><div class="dep-name">'+(fmtPregDate(f.date)||'No date')+'</div><div class="dep-detail">'+escHtml(f.text)+'</div><div class="dep-actions" style="margin-top:8px;"><button class="dep-del" onclick="deletePregnancyFeeling('+i+')">🗑️ Delete</button></div></div>').join('');
+}
+function addPregnancyClinicVisit(){
+  const date=(document.getElementById('preg-clinic-date')||{}).value||'';
+  const text=(document.getElementById('preg-clinic-text')||{}).value||'';
+  if(!text.trim()){alert('Add a note for this visit first.');return;}
+  const p=getPregnancy();
+  p.clinicLog=p.clinicLog||[];
+  p.clinicLog.unshift({date,text:text.trim()});
+  savePregnancyData(p);
+  document.getElementById('preg-clinic-text').value='';
+  renderPregnancyClinicLog();
+}
+function deletePregnancyClinicVisit(idx){
+  const p=getPregnancy();
+  p.clinicLog.splice(idx,1);
+  savePregnancyData(p);
+  renderPregnancyClinicLog();
+}
+function renderPregnancyClinicLog(){
+  const el=document.getElementById('preg-clinic-list');if(!el)return;
+  const p=getPregnancy();const list=p.clinicLog||[];
+  if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No visits logged yet.</p>';return;}
+  el.innerHTML=list.map((c,i)=>'<div class="dep-card"><div class="dep-name">'+(fmtPregDate(c.date)||'No date')+'</div><div class="dep-detail">'+escHtml(c.text)+'</div><div class="dep-actions" style="margin-top:8px;"><button class="dep-del" onclick="deletePregnancyClinicVisit('+i+')">🗑️ Delete</button></div></div>').join('');
+}
+function handlePregnancyFirstUltrasound(input){
+  if(!input.files||!input.files[0])return;
+  resizePhoto(input.files[0],1200,dataUrl=>{
+    const p=getPregnancy();
+    p.firstUltrasound=dataUrl;
+    savePregnancyData(p);
+    renderPregnancyFirstUltrasound();
+    input.value='';
+  });
+}
+function removePregnancyFirstUltrasound(){
+  const p=getPregnancy();
+  p.firstUltrasound=null;
+  savePregnancyData(p);
+  renderPregnancyFirstUltrasound();
+}
+function renderPregnancyFirstUltrasound(){
+  const el=document.getElementById('preg-first-us-preview');if(!el)return;
+  const p=getPregnancy();
+  el.innerHTML=p.firstUltrasound?('<img src="'+p.firstUltrasound+'" style="width:100%;max-width:280px;border-radius:12px;border:1.5px solid #e2e8f0;display:block;margin-bottom:8px;"><button class="dep-del" onclick="removePregnancyFirstUltrasound()">🗑️ Remove Photo</button>'):'<p style="color:#94a3b8;font-size:13px;">No photo added yet.</p>';
+}
+function handlePregnancyFollowUp(input){
+  if(!input.files||!input.files[0])return;
+  resizePhoto(input.files[0],1200,dataUrl=>{
+    const p=getPregnancy();
+    p.followUps=p.followUps||[];
+    p.followUps.push(dataUrl);
+    savePregnancyData(p);
+    renderPregnancyFollowUps();
+    input.value='';
+  });
+}
+function deletePregnancyFollowUp(idx){
+  const p=getPregnancy();
+  p.followUps.splice(idx,1);
+  savePregnancyData(p);
+  renderPregnancyFollowUps();
+}
+function renderPregnancyFollowUps(){
+  const el=document.getElementById('preg-followups-gallery');if(!el)return;
+  const p=getPregnancy();const list=p.followUps||[];
+  if(!list.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No follow-up photos added yet.</p>';return;}
+  el.innerHTML=list.map((ph,i)=>'<div style="position:relative;"><img src="'+ph+'" style="width:80px;height:80px;border-radius:10px;object-fit:cover;border:1.5px solid #e2e8f0;"><button onclick="deletePregnancyFollowUp('+i+')" style="position:absolute;top:-6px;right:-6px;background:#ef4444;color:white;border:none;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:1;cursor:pointer;">✕</button></div>').join('');
+}
+function handlePregnancyBabyPhoto(input){
+  if(!input.files||!input.files[0])return;
+  resizePhoto(input.files[0],1200,dataUrl=>{
+    const p=getPregnancy();
+    p.babyPhoto=dataUrl;
+    savePregnancyData(p);
+    renderPregnancyBabyPhoto();
+    input.value='';
+  });
+}
+function removePregnancyBabyPhoto(){
+  const p=getPregnancy();
+  p.babyPhoto=null;
+  savePregnancyData(p);
+  renderPregnancyBabyPhoto();
+}
+function renderPregnancyBabyPhoto(){
+  const el=document.getElementById('preg-baby-photo-preview');if(!el)return;
+  const p=getPregnancy();
+  el.innerHTML=p.babyPhoto?('<img src="'+p.babyPhoto+'" style="width:100%;max-width:280px;border-radius:12px;border:1.5px solid #e2e8f0;display:block;margin-bottom:8px;"><button class="dep-del" onclick="removePregnancyBabyPhoto()">🗑️ Remove Photo</button>'):'<p style="color:#94a3b8;font-size:13px;">No photo added yet.</p>';
+}
+function buildPregnancyText(){
+  const p=getPregnancy();
+  const lines=['🤰 BUMP TO BABY DIARY',''];
+  lines.push('Children already at home: '+(p.childrenCount||'—')+(p.childrenNotes?' ('+p.childrenNotes+')':''));
+  lines.push('Due Date: '+(fmtPregDate(p.dueDate)||'Not recorded'));
+  lines.push('First Kick Date: '+(fmtPregDate(p.firstKick)||'Not recorded'));
+  lines.push('Baby Name Ideas: '+(p.babyNames||'—'));
+  lines.push('');
+  lines.push('── HOW SHE\'S BEEN FEELING ──');
+  if((p.feelings||[]).length){[...p.feelings].reverse().forEach(f=>lines.push('• '+(fmtPregDate(f.date)||'No date')+': '+f.text));}else{lines.push('No entries yet.');}
+  lines.push('');
+  lines.push('── CLINIC / DOCTOR VISITS ──');
+  if((p.clinicLog||[]).length){[...p.clinicLog].reverse().forEach(c=>lines.push('• '+(fmtPregDate(c.date)||'No date')+': '+c.text));}else{lines.push('No visits logged yet.');}
+  if(p.babyFinalName||p.babyDob||p.babyWeight){
+    lines.push('','── BABY HAS ARRIVED! ──');
+    if(p.babyFinalName)lines.push('Name: '+p.babyFinalName);
+    if(p.babyDob)lines.push('Date of Birth: '+fmtPregDate(p.babyDob));
+    if(p.babyWeight)lines.push('Birth Weight: '+p.babyWeight);
+  }
+  lines.push('','📷 Photos are included when you use Print / Save as PDF.','','— From My Health One Stop —');
+  return lines.join('\n');
+}
+function sharePregnancyWhatsApp(){window.open('https://wa.me/?text='+encodeURIComponent(buildPregnancyText()),'_blank');}
+function sharePregnancyEmail(){
+  const p=getPregnancy();
+  const subject='Bump to Baby Diary'+(p.babyFinalName?' — '+p.babyFinalName:'');
+  window.location.href='mailto:?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(buildPregnancyText());
+}
+function printPregnancy(){
+  const p=getPregnancy();
+  const win=window.open('','_blank');
+  if(!win){alert('⚠️ Your browser blocked the print window. Please allow pop-ups for this page and try again.');return;}
+  const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  let html='<html><head><title>Bump to Baby Diary</title><style>body{font-family:sans-serif;font-size:14px;padding:24px;max-width:700px;margin:0 auto;line-height:1.7;color:#1e293b;}h1{font-size:22px;}h2{font-size:15px;margin-top:22px;border-bottom:1px solid #e2e8f0;padding-bottom:4px;}img{max-width:260px;border-radius:10px;margin:8px 8px 8px 0;border:1px solid #e2e8f0;}.entry{margin-bottom:8px;}@media print{body{padding:10px;}}</style></head><body>';
+  html+='<h1>🤰 Bump to Baby Diary</h1>';
+  html+='<p><strong>Children already at home:</strong> '+esc(p.childrenCount||'—')+(p.childrenNotes?' ('+esc(p.childrenNotes)+')':'')+'</p>';
+  html+='<p><strong>Due Date:</strong> '+esc(fmtPregDate(p.dueDate)||'Not recorded')+'</p>';
+  html+='<p><strong>First Kick Date:</strong> '+esc(fmtPregDate(p.firstKick)||'Not recorded')+'</p>';
+  html+='<p><strong>Baby Name Ideas:</strong> '+esc(p.babyNames||'—')+'</p>';
+  html+='<h2>💭 How She\'s Been Feeling</h2>';
+  html+=(p.feelings&&p.feelings.length)?[...p.feelings].reverse().map(f=>'<div class="entry">• <strong>'+esc(fmtPregDate(f.date)||'No date')+':</strong> '+esc(f.text)+'</div>').join(''):'<p>No entries yet.</p>';
+  html+='<h2>🏥 Clinic / Doctor Visits</h2>';
+  html+=(p.clinicLog&&p.clinicLog.length)?[...p.clinicLog].reverse().map(c=>'<div class="entry">• <strong>'+esc(fmtPregDate(c.date)||'No date')+':</strong> '+esc(c.text)+'</div>').join(''):'<p>No visits logged yet.</p>';
+  if(p.firstUltrasound){html+='<h2>🖼️ First Ultrasound</h2><img src="'+p.firstUltrasound+'">';}
+  if(p.followUps&&p.followUps.length){html+='<h2>🖼️ Follow-Up Ultrasounds</h2>'+p.followUps.map(ph=>'<img src="'+ph+'">').join('');}
+  if(p.babyFinalName||p.babyDob||p.babyWeight||p.babyPhoto){
+    html+='<h2>👶 Baby Has Arrived!</h2>';
+    if(p.babyFinalName)html+='<p><strong>Name:</strong> '+esc(p.babyFinalName)+'</p>';
+    if(p.babyDob)html+='<p><strong>Date of Birth:</strong> '+esc(fmtPregDate(p.babyDob))+'</p>';
+    if(p.babyWeight)html+='<p><strong>Birth Weight:</strong> '+esc(p.babyWeight)+'</p>';
+    if(p.babyPhoto)html+='<img src="'+p.babyPhoto+'">';
+  }
+  html+='<p style="margin-top:24px;color:#94a3b8;font-size:12px;">— From My Health One Stop —</p>';
+  html+='</body></html>';
+  win.document.write(html);
+  win.document.close();
+  setTimeout(()=>win.print(),300);
+}
 </script>
 <script>
 // ─── Initialise App ───────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded',()=>{
+  // Remove yesterday's (and older) daily medication-tracker keys so they don't pile up
+  const _todayMedKey='meds_taken_'+new Date().toDateString();
+  Store.keys().forEach(k=>{if(k.indexOf('meds_taken_')===0&&k!==_todayMedKey)Store.remove(k);});
   populateSchemes();
   loadProfile();
   if(typeof renderPmbChecker==='function')renderPmbChecker();
@@ -2358,7 +2703,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 <script>
 // ─── Pre-Op: CORRECTED functions (override earlier stubs) ─────────
 function autoFillPreop(){
-  const raw=Store.get('hos_profile');if(!raw)return;const p=JSON.parse(raw);
+  const raw=Store.get('hos_profile');if(!raw)return;const p=safeParse(raw,{});
   const set=(id,val)=>{const el=document.getElementById(id);if(el&&val)el.value=val;};
   set('po-name',p.name);
   set('po-id',p.said);
@@ -2495,6 +2840,7 @@ function sendPreopEmail(recipient){
 function printPreop(){
   const text=buildPreopText();
   const win=window.open('','_blank');
+  if(!win){alert('\u26A0\uFE0F Your browser blocked the print window. Please allow pop-ups for this page and try again.');return;}
   win.document.write('<html><head><title>Pre-Op Questionnaire</title><style>body{font-family:monospace;font-size:13px;padding:24px;white-space:pre-wrap;max-width:700px;margin:0 auto;line-height:1.6;}@media print{body{padding:10px;}}</style></head><body>'+text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</body></html>');
   win.document.close();
   setTimeout(()=>win.print(),300);
@@ -2791,7 +3137,7 @@ function pickPmb(code){
 }
 function renderMyPmbConditions(){
   const wrap=document.getElementById('pmb-my-conditions');if(!wrap)return;
-  const raw=Store.get('hos_profile');const p=raw?JSON.parse(raw):{};
+  const raw=Store.get('hos_profile');const p=safeParse(raw,{});
   const conds=(p.conditions||'').split(',').map(s=>s.trim()).filter(Boolean);
   if(!conds.length){wrap.innerHTML='';return;}
   // Match each saved condition back to the dataset (by code in brackets or by name)
@@ -2809,7 +3155,7 @@ function renderPmbChecker(){
   const country=document.getElementById('p-country')?document.getElementById('p-country').value:'South Africa';
   const card=document.getElementById('pmb-card');const note=document.getElementById('pmb-country-note');
   if(!card)return;
-  const _praw=Store.get('hos_profile');const _pp=_praw?JSON.parse(_praw):{};
+  const _praw=Store.get('hos_profile');const _pp=safeParse(_praw,{});
   if(typeof isHealthInsurance==='function'&&isHealthInsurance(_pp.aidScheme)){
     if(note)note.innerHTML='⚠️ <strong>You have selected a health insurance product, not a medical aid.</strong> PMB law applies only to registered medical schemes — insurance policies do NOT have to cover PMB conditions. The results below show what a medical scheme would have to cover; check your own policy wording for what YOUR product pays.';
   }else if(country==='Namibia'){
@@ -2868,7 +3214,7 @@ function savePet(){
     vetPhone:document.getElementById('pet-vet-phone').value.trim(),
     notes:document.getElementById('pet-notes').value.trim()
   };
-  const list=JSON.parse(Store.get('hos_pets')||'[]');
+  const list=safeParse(Store.get('hos_pets'),[]);
   list.push(pet);
   Store.set('hos_pets',JSON.stringify(list));
   closeModal('modal-addpet');
@@ -2881,14 +3227,14 @@ function savePet(){
 
 function deletePet(id){
   if(!confirm('Remove this pet?'))return;
-  const list=JSON.parse(Store.get('hos_pets')||'[]').filter(p=>p.id!==id);
+  const list=safeParse(Store.get('hos_pets'),[]).filter(p=>p.id!==id);
   Store.set('hos_pets',JSON.stringify(list));
   renderPets();
 }
 
 function renderPets(){
   const el=document.getElementById('pet-list');if(!el)return;
-  const list=JSON.parse(Store.get('hos_pets')||'[]');
+  const list=safeParse(Store.get('hos_pets'),[]);
   if(!list.length){
     el.innerHTML='<div style="text-align:center;color:#94a3b8;font-size:13px;padding:24px 0;">No pets added yet.<br>Tap <strong>+ Add Pet</strong> to get started.</div>';
     return;
@@ -2929,7 +3275,7 @@ function findNearestVet(){searchNearby('vet','Vet / Animal Clinic','🐾');}
 <!-- Copyright footer — subtle but present for IP protection -->
 <div style="text-align:center;padding:12px 16px 4px;font-size:10px;color:#cbd5e1;font-family:'Poppins',sans-serif;">
   © 2026 Dr JA Geldenhuys · My Health One Stop · All rights reserved<br>
-  <span id="app-version" style="font-size:10px;color:#cbd5e1;">Version 2026.07.04</span>
+  <span id="app-version" style="font-size:10px;color:#cbd5e1;">Version 2026.07.10</span>
 </div>
 
 </body>
