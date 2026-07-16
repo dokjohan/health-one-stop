@@ -421,7 +421,6 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
         <div id="med-suggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:white;border:1.5px solid #2563eb;border-top:none;border-radius:0 0 10px 10px;z-index:500;max-height:180px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
       </div>
       <button type="button" class="btn btn-outline" onclick="openBarcodeScanner()" style="margin-top:8px;font-size:13px;padding:10px;width:100%;">📷 Scan Medication Barcode</button>
-      <button type="button" class="btn btn-outline" onclick="document.getElementById('med-photo-input').click()" style="margin-top:8px;font-size:13px;padding:10px;width:100%;">📸 Photo of Medicine Box — auto-read name &amp; dose</button>
       <div id="barcode-status" style="display:none;margin-top:8px;font-size:12px;line-height:1.6;padding:10px 12px;border-radius:10px;"></div>
       <p style="font-size:11px;color:#94a3b8;margin-top:8px;">Tap ✏️ on a medication to add its dose and how often it's taken — totally optional.</p>
       <div id="meds-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
@@ -687,7 +686,6 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   </div>
   <div id="chat-messages"></div>
   <input type="file" id="cam-input" accept="image/*" capture="environment" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px;" onchange="scanCard(this)">
-  <input type="file" id="med-photo-input" accept="image/*" capture="environment" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px;" onchange="scanMedBox(this)">
   <div class="chat-input-row">
     <label for="cam-input" class="chat-cam-btn" title="Scan ID or medical aid card">📷</label>
     <input type="text" id="chat-input" placeholder="Ask me anything…" onkeydown="chatKeyDown(event)">
@@ -1417,7 +1415,6 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
       <li><strong>Health tracking</strong> — BMI, blood pressure, blood sugar, vaccinations, lab &amp; radiology results</li>
       <li><strong>Medical aid &amp; coverage</strong> — PMB checker, condition lookup, medication list</li>
       <li><strong>Hospital Authorisation Helper</strong> — your scheme's pre-auth number &amp; what to have ready before an operation or specialist visit</li>
-      <li><strong>Medicine box photo</strong> — photograph the box and the app reads the name &amp; dose for you</li>
       <li><strong>Works offline</strong> — once opened, the app works even without data or airtime</li>
       <li><strong>Funeral &amp; Memorial Services</strong> — information and contacts, kept in More</li>
       <li><strong>Mental Health Check-in</strong> — a quick private self check with support numbers</li>
@@ -1903,7 +1900,7 @@ function renderHealthCard(){
   }
   const photoB64=Store.get('hos_photo')||'';
   const photoOnCard=photoB64?'<div style="position:absolute;top:14px;right:14px;width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,0.7);overflow:hidden;flex-shrink:0;"><img src="'+photoB64+'" style="width:100%;height:100%;object-fit:cover;"></div>':'<div class="card-logo">My Health<br>One Stop</div>';
-  container.innerHTML='<div class="health-card">'+photoOnCard+'<div class="card-chip">💳</div><div class="card-name">'+escHtml(p.name||'—')+'</div><div class="card-id">'+(p.country==='South Africa'?'SA ID':'ID')+': '+escHtml(p.said||'—')+'</div><div class="card-row"><div class="card-field"><label>DATE OF BIRTH</label><div class="val">'+dobFmt+'</div></div><div class="card-field"><label>BLOOD TYPE</label><div class="val">'+escHtml(p.blood||'?')+'</div></div>'+(p.aidScheme?'<div class="card-field"><label>MEDICAL AID</label><div class="val">'+escHtml(p.aidScheme)+'</div></div>':'')+'</div></div>'+trackerHtml+coverageHtml+'<div class="card"><div class="card-title">🚨 Medical Alerts</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:0 0 8px;">Allergies</div><div>'+allergyHtml+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Chronic Conditions</div><div>'+condHtml+'</div>'+(p.meds?'<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Medications</div><p style="font-size:13px;color:#444;">'+escHtml(p.meds)+'</p>':'')+'</div><div class="card"><div class="card-title">📱 My QR Code</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Healthcare providers can scan this for your key medical info.</p><div class="qr-container"><div id="qrcode"></div><div class="qr-label">Scan to view patient info</div></div></div><div class="card"><div class="card-title">📤 Share My Details</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Send your medical summary to a family member, carer, or old age home via WhatsApp or email.</p><button class="btn btn-primary" onclick="shareMyDetails()">📤 Share My Details</button></div>';
+  container.innerHTML='<div class="health-card">'+photoOnCard+'<div class="card-chip">💳</div><div class="card-name">'+escHtml(p.name||'—')+'</div><div class="card-id">'+(p.country==='South Africa'?'SA ID':'ID')+': '+escHtml(p.said||'—')+'</div><div class="card-row"><div class="card-field"><label>DATE OF BIRTH</label><div class="val">'+dobFmt+'</div></div><div class="card-field"><label>BLOOD TYPE</label><div class="val">'+escHtml(p.blood||'?')+'</div></div>'+(p.aidScheme?'<div class="card-field"><label>MEDICAL AID</label><div class="val">'+escHtml(p.aidScheme)+'</div></div>':'')+(p.aidNum?'<div class="card-field"><label>MEMBER NO</label><div class="val">'+escHtml(p.aidNum)+'</div></div>':'')+'</div></div>'+trackerHtml+coverageHtml+'<div class="card"><div class="card-title">🚨 Medical Alerts</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:0 0 8px;">Allergies</div><div>'+allergyHtml+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Chronic Conditions</div><div>'+condHtml+'</div>'+(p.meds?'<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Medications</div><p style="font-size:13px;color:#444;">'+escHtml(p.meds)+'</p>':'')+'</div><div class="card"><div class="card-title">📱 My QR Code</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Healthcare providers can scan this for your key medical info.</p><div class="qr-container"><div id="qrcode"></div><div class="qr-label">Scan to view patient info</div></div></div><div class="card"><div class="card-title">📤 Share My Details</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Send your medical summary to a family member, carer, or old age home via WhatsApp or email.</p><button class="btn btn-primary" onclick="shareMyDetails()">📤 Share My Details</button></div>';
   const qrData=JSON.stringify({name:p.name,said:p.said,dob:p.dob,blood:p.blood,allergies:p.allergies,conditions:p.conditions,aid:p.aidScheme,aidNum:p.aidNum,ec:p.ecName+' '+p.ecNum});
   setTimeout(()=>{const el=document.getElementById('qrcode');if(el&&typeof QRCode!=='undefined'){el.innerHTML='';try{new QRCode(el,{text:qrData,width:200,height:200,colorDark:'#1e3a8a',colorLight:'#ffffff'});}catch(e){el.innerHTML='<div style="font-size:12px;color:#991b1b;padding:10px;text-align:center;">⚠️ Could not generate the QR code. Tap Save Profile again — if it keeps failing, try removing some text from Allergies/Conditions, as a very long list can be too much data for the QR code.</div>';}}},200);
 }
@@ -2501,77 +2498,6 @@ function confirmCardEntry(){
   closeModal('modal-scan');
   switchTab('profile',document.querySelector('[data-tab="profile"]'));
   showAlert('profile-alert','✅ Card details imported — check them, then tap Save Profile.');
-}
-
-// ─── Medication box photo: read name & dose from a photo ──────────
-function scanMedBox(input){
-  if(!input||!input.files||!input.files[0])return;
-  const file=input.files[0];
-  const reader=new FileReader();
-  reader.onload=async ev=>{
-    const body=document.getElementById('scan-body');
-    body.innerHTML='<img class="ocr-preview" src="'+ev.target.result+'">'
-      +'<div class="ocr-progress-bar" id="medscan-status"><span class="spinner-dark"></span>Reading the box…</div>'
-      +'<div class="ocr-field"><label>Medication Name</label><input type="text" id="medscan-name" placeholder="e.g. Atorvastatin"></div>'
-      +'<div class="ocr-field"><label>Dose / Strength</label><input type="text" id="medscan-dose" placeholder="e.g. 20 mg"></div>'
-      +'<button class="btn btn-primary" style="margin-top:10px;" onclick="confirmMedPhotoEntry()">✅ Add to My Medications</button>'
-      +'<button class="modal-close-btn" onclick="closeModal(\'modal-scan\')">Cancel</button>';
-    const title=document.querySelector('#modal-scan .modal-title');if(title)title.textContent='📸 Photo of Medicine Box';
-    openModal('modal-scan');
-    await runMedOCR(ev.target.result);
-  };
-  reader.readAsDataURL(file);
-  input.value='';
-}
-async function runMedOCR(dataUrl){
-  const status=document.getElementById('medscan-status');
-  try{
-    if(!window.Tesseract)await new Promise((res,rej)=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';sc.onload=res;sc.onerror=rej;document.head.appendChild(sc);});
-    const {data:{text}}=await Tesseract.recognize(dataUrl,'eng');
-    const parsed=parseMedText(text);
-    if(status)status.innerHTML=(parsed.name||parsed.dose)?'✅ Details found — check and correct below:':'⚠️ Could not read the box clearly — type the name below.';
-    const set=(id,v)=>{const el=document.getElementById(id);if(el&&v)el.value=v;};
-    set('medscan-name',parsed.name);set('medscan-dose',parsed.dose);
-  }catch(err){if(status)status.innerHTML='⚠️ Could not read the box — please type it in below.';}
-}
-function parseMedText(text){
-  const result={name:'',dose:''};
-  // Dose: number + unit (mg, ml, mcg, g, IU)
-  const doseMatch=text.match(/(\d+(?:[.,]\d+)?)\s*(mg|mcg|µg|ml|iu|units?|g)\b/i);
-  if(doseMatch)result.dose=doseMatch[1].replace(',','.')+' '+doseMatch[2].toLowerCase();
-  // Name: pick the most title-like line, skipping packaging words
-  const skip=['tablet','tablets','capsule','capsules','caps','syrup','suspension','solution','cream','ointment','gel','drops','injection','oral','film','coated','sugar','each','contains','store','below','keep','out','reach','of children','children','schedule','reg','no.','exp','batch','lot','dosage','directions','use','only','prescription','warning','pharmacist','pharmacy','made in','www','.co.za','.com'];
-  const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
-  let best='';let bestScore=0;
-  for(const l of lines.slice(0,15)){
-    const letters=l.replace(/[^A-Za-z]/g,'').length;
-    if(letters<4||l.length>40)continue;
-    const lw=l.toLowerCase();
-    if(skip.some(w=>lw.includes(w)))continue;
-    let score=letters;
-    if(/^[A-Z][A-Za-z\- ]+$/.test(l))score+=10;               // clean word(s)
-    if(l===l.toUpperCase()&&letters>5)score+=8;                // brand names are often ALL CAPS
-    if(doseMatch&&l.includes(doseMatch[0]))score+=6;           // line containing the dose
-    if(score>bestScore){bestScore=score;best=l;}
-  }
-  // Strip the dose out of the name line if it crept in
-  result.name=best.replace(/(\d+(?:[.,]\d+)?)\s*(mg|mcg|µg|ml|iu|units?|g)\b/ig,'').replace(/\s{2,}/g,' ').trim();
-  return result;
-}
-function confirmMedPhotoEntry(){
-  const g=id=>{const el=document.getElementById(id);return el?el.value.trim():'';};
-  const name=g('medscan-name'),dose=g('medscan-dose');
-  if(!name){showAlert('profile-alert','⚠️ Please type the medication name before adding.','error');return;}
-  if(!medItems.some(it=>it.name.toLowerCase()===name.toLowerCase())){
-    medItems.push({name:name,dose:dose,freq:''});
-  }else if(dose){
-    const it=medItems.find(it=>it.name.toLowerCase()===name.toLowerCase());if(it&&!it.dose)it.dose=dose;
-  }
-  renderMedTags();
-  const hidden=document.getElementById('p-meds');if(hidden)hidden.value=medItemsToHidden(medItems);
-  closeModal('modal-scan');
-  switchTab('profile',document.querySelector('[data-tab="profile"]'));
-  showAlert('profile-alert','✅ '+name+(dose?' ('+dose+')':'')+' added — remember to tap Save Profile.');
 }
 
 // ─── Profile Photo ────────────────────────────────────────────────
@@ -3854,12 +3780,12 @@ if('serviceWorker' in navigator){
 
 <!-- Static description for search engines and users without JavaScript -->
 <div style="text-align:center;padding:10px 20px 0;font-size:11px;color:#94a3b8;font-family:'Poppins',sans-serif;max-width:640px;margin:0 auto;line-height:1.6;">
-  <strong>MyHealthOneStop</strong> is a free health app for South Africa and Namibia, built by a doctor. Find a GP, specialist, dentist, physiotherapist, pharmacy, gym or hospital near you; check what your medical aid covers (PMBs); get your scheme's hospital pre-authorisation number and checklist; keep a virtual health card with an emergency QR code; photograph a medicine box to record your medication; track blood pressure, blood sugar and vaccinations; and find blood donation centres. Works offline once loaded — your information stays on your own phone.
+  <strong>MyHealthOneStop</strong> is a free health app for South Africa and Namibia, built by a doctor. Find a GP, specialist, dentist, physiotherapist, pharmacy, gym or hospital near you; check what your medical aid covers (PMBs); get your scheme's hospital pre-authorisation number and checklist; keep a virtual health card with an emergency QR code; track blood pressure, blood sugar and vaccinations; and find blood donation centres. Works offline once loaded — your information stays on your own phone.
 </div>
 <!-- Copyright footer — subtle but present for IP protection -->
 <div style="text-align:center;padding:12px 16px 4px;font-size:10px;color:#cbd5e1;font-family:'Poppins',sans-serif;">
   © 2026 Dr JA Geldenhuys · My Health One Stop · All rights reserved<br>
-  <span id="app-version" style="font-size:10px;color:#cbd5e1;">Version 2026.07.16</span>
+  <span id="app-version" style="font-size:10px;color:#cbd5e1;">Version 2026.07.18</span>
 </div>
 
 </body>
