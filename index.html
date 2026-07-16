@@ -3,7 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>MyHealthOneStop</title>
+<!-- ── Auto-update: tell phones NOT to cache old copies of this page ── -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>MyHealthOneStop — Find a GP, Check Medical Aid Cover | South Africa & Namibia</title>
+<meta name="description" content="Free health app for South Africa & Namibia. Find a GP, specialist or pharmacy near you, check medical aid cover (PMB) and carry a virtual health card with QR code.">
+<meta name="keywords" content="health app South Africa, find a GP near me, medical aid PMB checker, pharmacy near me, virtual health card, blood donation, Namibia health app, Vredendal doctor">
+<link rel="canonical" href="https://www.myhealthonestop.com/">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<!-- Social sharing (Facebook / WhatsApp / LinkedIn) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MyHealthOneStop">
+<meta property="og:title" content="MyHealthOneStop — Your Personal Health Assistant">
+<meta property="og:description" content="Free health app: find a GP, specialist or pharmacy near you, check medical aid cover, and keep a virtual health card with an emergency QR code.">
+<meta property="og:url" content="https://www.myhealthonestop.com/">
+<meta property="og:image" content="https://www.myhealthonestop.com/share-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Structured data so Google understands what this site is -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"MyHealthOneStop","url":"https://www.myhealthonestop.com/","applicationCategory":"HealthApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"ZAR"},"description":"Free health app for South Africa and Namibia: find a GP, specialist or pharmacy near you, check medical aid cover (PMBs) and keep a virtual health card with an emergency QR code.","author":{"@type":"Physician","name":"Dr JA Geldenhuys","address":{"@type":"PostalAddress","addressLocality":"Vredendal","addressRegion":"Western Cape","addressCountry":"ZA"}}}
+</script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="MyHealthOneStop">
@@ -284,7 +306,24 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
 <div class="app-header">
   <div class="app-header-icon">
     <svg width="26" height="26" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <path d="M50,74 C50,74 18,56 18,34 C18,24 26,17 36,17 C42,17 47,21 50,27 C53,21 58,17 64,17 C74,17 82,24 82,34 C82,56 50,74 50,74Z" fill="#ef4444"/>
+      <defs>
+        <linearGradient id="hos3dHeart" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#fb7185"/>
+          <stop offset="45%" stop-color="#ef4444"/>
+          <stop offset="100%" stop-color="#991b1b"/>
+        </linearGradient>
+        <radialGradient id="hos3dShine" cx="35%" cy="22%" r="55%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85"/>
+          <stop offset="60%" stop-color="#ffffff" stop-opacity="0.1"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="hos3dShadow" x="-25%" y="-25%" width="150%" height="150%">
+          <feDropShadow dx="0" dy="3.5" stdDeviation="3" flood-color="#450a0a" flood-opacity="0.5"/>
+        </filter>
+      </defs>
+      <path d="M50,74 C50,74 18,56 18,34 C18,24 26,17 36,17 C42,17 47,21 50,27 C53,21 58,17 64,17 C74,17 82,24 82,34 C82,56 50,74 50,74Z" fill="url(#hos3dHeart)" filter="url(#hos3dShadow)"/>
+      <path d="M50,74 C50,74 18,56 18,34 C18,24 26,17 36,17 C42,17 47,21 50,27 C53,21 58,17 64,17 C74,17 82,24 82,34 C82,56 50,74 50,74Z" fill="url(#hos3dShine)"/>
+      <polyline points="5,52 22,52 28,42 34,62 40,30 46,72 50,52 65,52 70,45 75,52 95,52" fill="none" stroke="#7f1d1d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
       <polyline points="5,50 22,50 28,40 34,60 40,28 46,70 50,50 65,50 70,43 75,50 95,50" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </div>
@@ -327,6 +366,11 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
       <select id="p-country" onchange="onCountryChange()">
         <option>South Africa</option>
         <option>Namibia</option>
+        <option>Botswana</option>
+        <option>Zimbabwe</option>
+        <option>Zambia</option>
+        <option>Lesotho</option>
+        <option>Eswatini</option>
       </select>
     </div>
     <div class="form-group"><label id="lbl-said">ID Number *</label><input type="text" id="p-said" placeholder="13-digit number" maxlength="13" inputmode="numeric"></div>
@@ -377,6 +421,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
         <div id="med-suggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:white;border:1.5px solid #2563eb;border-top:none;border-radius:0 0 10px 10px;z-index:500;max-height:180px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
       </div>
       <button type="button" class="btn btn-outline" onclick="openBarcodeScanner()" style="margin-top:8px;font-size:13px;padding:10px;width:100%;">📷 Scan Medication Barcode</button>
+      <button type="button" class="btn btn-outline" onclick="document.getElementById('med-photo-input').click()" style="margin-top:8px;font-size:13px;padding:10px;width:100%;">📸 Photo of Medicine Box — auto-read name &amp; dose</button>
       <div id="barcode-status" style="display:none;margin-top:8px;font-size:12px;line-height:1.6;padding:10px 12px;border-radius:10px;"></div>
       <p style="font-size:11px;color:#94a3b8;margin-top:8px;">Tap ✏️ on a medication to add its dose and how often it's taken — totally optional.</p>
       <div id="meds-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
@@ -410,7 +455,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     </div>
   </div>
   <!-- PMB CHECKER -->
-  <div class="card" id="pmb-card">
+  <div class="card" id="pmb-card" data-saonly="1">
     <div class="cov-guide-header" onclick="togglePmb(this)"><div class="card-title" style="margin-bottom:0;">🛡️ Is My Condition Covered? (PMB Check)</div><span style="font-size:11px;color:#2563eb;font-weight:600;">Show ▼</span></div>
     <div id="pmb-body" style="display:none;margin-top:12px;">
       <p style="font-size:13px;color:#64748b;line-height:1.6;margin-bottom:12px;">Prescribed Minimum Benefits (PMBs) are conditions every registered medical aid must cover <strong>by law</strong> — on every option, regardless of how basic the plan is. Check a condition below.</p>
@@ -470,8 +515,29 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
 
   <div id="coverage-guide-wrap"></div>
 
+  <!-- HOSPITAL / SPECIALIST PRE-AUTHORISATION HELPER -->
+  <div class="card" data-saonly="1">
+    <div class="card-title">📞 Hospital &amp; Specialist Authorisation</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6;">Going to hospital for a planned operation or procedure? Your medical aid must <strong>authorise it BEFORE you go in</strong> — usually at least <strong>48 hours before admission</strong>. For emergencies, phone within 24 hours or on the first working day after. Choose your scheme below to see exactly what to do (South African &amp; Namibian schemes).</p>
+    <label style="font-size:12px;font-weight:600;color:#334155;display:block;margin-bottom:5px;">Your Medical Aid Scheme</label>
+    <select id="preauth-scheme" onchange="renderPreauth()" style="width:100%;padding:12px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Poppins',sans-serif;background:#fff;margin-bottom:12px;">
+      <option value="">— Select your scheme —</option>
+    </select>
+    <div id="preauth-result"></div>
+    <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:11px 13px;margin-top:12px;font-size:12px;color:#1e40af;line-height:1.7;">
+      <strong>📋 Have this ready before you phone:</strong><br>
+      • Your membership number (on your card)<br>
+      • The ICD-10 code — <strong>ask your doctor</strong>, it's on your referral letter<br>
+      • The procedure / tariff code — your doctor or the hospital provides this<br>
+      • Name of the doctor/specialist and the hospital<br>
+      • Planned admission date<br>
+      You will receive an <strong>authorisation number</strong> — write it down and take it with you to the hospital.
+    </div>
+    <p style="font-size:11px;color:#94a3b8;margin-top:10px;line-height:1.5;">Numbers verified July 2026 but can change — the pre-authorisation number is also printed on the back of your membership card. No authorisation may mean the scheme pays less or nothing, so always phone first.</p>
+  </div>
+
   <!-- GAP COVER INFO -->
-  <div class="card">
+  <div class="card" data-saonly="1">
     <div class="cov-guide-header" onclick="toggleGapCover(this)"><div class="card-title" style="margin-bottom:0;">🛡️ What is Gap Cover?</div><span style="font-size:11px;color:#2563eb;font-weight:600;">Show ▼</span></div>
     <div id="gap-cover-body" style="display:none;margin-top:12px;font-size:13px;color:#475569;line-height:1.75;">
       <p style="margin-bottom:10px;"><strong>Gap cover</strong> is extra insurance that pays the <strong>difference</strong> when a specialist, surgeon, or anaesthetist charges more than your medical aid pays. Example: your medical aid pays 100% of the scheme rate, but the surgeon charges 300% — gap cover pays the missing 200%.</p>
@@ -524,7 +590,8 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
       <button ontouchstart="" class="service-btn" onclick="openSpecialistPicker()"><div class="svc-icon">🩺</div><div class="svc-text"><div class="svc-name">Specialist Doctor</div><div class="svc-sub">Choose a speciality — ENT, surgeon, paediatrician…</div></div><div class="svc-arrow">›</div></button>
       <button ontouchstart="" class="service-btn" onclick="searchNearby('pharmacy','Pharmacy','💊')"><div class="svc-icon">💊</div><div class="svc-text"><div class="svc-name">Pharmacy</div><div class="svc-sub">Clicks, Dis-Chem, independent</div></div><div class="svc-arrow">›</div></button>
       <button ontouchstart="" class="service-btn" onclick="searchNearby('occ','Occupational Health Doctor','🏭')"><div class="svc-icon">🏭</div><div class="svc-text"><div class="svc-name">Occupational Health Doctor</div><div class="svc-sub">Workplace health &amp; fitness certificates</div></div><div class="svc-arrow">›</div></button>
-      <a href="https://hpcsaonline.custhelp.com/app/i_reg_form" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🔍</div><div class="svc-text"><div class="svc-name">HPCSA Doctor Verification (iRegister)</div><div class="svc-sub">Check a doctor's registration — search by surname or HPCSA number</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://hpcsaonline.custhelp.com/app/i_reg_form" data-saonly="1" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🔍</div><div class="svc-text"><div class="svc-name">HPCSA Doctor Verification (iRegister)</div><div class="svc-sub">Check a doctor's registration — search by surname or HPCSA number</div></div><div class="svc-arrow">›</div></a>
+      <div id="verify-country" style="display:none;"></div>
     </div>
   </div>
 
@@ -542,11 +609,21 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
       <button ontouchstart="" class="service-btn" onclick="searchNearby('podiatrist','Podiatrist','🦶')"><div class="svc-icon">🦶</div><div class="svc-text"><div class="svc-name">Podiatrist</div><div class="svc-sub">Foot care, nails &amp; diabetic feet</div></div><div class="svc-arrow">›</div></button>
       <button ontouchstart="" class="service-btn" onclick="searchNearby('massage','Massage Therapist','💆')"><div class="svc-icon">💆</div><div class="svc-text"><div class="svc-name">Massage Therapist</div><div class="svc-sub">Therapeutic &amp; sports massage</div></div><div class="svc-arrow">›</div></button>
       <button ontouchstart="" class="service-btn" onclick="searchNearby('wellness','Wellness / Aesthetic Clinic','✨')"><div class="svc-icon">✨</div><div class="svc-text"><div class="svc-name">Wellness &amp; Aesthetic Clinic</div><div class="svc-sub">Skin treatments, botox, IV therapy &amp; spa</div></div><div class="svc-arrow">›</div></button>
-      <a href="https://ahpcsa.co.za/practitioners/" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🔍</div><div class="svc-text"><div class="svc-name">AHPCSA Verification</div><div class="svc-sub">Check a chiropractor / homeopath registration</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://ahpcsa.co.za/practitioners/" data-saonly="1" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🔍</div><div class="svc-text"><div class="svc-name">AHPCSA Verification</div><div class="svc-sub">Check a chiropractor / homeopath registration</div></div><div class="svc-arrow">›</div></a>
     </div>
   </div>
 
   <div class="card">
+    <div class="card-title">💪 Fitness &amp; Gyms</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('gym','Gym / Fitness Centre','💪')"><div class="svc-icon">💪</div><div class="svc-text"><div class="svc-name">Gym / Fitness Centre</div><div class="svc-sub">Gyms, fitness centres &amp; health clubs near you</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('crossfit','CrossFit Gym','🏋️')"><div class="svc-icon">🏋️</div><div class="svc-text"><div class="svc-name">CrossFit Gym</div><div class="svc-sub">CrossFit boxes &amp; functional training</div></div><div class="svc-arrow">›</div></button>
+      <button ontouchstart="" class="service-btn" onclick="searchNearby('bio','Biokineticist','🏃‍♂️')"><div class="svc-icon">🏃‍♂️</div><div class="svc-text"><div class="svc-name">Biokineticist</div><div class="svc-sub">Exercise rehabilitation &amp; conditioning</div></div><div class="svc-arrow">›</div></button>
+    </div>
+    <p style="font-size:11px;color:#94a3b8;margin-top:10px;line-height:1.5;">💡 Regular exercise helps control blood pressure, diabetes and weight — ask your doctor before starting a new programme.</p>
+  </div>
+
+  <div class="card" data-saonly="1">
     <div class="card-title">🧪 Get My Test Results</div>
     <div style="display:flex;flex-direction:column;gap:10px;">
       <a href="https://www.pathcare.co.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🔬</div><div class="svc-text"><div class="svc-name">PathCare</div><div class="svc-sub">Blood tests &amp; lab results online</div></div><div class="svc-arrow">›</div></a>
@@ -560,9 +637,10 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <div class="card-title">🩸 Donate Blood / Blood Services</div>
     <p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6;">Find your nearest blood donation centre, check donation dates, or see if there's a shortage right now. Pick the service for your area.</p>
     <div style="display:flex;flex-direction:column;gap:10px;">
-      <a href="https://www.wcbs.org.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🩸</div><div class="svc-text"><div class="svc-name">Western Cape Blood Service</div><div class="svc-sub">For Western Cape — donation sites &amp; stock levels</div></div><div class="svc-arrow">›</div></a>
-      <a href="https://sanbs.org.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🩸</div><div class="svc-text"><div class="svc-name">SANBS</div><div class="svc-sub">All other SA provinces — donation sites &amp; stock levels</div></div><div class="svc-arrow">›</div></a>
-      <a href="https://www.bts.com.na" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🩸</div><div class="svc-text"><div class="svc-name">NamBTS (Namibia)</div><div class="svc-sub">Windhoek, Swakopmund, Walvis Bay, Oshakati &amp; Ondangwa centres</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://www.wcbs.org.za" data-saonly="1" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🩸</div><div class="svc-text"><div class="svc-name">Western Cape Blood Service</div><div class="svc-sub">For Western Cape — donation sites &amp; stock levels</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://sanbs.org.za" data-saonly="1" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🩸</div><div class="svc-text"><div class="svc-name">SANBS</div><div class="svc-sub">All other SA provinces — donation sites &amp; stock levels</div></div><div class="svc-arrow">›</div></a>
+      <a href="https://www.bts.com.na" data-saonly="1" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🩸</div><div class="svc-text"><div class="svc-name">NamBTS (Namibia)</div><div class="svc-sub">Windhoek, Swakopmund, Walvis Bay, Oshakati &amp; Ondangwa centres</div></div><div class="svc-arrow">›</div></a>
+      <div id="blood-country" style="display:none;flex-direction:column;gap:10px;"></div>
     </div>
     <p style="font-size:11px;color:#94a3b8;margin-top:10px;line-height:1.5;">Donation dates and urgent shortage alerts are managed by each blood service directly — tap through to their site for the latest.</p>
   </div>
@@ -580,7 +658,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <div style="margin-top:10px;font-size:10px;color:#94a3b8;">© 2026 My Health One Stop · Advertising enquiries: advertise@myhealthonestop.com</div>
   </div>
 
-  <div class="card" style="border-left:4px solid #dc2626;">
+  <div class="card" style="border-left:4px solid #dc2626;" data-saonly="1">
     <div class="card-title" style="color:#dc2626;">🚨 Quick Emergency Call</div>
     <div class="emergency-item"><div class="em-icon">🚑</div><div class="em-info"><div class="em-name">Ambulance / Emergency</div><div class="em-num">10177</div></div><a href="tel:10177" class="em-call-btn" onclick="handleEmergencyCall('10177',event)">📞 Call</a></div>
     <div class="emergency-item"><div class="em-icon">☎️</div><div class="em-info"><div class="em-name">ER24</div><div class="em-num">084 124</div></div><a href="tel:084124" class="em-call-btn" onclick="handleEmergencyCall('084124',event)">📞 Call</a></div>
@@ -609,6 +687,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   </div>
   <div id="chat-messages"></div>
   <input type="file" id="cam-input" accept="image/*" capture="environment" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px;" onchange="scanCard(this)">
+  <input type="file" id="med-photo-input" accept="image/*" capture="environment" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px;" onchange="scanMedBox(this)">
   <div class="chat-input-row">
     <label for="cam-input" class="chat-cam-btn" title="Scan ID or medical aid card">📷</label>
     <input type="text" id="chat-input" placeholder="Ask me anything…" onkeydown="chatKeyDown(event)">
@@ -630,6 +709,22 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <div class="card-title">👨‍👩‍👧 Family Emergency Info</div>
     <div id="family-emergency-content"></div>
   </div>
+  <div class="card" style="border-left:4px solid #059669;">
+    <div class="card-title">🚑 My Local Ambulance Service</div>
+    <div id="local-ambulance-display"></div>
+    <div id="local-ambulance-form">
+      <p style="font-size:12px;color:#64748b;margin-bottom:10px;line-height:1.6;">Many towns have their own private ambulance service that responds faster than national lines (e.g. Vredendal Paramedical Services). Save yours here so it's one tap away — it works even without internet.</p>
+      <div class="form-group"><label>Service name</label><input type="text" id="amb-name" placeholder="e.g. Vredendal Paramedical Services"></div>
+      <div class="form-group"><label>Phone number</label><input type="tel" id="amb-num" placeholder="e.g. 027 213 2955"></div>
+      <button class="btn btn-primary" onclick="saveLocalAmbulance()" style="width:100%;">💾 Save My Local Ambulance</button>
+    </div>
+    <div id="amb-alert"></div>
+    <div style="margin-top:12px;border-top:1px solid #e2e8f0;padding-top:12px;">
+      <div class="form-group"><label>Don't know your local service? Search your town:</label><input type="text" id="amb-town" placeholder="e.g. Vredendal"></div>
+      <button class="btn" style="width:100%;background:#eff6ff;color:#1d4ed8;border:1.5px solid #bfdbfe;" onclick="searchLocalAmbulance()">🔍 Find Ambulance Services Near Me</button>
+      <p style="font-size:11px;color:#94a3b8;margin-top:8px;">Opens a map search — needs internet. Phone the service to confirm their number, then save it above.</p>
+    </div>
+  </div>
   <div class="card" id="em-numbers-na" style="display:none;">
     <div class="card-title">📞 Namibia Emergency Numbers</div>
     <div class="emergency-item"><div class="em-icon">🚑</div><div class="em-info"><div class="em-name">National Emergency</div><div class="em-num">112</div></div><a href="tel:112" class="em-call-btn" onclick="handleEmergencyCall('112',event)">📞 Call</a></div>
@@ -640,6 +735,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <div class="emergency-item"><div class="em-icon">💙</div><div class="em-info"><div class="em-name">Lifeline / Childline Namibia</div><div class="em-num">116</div></div><a href="tel:116" class="em-call-btn" onclick="handleEmergencyCall('116',event)">📞 Call</a></div>
     <p style="font-size:11px;color:#94a3b8;margin-top:8px;">Numbers may differ by town — confirm your local ambulance service.</p>
   </div>
+  <div class="card" id="em-numbers-other" style="display:none;"></div>
   <div class="card" id="em-numbers-sa">
     <div class="card-title">📞 SA Emergency Numbers</div>
     <div class="emergency-item"><div class="em-icon">🚑</div><div class="em-info"><div class="em-name">Ambulance / Emergency</div><div class="em-num">10177</div></div><a href="tel:10177" class="em-call-btn" onclick="handleEmergencyCall('10177',event)">📞 Call</a></div>
@@ -656,8 +752,17 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
 
 <!-- SCREEN 6 — MORE -->
 <div class="screen" id="screen-more">
+  <!-- Customize -->
+  <div class="nav-card" onclick="showSubScreen('customize')" ontouchstart="" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);">
+    <div class="nav-card-icon">⚙️</div>
+    <div class="nav-card-text">
+      <div class="nav-card-title">Customize This App</div>
+      <div class="nav-card-sub">Hide the features you don't use to keep things simple</div>
+    </div>
+    <div class="nav-card-arrow">›</div>
+  </div>
   <!-- Navigation to sub-screens -->
-  <div class="nav-card" onclick="showSubScreen('preop')" ontouchstart="">
+  <div class="nav-card" data-feature="preop" onclick="showSubScreen('preop')" ontouchstart="">
     <div class="nav-card-icon">📋</div>
     <div class="nav-card-text">
       <div class="nav-card-title">Pre-Op Questionnaire</div>
@@ -665,7 +770,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     </div>
     <div class="nav-card-arrow">›</div>
   </div>
-  <div class="nav-card" onclick="showSubScreen('pets')" ontouchstart="">
+  <div class="nav-card" data-feature="pets" onclick="showSubScreen('pets')" ontouchstart="">
     <div class="nav-card-icon">🐾</div>
     <div class="nav-card-text">
       <div class="nav-card-title">My Pets</div>
@@ -673,7 +778,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     </div>
     <div class="nav-card-arrow">›</div>
   </div>
-  <div class="nav-card" onclick="showSubScreen('pregnancy')" ontouchstart="">
+  <div class="nav-card" data-feature="pregnancy" onclick="showSubScreen('pregnancy')" ontouchstart="">
     <div class="nav-card-icon">🤰</div>
     <div class="nav-card-text">
       <div class="nav-card-title">Bump to Baby Diary</div>
@@ -683,7 +788,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   </div>
 
   <!-- BMI Calculator -->
-  <div class="card">
+  <div class="card" data-feature="bmi">
     <div class="card-title">⚖️ BMI Calculator</div>
     <div class="form-group"><label>Height (cm)</label><input type="number" id="bmi-height" placeholder="e.g. 170" inputmode="decimal" min="50" max="250"></div>
     <div class="form-group"><label>Weight (kg)</label><input type="number" id="bmi-weight" placeholder="e.g. 75" inputmode="decimal" min="10" max="300"></div>
@@ -692,7 +797,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   </div>
 
   <!-- Blood Pressure Log -->
-  <div class="card">
+  <div class="card" data-feature="bp">
     <div class="card-title">❤️ Blood Pressure Log</div>
     <div class="form-group"><label>Systolic (top number)</label><input type="number" id="bp-systolic" placeholder="e.g. 120" inputmode="numeric" min="60" max="250"></div>
     <div class="form-group"><label>Diastolic (bottom number)</label><input type="number" id="bp-diastolic" placeholder="e.g. 80" inputmode="numeric" min="30" max="150"></div>
@@ -703,7 +808,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   </div>
 
   <!-- Blood Sugar Log -->
-  <div class="card">
+  <div class="card" data-feature="sugar">
     <div class="card-title">🍬 Blood Sugar Log</div>
     <div class="form-group"><label>Blood Sugar (mmol/L)</label><input type="number" step="0.1" id="sugar-value" placeholder="e.g. 5.5" inputmode="decimal" min="1" max="40"></div>
     <div class="form-group"><label>Reading Type</label><select id="sugar-type"><option value="Fasting">Fasting</option><option value="Random">Random</option></select></div>
@@ -715,7 +820,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   </div>
 
   <!-- Vaccination Record -->
-  <div class="card">
+  <div class="card" data-feature="vacc">
     <div class="card-title">💉 Vaccination Record</div>
     <div class="form-group"><label>Vaccine Name</label><input type="text" id="vacc-name" placeholder="e.g. COVID-19, Flu, Tetanus"></div>
     <div class="form-group"><label>Date Given</label><input type="date" id="vacc-date-given"></div>
@@ -726,7 +831,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   </div>
 
   <!-- Health Info -->
-  <div class="card">
+  <div class="card" data-feature="condguide">
     <div class="card-title">📖 Health Conditions Guide</div>
     <p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6;">Plain-language info. Visit your nearest clinic — applies to all patients including those without medical aid.</p>
     <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><span>❤️ Hypertension (High Blood Pressure)</span><span>▼</span></div><div class="accordion-body">High blood pressure means your heart works too hard. You usually have NO symptoms — called the "silent killer."<br><br><strong>⚠️ Emergency:</strong> Severe headache, blurred vision, chest pain → go immediately.<br><br>Get BP checked free at any pharmacy. Never stop medication without your doctor.</div></div>
@@ -737,7 +842,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   </div>
 
   <!-- Mental Health Check-in -->
-  <div class="card">
+  <div class="card" data-feature="mental">
     <div class="card-title">🧠 Mental Health Check-in</div>
     <p style="font-size:12px;color:#64748b;margin-bottom:14px;line-height:1.6;">Rate each 1 (poor) to 5 (great) — just for you.</p>
     <div class="mh-question"><span class="mh-q-text">😊 How is your mood today?</span><select id="mh-1" style="width:70px;border:1.5px solid #e2e8f0;border-radius:8px;padding:6px;font-family:'Poppins',sans-serif;font-size:13px;"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>
@@ -747,11 +852,11 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <div class="mh-question"><span class="mh-q-text">🌟 Do you feel hopeful about the future?</span><select id="mh-5" style="width:70px;border:1.5px solid #e2e8f0;border-radius:8px;padding:6px;font-family:'Poppins',sans-serif;font-size:13px;"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>
     <button class="btn btn-primary" style="margin-top:14px;" onclick="mentalHealthCheck()">✅ Check My Score</button>
     <div id="mh-result"></div>
-    <div style="margin-top:14px;padding:12px 14px;background:#fef3c7;border:1.5px solid #fbbf24;border-radius:10px;font-size:13px;color:#92400e;line-height:1.6;">💛 <strong>Need to talk?</strong> SADAG: <a href="tel:0800567567" style="color:#92400e;font-weight:700;">0800 567 567</a> — free, 24 hours.</div>
+    <div data-saonly="1" style="margin-top:14px;padding:12px 14px;background:#fef3c7;border:1.5px solid #fbbf24;border-radius:10px;font-size:13px;color:#92400e;line-height:1.6;">💛 <strong>Need to talk?</strong> SADAG: <a href="tel:0800567567" style="color:#92400e;font-weight:700;">0800 567 567</a> — free, 24 hours.</div>
   </div>
 
   <!-- Health Records -->
-  <div class="card">
+  <div class="card" data-feature="records">
     <div class="card-title">📁 My Health Records</div>
     <div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:10px;">🧪 Lab Results</div>
     <button class="btn btn-outline" style="margin-bottom:12px;" onclick="openModal('modal-lab')">+ Add Lab Result</button>
@@ -763,7 +868,7 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   </div>
 
   <!-- Funeral & Memorial Services -->
-  <div class="card">
+  <div class="card" data-feature="funeral">
     <div class="card-title">🕊️ Funeral &amp; Memorial Services</div>
     <p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6;">Information and contacts to help a family during a difficult time — cover options, arranging a service, and finding help nearby.</p>
     <div style="display:flex;flex-direction:column;gap:10px;">
@@ -782,6 +887,14 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <input type="file" id="restore-input" accept=".json,application/json" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px;" onchange="importBackup(this)">
     <button class="btn btn-outline" onclick="document.getElementById('restore-input').click()">⬆️ Restore From Backup</button>
     <div id="backup-alert" style="margin-top:10px;"></div>
+    <div style="text-align:center;margin-top:14px;font-size:11px;color:#94a3b8;" id="app-version-label">Version …</div>
+  </div>
+
+  <!-- Delete / wipe all data -->
+  <div class="card" style="border-left:4px solid #dc2626;">
+    <div class="card-title" style="color:#dc2626;">🗑️ Delete All My Data</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6;">This permanently erases <strong>everything</strong> stored on this phone — your profile, family, pets, records, photos and diary. This cannot be undone. Make a backup first if you might want your data back.</p>
+    <button class="btn" style="background:#dc2626;color:#fff;" onclick="wipeAllData()">🗑️ Wipe All Data From This Phone</button>
   </div>
 </div>
 
@@ -991,6 +1104,11 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <button class="btn btn-primary" style="margin-bottom:10px;" onclick="sendPreopEmail('anaest')">📧 Email to Anaesthetist</button>
     <button class="btn btn-outline" onclick="printPreop()">🖨️ Print / Save as PDF</button>
   </div>
+  <div class="card" style="border-left:4px solid #dc2626;">
+    <div class="card-title" style="color:#dc2626;">🗑️ Clear This Form</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6;">Empties every field in this questionnaire so you can start fresh. This cannot be undone.</p>
+    <button class="btn" style="background:#dc2626;color:#fff;" onclick="clearPreopForm()">🗑️ Clear Pre-Op Form</button>
+  </div>
   <div style="height:20px;"></div>
 </div>
 
@@ -1043,21 +1161,39 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   <div class="preop-section">
     <div class="preop-section-title">🖼️ First Ultrasound Photo</div>
     <div id="preg-first-us-preview" style="margin-bottom:10px;"></div>
-    <input type="file" id="preg-first-us-input" accept="image/*" capture="environment" style="font-size:13px;font-family:'Poppins',sans-serif;width:100%;" onchange="handlePregnancyFirstUltrasound(this)">
+    <input type="file" id="preg-first-us-input" accept="image/*" capture="environment" style="display:none;" onchange="handlePregnancyFirstUltrasound(this)">
+    <input type="file" id="preg-first-us-lib" accept="image/*" style="display:none;" onchange="handlePregnancyFirstUltrasound(this)">
+    <div style="display:flex;gap:8px;">
+      <label for="preg-first-us-input" class="btn" style="flex:1;text-align:center;background:#ecfdf5;color:#047857;border:1.5px solid #a7f3d0;cursor:pointer;">📷 Take a Photo</label>
+      <label for="preg-first-us-lib" class="btn" style="flex:1;text-align:center;background:#eff6ff;color:#1d4ed8;border:1.5px solid #bfdbfe;cursor:pointer;">🖼️ From Library</label>
+    </div>
+    <p style="font-size:11px;color:#94a3b8;margin-top:6px;line-height:1.5;">📉 Photos are saved in reduced quality to save space on your phone. Keep the original in your camera roll if you want the full-quality picture.</p>
   </div>
 
   <!-- Follow-up Ultrasounds -->
   <div class="preop-section">
     <div class="preop-section-title">🖼️ Follow-Up Ultrasound Photos</div>
     <div id="preg-followups-gallery" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;"></div>
-    <input type="file" id="preg-followup-input" accept="image/*" capture="environment" style="font-size:13px;font-family:'Poppins',sans-serif;width:100%;" onchange="handlePregnancyFollowUp(this)">
+    <input type="file" id="preg-followup-input" accept="image/*" capture="environment" style="display:none;" onchange="handlePregnancyFollowUp(this)">
+    <input type="file" id="preg-followup-lib" accept="image/*" style="display:none;" onchange="handlePregnancyFollowUp(this)">
+    <div style="display:flex;gap:8px;">
+      <label for="preg-followup-input" class="btn" style="flex:1;text-align:center;background:#ecfdf5;color:#047857;border:1.5px solid #a7f3d0;cursor:pointer;">📷 Take a Photo</label>
+      <label for="preg-followup-lib" class="btn" style="flex:1;text-align:center;background:#eff6ff;color:#1d4ed8;border:1.5px solid #bfdbfe;cursor:pointer;">🖼️ From Library</label>
+    </div>
+    <p style="font-size:11px;color:#94a3b8;margin-top:6px;line-height:1.5;">📉 Photos are saved in reduced quality to save space on your phone.</p>
   </div>
 
   <!-- After Birth -->
   <div class="preop-section">
     <div class="preop-section-title">👶 After Birth</div>
     <div id="preg-baby-photo-preview" style="margin-bottom:10px;"></div>
-    <input type="file" id="preg-baby-photo-input" accept="image/*" capture="environment" style="font-size:13px;font-family:'Poppins',sans-serif;width:100%;margin-bottom:12px;" onchange="handlePregnancyBabyPhoto(this)">
+    <input type="file" id="preg-baby-photo-input" accept="image/*" capture="environment" style="display:none;" onchange="handlePregnancyBabyPhoto(this)">
+    <input type="file" id="preg-baby-photo-lib" accept="image/*" style="display:none;" onchange="handlePregnancyBabyPhoto(this)">
+    <div style="display:flex;gap:8px;margin-bottom:4px;">
+      <label for="preg-baby-photo-input" class="btn" style="flex:1;text-align:center;background:#ecfdf5;color:#047857;border:1.5px solid #a7f3d0;cursor:pointer;">📷 Take a Photo</label>
+      <label for="preg-baby-photo-lib" class="btn" style="flex:1;text-align:center;background:#eff6ff;color:#1d4ed8;border:1.5px solid #bfdbfe;cursor:pointer;">🖼️ From Library</label>
+    </div>
+    <p style="font-size:11px;color:#94a3b8;margin-bottom:12px;line-height:1.5;">📉 Photos are saved in reduced quality to save space on your phone.</p>
     <div class="form-group"><label>Baby's Name</label><input type="text" id="preg-baby-final-name" placeholder="e.g. Noah Geldenhuys"></div>
     <div class="form-group"><label>Date of Birth</label><input type="date" id="preg-baby-dob"></div>
     <div class="form-group"><label>Birth Weight (optional)</label><input type="text" id="preg-baby-weight" placeholder="e.g. 3.2 kg"></div>
@@ -1071,6 +1207,28 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
     <button class="btn btn-whatsapp" style="margin-bottom:10px;" onclick="sharePregnancyWhatsApp()">📱 Share via WhatsApp</button>
     <button class="btn btn-primary" style="margin-bottom:10px;" onclick="sharePregnancyEmail()">📧 Share via Email</button>
     <button class="btn btn-outline" onclick="printPregnancy()">🖨️ Print / Save as PDF</button>
+  </div>
+  <div class="card" style="border-left:4px solid #dc2626;">
+    <div class="card-title" style="color:#dc2626;">🗑️ Clear This Diary</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6;">Permanently deletes this whole Bump to Baby diary — all entries, visits and photos. This cannot be undone, so print or share it first if you want to keep it.</p>
+    <button class="btn" style="background:#dc2626;color:#fff;" onclick="clearPregnancyDiary()">🗑️ Delete Entire Diary</button>
+  </div>
+  <div style="height:20px;"></div>
+</div>
+
+<!-- SCREEN — CUSTOMIZE / HIDE FEATURES -->
+<div class="screen" id="screen-customize">
+  <div class="back-bar">
+    <button class="back-btn" onclick="backToMore()">← Back</button>
+    <span class="sub-title">⚙️ Customize This App</span>
+  </div>
+  <div class="card" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:none;">
+    <p style="font-size:13px;color:#1e3a8a;line-height:1.7;">Turn off any features you don't use — they'll disappear from your <strong>More</strong> tab to keep things simple. Nothing is deleted, and you can switch them back on here any time.</p>
+  </div>
+  <div class="card">
+    <div class="card-title">Show / Hide Features</div>
+    <div id="customize-list"></div>
+    <button class="btn btn-outline" style="margin-top:14px;" onclick="resetFeatures()">↩️ Show Everything Again</button>
   </div>
   <div style="height:20px;"></div>
 </div>
@@ -1226,6 +1384,16 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
           <li>Tap <strong>Add</strong> — done!</li>
         </ol>
       </div>
+      <div id="install-samsung" style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:14px 16px;margin-bottom:10px;">
+        <div style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:8px;">📱 Samsung phones (Samsung Internet)</div>
+        <ol style="font-size:13px;color:#334155;line-height:2;margin:0;padding-left:20px;">
+          <li>Open <strong>www.myhealthonestop.com</strong> in the <strong>Samsung Internet</strong> browser (the purple-blue globe icon)</li>
+          <li>Tap the <strong>Menu</strong> button <span style="display:inline-block;border:1.5px solid #94a3b8;border-radius:5px;padding:0 6px;font-size:12px;">≡</span> at the bottom right (on some versions it's <span style="display:inline-block;border:1.5px solid #94a3b8;border-radius:5px;padding:0 6px;font-size:12px;">⋮</span> at the top)</li>
+          <li>Tap <strong>"Add page to"</strong></li>
+          <li>Choose <strong>"Home screen"</strong>, then tap <strong>Add</strong> — done!</li>
+        </ol>
+        <p style="font-size:12px;color:#94a3b8;line-height:1.6;margin:8px 0 0;">💡 Shortcut: if you see a small <strong>＋</strong> or <strong>house icon</strong> in the address bar, tap that instead — then choose Home screen.</p>
+      </div>
     </div>
     <p style="font-size:12px;color:#94a3b8;line-height:1.6;margin-bottom:6px;">💡 Once added, tap the icon on your home screen to open the app instantly — even in an emergency.</p>
     <button class="modal-close-btn" onclick="closeModal('modal-install')">Close</button>
@@ -1248,6 +1416,9 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
       <li><strong>Bump to Baby Diary</strong> — a fun, private pregnancy record you can keep as a baby album</li>
       <li><strong>Health tracking</strong> — BMI, blood pressure, blood sugar, vaccinations, lab &amp; radiology results</li>
       <li><strong>Medical aid &amp; coverage</strong> — PMB checker, condition lookup, medication list</li>
+      <li><strong>Hospital Authorisation Helper</strong> — your scheme's pre-auth number &amp; what to have ready before an operation or specialist visit</li>
+      <li><strong>Medicine box photo</strong> — photograph the box and the app reads the name &amp; dose for you</li>
+      <li><strong>Works offline</strong> — once opened, the app works even without data or airtime</li>
       <li><strong>Funeral &amp; Memorial Services</strong> — information and contacts, kept in More</li>
       <li><strong>Mental Health Check-in</strong> — a quick private self check with support numbers</li>
       <li><strong>Backup &amp; Restore</strong> — save all your data to a file so nothing is lost between updates</li>
@@ -1325,6 +1496,18 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
 <script>
 // ─── Safe Storage ──────────────────────────────────────────────────
 const Store=(()=>{let _m={},_ok=false;try{localStorage.setItem('_t','1');localStorage.removeItem('_t');_ok=true;}catch(e){}return{get(k){if(_ok){try{return localStorage.getItem(k);}catch(e){}}return _m[k]??null;},set(k,v){if(_ok){try{localStorage.setItem(k,v);return true;}catch(e){}} _m[k]=v;return false;},remove(k){if(_ok){try{localStorage.removeItem(k);}catch(e){}}delete _m[k];},keys(){if(_ok){try{return Object.keys(localStorage);}catch(e){}}return Object.keys(_m);},isLocal(){return !_ok;}};})();
+// ─── App version / auto-update ─────────────────────────────────────
+// Bump this every time you release a new version. The number shows in the
+// About screen so you (and users) can confirm the newest version is live.
+const APP_VERSION='2026.07.11 (v14)';
+function checkAppVersion(){
+  const seen=Store.get('hos_app_version');
+  if(seen&&seen!==APP_VERSION){
+    // User was on an older version and just received a new one.
+    try{addChatBubble('🎉 <strong>Your app has updated to the latest version</strong> ('+APP_VERSION+'). Your saved information is safe.','ai');}catch(e){}
+  }
+  Store.set('hos_app_version',APP_VERSION);
+}
 // Safe JSON parse — a corrupted stored value falls back instead of blanking the screen
 function safeParse(s,fallback){if(s==null)return fallback;try{const v=JSON.parse(s);return v==null?fallback:v;}catch(e){return fallback;}}
 // Shrink an uploaded photo before saving (phone photos are far bigger than storage allows)
@@ -1343,7 +1526,7 @@ window.switchTab=function(name,btn){
     gaEvent('tab_view',{tab_name:name});
     window.scrollTo(0,0);
     if(name==='card'){try{renderHealthCard();}catch(e){}}
-    if(name==='emergency'){try{renderEmergency();}catch(e){}}
+    if(name==='emergency'){try{renderEmergency();}catch(e){}try{renderLocalAmbulance();}catch(e){}}
     if(name==='care'){try{renderCoverageGuide();}catch(e){}}
     if(name==='more'){try{renderBP();}catch(e){}try{renderSugar();}catch(e){}try{renderVaccines();}catch(e){}try{renderLabResults();}catch(e){}try{renderRadiology();}catch(e){}}
     try{renderAdSlot(name);}catch(e){}
@@ -1361,6 +1544,7 @@ function showSubScreen(name){
   if(name==='preop')autoFillPreop();
   if(name==='pets')renderPets();
   if(name==='pregnancy')renderPregnancy();
+  if(name==='customize')renderCustomize();
 }
 function backToMore(){
   switchTab('more',document.querySelector('[data-tab="more"]'));
@@ -1371,43 +1555,84 @@ function backToMore(){
 // fill in title/sub/link/sponsor, and list which countries ('ZA','NA','US', or 'ALL')
 // and which pages ('profile','card','care','chat','emergency','more', or 'all') it should show on.
 // Only ONE ad shows at a time (the first active match) so the app never feels cluttered.
+// ─── Advertising ────────────────────────────────────────────────────
+// Ads live in a small separate file on the website: ads/ads.json
+// Editing that file changes the adverts WITHOUT re-uploading this app.
+// Each ad: {id, active, premium, countries:['ZA','NA','ALL'], pages:['care','all',...],
+//           sponsor, title, sub, link, img (optional image URL)}
+// premium:true ads always show FIRST when a screen opens (the "front" slot).
+// The list below is only the built-in fallback used when ads.json can't be reached.
 const AD_INVENTORY=[
   // TEMPLATE — duplicate this block for each real advertiser, then set active:true
-  {id:'template',active:false,countries:['ZA'],pages:['care'],sponsor:'Example Pharmacy',
+  {id:'template',active:false,premium:false,countries:['ZA'],pages:['care'],sponsor:'Example Pharmacy',
    title:'📢 Example Pharmacy — Free Delivery',title2:'',sub:'Short one-line description of the offer.',
    link:'https://example.com'},
   // TEST AD — Dr JA Geldenhuys & Dr E Burner, added 27 Jun 2026 for testing the ad slot
-  {id:'geldenhuys-burner',active:true,countries:['ZA'],pages:['care'],sponsor:'Dr JA Geldenhuys & Dr E Burner',
+  {id:'geldenhuys-burner',active:true,premium:false,countries:['ZA'],pages:['care'],sponsor:'Dr JA Geldenhuys & Dr E Burner',
    title:'📢 Dr JA Geldenhuys & Dr E Burner — Medical Drs & Occupational Health',title2:'',
    sub:'18 Matzikama Street, Vredendal, 8160 — GP consultations & Occupational Health (incl. ionising radiation). Tap to call.',
    link:'tel:+27272131053'}
 ];
+const ADS_URL='ads/ads.json';
+let ADS_LIVE=AD_INVENTORY;
+function loadRemoteAds(){
+  // Offline-first: start from the last successfully downloaded list, then try to update it.
+  const cached=safeParse(Store.get('hos_ads_cache'),null);
+  if(Array.isArray(cached)&&cached.length)ADS_LIVE=cached;
+  try{
+    fetch(ADS_URL,{cache:'no-store'}).then(r=>r&&r.ok?r.json():null).then(list=>{
+      if(Array.isArray(list)&&list.length){ADS_LIVE=list;Store.set('hos_ads_cache',JSON.stringify(list));refreshCurrentAd();}
+    }).catch(()=>{});
+  }catch(e){}
+}
 function adCountryCode(){
   const c=(typeof getCountry==='function')?getCountry():'South Africa';
   return c==='Namibia'?'NA':'ZA';
 }
-function pickAd(page){
+function pickAds(page){
   const cc=adCountryCode();
-  return AD_INVENTORY.find(a=>a.active&&(a.pages.includes(page)||a.pages.includes('all'))&&(a.countries.includes(cc)||a.countries.includes('ALL')))||null;
+  const match=ADS_LIVE.filter(a=>a&&a.active&&Array.isArray(a.pages)&&Array.isArray(a.countries)&&(a.pages.includes(page)||a.pages.includes('all'))&&(a.countries.includes(cc)||a.countries.includes('ALL')));
+  return match.filter(a=>a.premium).concat(match.filter(a=>!a.premium)); // premium always in front
+}
+let _adTimer=null,_adIdx=0,_adPage='';
+function showAd(el,ad){
+  if(!ad)return;
+  el.style.display='flex';
+  el.style.transition='opacity .3s';
+  const body=(ad.img?'<img src="'+ad.img+'" alt="" style="width:100%;max-height:70px;object-fit:contain;border-radius:8px;margin-bottom:4px;" loading="lazy">':'')
+    +'<div class="ad-title">'+ad.title+'</div><div class="ad-sub">'+(ad.sub||'')+'</div>';
+  el.innerHTML='<div class="ad-label">Sponsored</div>'
+    +'<a class="ad-body" href="'+ad.link+'" target="_blank" rel="noopener sponsored">'+body+'</a>'
+    +'<button class="ad-close" type="button" onclick="dismissAd()" aria-label="Close ad">×</button>';
 }
 function renderAdSlot(page){
   const el=document.getElementById('global-ad-slot');
   if(!el)return;
+  if(_adTimer){clearInterval(_adTimer);_adTimer=null;}
   if(el.dataset.dismissed==='1'){el.style.display='none';return;}
-  const ad=pickAd(page);
-  if(!ad){el.style.display='none';el.innerHTML='';return;}
-  el.style.display='flex';
-  el.innerHTML='<div class="ad-label">Sponsored</div>'
-    +'<a class="ad-body" href="'+ad.link+'" target="_blank" rel="noopener sponsored">'
-    +'<div class="ad-title">'+ad.title+'</div><div class="ad-sub">'+ad.sub+'</div></a>'
-    +'<button class="ad-close" type="button" onclick="dismissAd()" aria-label="Close ad">×</button>';
+  if(page!==_adPage){_adIdx=0;_adPage=page;} // new screen → restart at the premium (front) ad
+  const list=pickAds(page);
+  if(!list.length){el.style.display='none';el.innerHTML='';return;}
+  showAd(el,list[_adIdx%list.length]);
+  if(list.length>1){
+    _adTimer=setInterval(()=>{
+      if(el.dataset.dismissed==='1'){clearInterval(_adTimer);_adTimer=null;return;}
+      const l=pickAds(_adPage);if(!l.length)return;
+      _adIdx=(_adIdx+1)%l.length;
+      el.style.opacity='0';
+      setTimeout(()=>{showAd(el,l[_adIdx%l.length]);el.style.opacity='1';},250);
+    },8000); // rotate every 8 seconds — smooth fade, no flashing
+  }
 }
+function refreshCurrentAd(){try{const b=document.querySelector('.tab-btn.active');if(b)renderAdSlot(b.dataset.tab);}catch(e){}}
 function dismissAd(){
   const el=document.getElementById('global-ad-slot');
   if(!el)return;
   el.dataset.dismissed='1';
   el.style.display='none';
+  if(_adTimer){clearInterval(_adTimer);_adTimer=null;}
 }
+loadRemoteAds();
 
 // ─── Country (SA / Namibia) ────────────────────────────────────────
 // SA schemes per 2025 CMS register. Open = anyone can join; Restricted = via employer/industry.
@@ -1421,6 +1646,48 @@ const COUNTRY_SCHEMES={
   'South Africa':SA_OPEN_SCHEMES.concat(SA_RESTRICTED_SCHEMES,SA_HEALTH_INSURANCE,['None / Uninsured']),
   'Namibia':['Namibia Health Plan (NHP)','Namibia Medical Care (NMC)','Nammed','Renaissance Health (RMA)','Heritage Health','GemHealth','Napotel','PSEMAS (Government Employees)','None / Uninsured']
 };
+// ─── Southern African (SADC) countries ─────────────────────────────
+// Emergency numbers verified July 2026 — but numbers can change and vary by
+// town, so each screen carries a "confirm your local service" caveat.
+const SADC_COUNTRIES={
+  'Botswana':{
+    idLabel:'Omang / ID Number *', idLen:12, idPh:'Omang or ID number', phonePh:'+267 71 000 000',
+    schemes:['Botswana Public Officers Medical Aid Scheme (BPOMAS)','Pula Medical Aid Fund','Bomaid','Botsogo Health Plan','PULA / PSMAS','None / Uninsured'],
+    emergency:[['🚑','Ambulance','997'],['🚔','Police','999'],['🔥','Fire','998'],['🏥','Med Rescue International','991']],
+    blood:[['National Blood Transfusion Service (Botswana)','https://www.moh.gov.bw','Ministry of Health — donation centres nationwide']],
+    verify:['Botswana Health Professions Council (BHPC)','https://bhpc.org.bw/registrants/']
+  },
+  'Zimbabwe':{
+    idLabel:'National ID Number *', idLen:0, idPh:'e.g. 63-1234567 A 00', phonePh:'+263 71 000 0000',
+    schemes:['CIMAS','PSMAS (Premier Service Medical Aid)','First Mutual Health','Fidelity Life Medical Aid','Alliance Health','Generation Health','None / Uninsured'],
+    emergency:[['🚑','Ambulance (Harare)','994'],['🚔','Police','995'],['🔥','Fire','993'],['📱','Mobile emergency (Econet)','112']],
+    blood:[['National Blood Service Zimbabwe (NBSZ)','https://nbsz.co.zw','Donation centres & stock levels']],
+    verify:['Medical & Dental Practitioners Council of Zimbabwe (MDPCZ)','https://www.mdpcz.co.zw/public_register']
+  },
+  'Zambia':{
+    idLabel:'NRC Number *', idLen:0, idPh:'National Registration Card no.', phonePh:'+260 97 000 0000',
+    schemes:['Sesani Health (formerly NHIMA partners)','NHIMA (National Health Insurance)','Prudential Health','Madison Health','Hobbiton Health','None / Uninsured'],
+    emergency:[['🚑','Ambulance','991'],['🚔','Police','999'],['🔥','Fire','993'],['📱','Mobile emergency','112']],
+    blood:[['Zambia National Blood Transfusion Service (ZNBTS)','https://www.moh.gov.zm','Ministry of Health — donation centres']],
+    verify:['Health Professions Council of Zambia (HPCZ)','https://hpcz.org.zm']
+  },
+  'Lesotho':{
+    idLabel:'National ID Number *', idLen:0, idPh:'National ID number', phonePh:'+266 5 000 0000',
+    schemes:['Lesotho Government Medical Aid','Alliance Insurance Health','Metropolitan Lesotho Health','None / Uninsured'],
+    emergency:[['🚑','Ambulance','121'],['🚔','Police','123'],['🔥','Fire','122'],['📱','Alternative emergency','112']],
+    blood:[['Lesotho Blood Transfusion Service','https://www.gov.ls','Ministry of Health — Queen ’Mamohato Memorial Hospital']],
+    verify:['Lesotho Medical, Dental & Pharmacy Council (LMDPC)','https://lesodec.com/lmdpc/']
+  },
+  'Eswatini':{
+    idLabel:'National ID (PIN) *', idLen:0, idPh:'National ID / PIN', phonePh:'+268 76 00 0000',
+    schemes:['Swazimed','Medscheme Eswatini','Momentum Health Eswatini','Getsavvi Health','None / Uninsured'],
+    emergency:[['🚑','Ambulance','977'],['🚔','Police','999'],['🔥','Fire','933'],['📱','Alternative emergency','112']],
+    blood:[['Eswatini National Blood Transfusion Service','https://www.gov.sz','Ministry of Health — Manzini']],
+    verify:['Swaziland Medical & Dental Council','https://www.gov.sz']
+  }
+};
+// Merge SADC schemes into COUNTRY_SCHEMES so populate logic finds them.
+Object.keys(SADC_COUNTRIES).forEach(c=>{COUNTRY_SCHEMES[c]=SADC_COUNTRIES[c].schemes;});
 function getCountry(){const el=document.getElementById('p-country');return el&&el.value?el.value:'South Africa';}
 function populateSchemes(keep){
   const sel=document.getElementById('p-aid-scheme');if(!sel)return;
@@ -1428,7 +1695,7 @@ function populateSchemes(keep){
   const list=COUNTRY_SCHEMES[country]||COUNTRY_SCHEMES['South Africa'];
   const current=keep||sel.value;
   const opt=s=>'<option>'+s+'</option>';
-  if(country==='Namibia'){
+  if(country==='Namibia'||SADC_COUNTRIES[country]){
     sel.innerHTML='<option value="">— Select Scheme —</option>'+list.map(opt).join('');
   }else{
     sel.innerHTML='<option value="">— Select Scheme —</option>'
@@ -1490,20 +1757,60 @@ function onCountryChange(){
   populateSchemes();
   populatePlans();
   const country=document.getElementById('p-country').value;
+  const sadc=SADC_COUNTRIES[country];
   const lbl=document.getElementById('lbl-said');
-  if(lbl)lbl.textContent=country==='Namibia'?'Namibian ID Number *':'SA ID Number *';
   const said=document.getElementById('p-said');
-  if(said){said.maxLength=country==='Namibia'?11:13;said.placeholder=country==='Namibia'?'11-digit number':'13-digit number';}
   const phone=document.getElementById('p-phone');
-  if(phone&&!phone.value)phone.placeholder=country==='Namibia'?'+264 81 000 0000':'+27 82 000 0000';
+  if(sadc){
+    if(lbl)lbl.textContent=sadc.idLabel;
+    if(said){said.maxLength=sadc.idLen>0?sadc.idLen:40;said.placeholder=sadc.idPh;said.removeAttribute('inputmode');}
+    if(phone&&!phone.value)phone.placeholder=sadc.phonePh;
+  }else{
+    if(lbl)lbl.textContent=country==='Namibia'?'Namibian ID Number *':'SA ID Number *';
+    if(said){said.maxLength=country==='Namibia'?11:13;said.placeholder=country==='Namibia'?'11-digit number':'13-digit number';said.setAttribute('inputmode','numeric');}
+    if(phone&&!phone.value)phone.placeholder=country==='Namibia'?'+264 81 000 0000':'+27 82 000 0000';
+  }
   toggleEmergencyCountry(country);
+  renderCountryServices(country);
+  applySAOnlyVisibility(country);
   if(typeof renderPmbChecker==='function')renderPmbChecker();
   try{const activeBtn=document.querySelector('.tab-btn.active');if(activeBtn)renderAdSlot(activeBtn.dataset.tab);}catch(e){}
 }
 function toggleEmergencyCountry(country){
-  const sa=document.getElementById('em-numbers-sa'),na=document.getElementById('em-numbers-na');
-  if(sa)sa.style.display=country==='Namibia'?'none':'block';
-  if(na)na.style.display=country==='Namibia'?'block':'none';
+  const sa=document.getElementById('em-numbers-sa'),na=document.getElementById('em-numbers-na'),other=document.getElementById('em-numbers-other');
+  const sadc=SADC_COUNTRIES[country];
+  if(sa)sa.style.display=(country==='South Africa')?'block':'none';
+  if(na)na.style.display=(country==='Namibia')?'block':'none';
+  if(other){
+    if(sadc){
+      const rows=sadc.emergency.map(e=>{const num=String(e[2]).replace(/\s/g,'');return '<div class="emergency-item"><div class="em-icon">'+e[0]+'</div><div class="em-info"><div class="em-name">'+e[1]+'</div><div class="em-num">'+e[2]+'</div></div><a href="tel:'+num+'" class="em-call-btn" onclick="handleEmergencyCall(\''+num+'\',event)">📞 Call</a></div>';}).join('');
+      other.innerHTML='<div class="card-title">📞 '+country+' Emergency Numbers</div>'+rows+'<p style="font-size:11px;color:#94a3b8;margin-top:8px;">Numbers can change and vary by town — always confirm your local ambulance service. In many areas 112 works from a mobile.</p>';
+      other.style.display='block';
+    }else{other.style.display='none';other.innerHTML='';}
+  }
+}
+// Hide South-Africa-only cards/links when a SADC country is selected
+// (SA labs, SA quick-emergency, PMB check, gap cover, SANBS/WCBS, HPCSA, SADAG line).
+function applySAOnlyVisibility(country){
+  const saOnly=(country==='South Africa'||country==='Namibia');
+  document.querySelectorAll('[data-saonly]').forEach(el=>{el.style.display=saOnly?'':'none';});
+}
+// Country-specific blood service + practitioner-verification links (Care screen)
+function renderCountryServices(country){
+  const sadc=SADC_COUNTRIES[country];
+  const bEl=document.getElementById('blood-country'),vEl=document.getElementById('verify-country');
+  if(bEl){
+    if(sadc&&sadc.blood){
+      bEl.innerHTML=sadc.blood.map(b=>'<a href="'+b[1]+'" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🩸</div><div class="svc-text"><div class="svc-name">'+b[0]+'</div><div class="svc-sub">'+b[2]+'</div></div><div class="svc-arrow">›</div></a>').join('');
+      bEl.style.display='flex';
+    }else{bEl.style.display='none';bEl.innerHTML='';}
+  }
+  if(vEl){
+    if(sadc&&sadc.verify){
+      vEl.innerHTML='<a href="'+sadc.verify[1]+'" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🔍</div><div class="svc-text"><div class="svc-name">'+sadc.verify[0]+'</div><div class="svc-sub">Check a doctor / health professional’s registration</div></div><div class="svc-arrow">›</div></a>';
+      vEl.style.display='block';
+    }else{vEl.style.display='none';vEl.innerHTML='';}
+  }
 }
 
 // ─── Profile Save / Load ───────────────────────────────────────────
@@ -1596,7 +1903,7 @@ function renderHealthCard(){
   }
   const photoB64=Store.get('hos_photo')||'';
   const photoOnCard=photoB64?'<div style="position:absolute;top:14px;right:14px;width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,0.7);overflow:hidden;flex-shrink:0;"><img src="'+photoB64+'" style="width:100%;height:100%;object-fit:cover;"></div>':'<div class="card-logo">My Health<br>One Stop</div>';
-  container.innerHTML='<div class="health-card">'+photoOnCard+'<div class="card-chip">💳</div><div class="card-name">'+escHtml(p.name||'—')+'</div><div class="card-id">'+(p.country==='Namibia'?'ID':'SA ID')+': '+escHtml(p.said||'—')+'</div><div class="card-row"><div class="card-field"><label>DATE OF BIRTH</label><div class="val">'+dobFmt+'</div></div><div class="card-field"><label>BLOOD TYPE</label><div class="val">'+escHtml(p.blood||'?')+'</div></div>'+(p.aidScheme?'<div class="card-field"><label>MEDICAL AID</label><div class="val">'+escHtml(p.aidScheme)+'</div></div>':'')+'</div></div>'+trackerHtml+coverageHtml+'<div class="card"><div class="card-title">🚨 Medical Alerts</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:0 0 8px;">Allergies</div><div>'+allergyHtml+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Chronic Conditions</div><div>'+condHtml+'</div>'+(p.meds?'<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Medications</div><p style="font-size:13px;color:#444;">'+escHtml(p.meds)+'</p>':'')+'</div><div class="card"><div class="card-title">📱 My QR Code</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Healthcare providers can scan this for your key medical info.</p><div class="qr-container"><div id="qrcode"></div><div class="qr-label">Scan to view patient info</div></div></div><div class="card"><div class="card-title">📤 Share My Details</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Send your medical summary to a family member, carer, or old age home via WhatsApp or email.</p><button class="btn btn-primary" onclick="shareMyDetails()">📤 Share My Details</button></div>';
+  container.innerHTML='<div class="health-card">'+photoOnCard+'<div class="card-chip">💳</div><div class="card-name">'+escHtml(p.name||'—')+'</div><div class="card-id">'+(p.country==='South Africa'?'SA ID':'ID')+': '+escHtml(p.said||'—')+'</div><div class="card-row"><div class="card-field"><label>DATE OF BIRTH</label><div class="val">'+dobFmt+'</div></div><div class="card-field"><label>BLOOD TYPE</label><div class="val">'+escHtml(p.blood||'?')+'</div></div>'+(p.aidScheme?'<div class="card-field"><label>MEDICAL AID</label><div class="val">'+escHtml(p.aidScheme)+'</div></div>':'')+'</div></div>'+trackerHtml+coverageHtml+'<div class="card"><div class="card-title">🚨 Medical Alerts</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:0 0 8px;">Allergies</div><div>'+allergyHtml+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Chronic Conditions</div><div>'+condHtml+'</div>'+(p.meds?'<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Medications</div><p style="font-size:13px;color:#444;">'+escHtml(p.meds)+'</p>':'')+'</div><div class="card"><div class="card-title">📱 My QR Code</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Healthcare providers can scan this for your key medical info.</p><div class="qr-container"><div id="qrcode"></div><div class="qr-label">Scan to view patient info</div></div></div><div class="card"><div class="card-title">📤 Share My Details</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Send your medical summary to a family member, carer, or old age home via WhatsApp or email.</p><button class="btn btn-primary" onclick="shareMyDetails()">📤 Share My Details</button></div>';
   const qrData=JSON.stringify({name:p.name,said:p.said,dob:p.dob,blood:p.blood,allergies:p.allergies,conditions:p.conditions,aid:p.aidScheme,aidNum:p.aidNum,ec:p.ecName+' '+p.ecNum});
   setTimeout(()=>{const el=document.getElementById('qrcode');if(el&&typeof QRCode!=='undefined'){el.innerHTML='';try{new QRCode(el,{text:qrData,width:200,height:200,colorDark:'#1e3a8a',colorLight:'#ffffff'});}catch(e){el.innerHTML='<div style="font-size:12px;color:#991b1b;padding:10px;text-align:center;">⚠️ Could not generate the QR code. Tap Save Profile again — if it keeps failing, try removing some text from Allergies/Conditions, as a very long list can be too much data for the QR code.</div>';}}},200);
 }
@@ -1640,6 +1947,37 @@ function renderEmergency(){
 function handleEmergencyCall(number,event){
   const isDesktop=!/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
   if(isDesktop){event.preventDefault();['call-fallback','em-call-fallback'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='block';});['call-fallback-num','em-fallback-num'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=number;});setTimeout(()=>{['call-fallback','em-call-fallback'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});},7000);}
+}
+
+// ─── My Local Ambulance Service ────────────────────────────────────
+function renderLocalAmbulance(){
+  const disp=document.getElementById('local-ambulance-display'),form=document.getElementById('local-ambulance-form');
+  if(!disp||!form)return;
+  const amb=safeParse(Store.get('hos_local_ambulance'),null);
+  if(amb&&amb.name&&amb.num){
+    const tel=amb.num.replace(/[^0-9+]/g,'');
+    disp.innerHTML='<div class="emergency-item"><div class="em-icon">🚑</div><div class="em-info"><div class="em-name">'+amb.name+'</div><div class="em-num">'+amb.num+'</div></div><a href="tel:'+tel+'" class="em-call-btn" onclick="handleEmergencyCall(\''+tel+'\',event)">📞 Call</a></div><button class="btn" style="width:100%;margin-top:8px;background:#f8fafc;color:#64748b;border:1.5px solid #e2e8f0;font-size:13px;" onclick="editLocalAmbulance()">✏️ Change</button>';
+    form.style.display='none';
+  }else{disp.innerHTML='';form.style.display='block';}
+}
+function saveLocalAmbulance(){
+  const name=document.getElementById('amb-name').value.trim();
+  const num=document.getElementById('amb-num').value.trim();
+  if(!name||!num){showAlert('amb-alert','⚠️ Please fill in both the service name and phone number.','error');return;}
+  Store.set('hos_local_ambulance',JSON.stringify({name,num}));
+  showAlert('amb-alert','✅ Saved! Your local ambulance is now one tap away.');
+  renderLocalAmbulance();
+}
+function editLocalAmbulance(){
+  const amb=safeParse(Store.get('hos_local_ambulance'),null);
+  if(amb){const n=document.getElementById('amb-name'),m=document.getElementById('amb-num');if(n)n.value=amb.name||'';if(m)m.value=amb.num||'';}
+  const form=document.getElementById('local-ambulance-form');if(form)form.style.display='block';
+  const disp=document.getElementById('local-ambulance-display');if(disp)disp.innerHTML='';
+}
+function searchLocalAmbulance(){
+  const town=(document.getElementById('amb-town')?.value||'').trim();
+  const q=town?('ambulance services near '+town):'ambulance services near me';
+  window.open('https://www.google.com/maps/search/'+encodeURIComponent(q),'_blank','noopener');
 }
 
 // ─── Location ──────────────────────────────────────────────────────
@@ -1702,8 +2040,8 @@ function toggleGapCover(el){const body=document.getElementById('gap-cover-body')
 function toggleCovGuide(el){const body=document.getElementById('cov-guide-body');const toggle=el.querySelector('span:last-child');if(!body)return;const open=body.style.display!=='none';body.style.display=open?'none':'block';if(toggle)toggle.textContent=open?'Show ▼':'Hide ▲';}
 
 // ─── Provider Search ───────────────────────────────────────────────
-const CARE_QUERIES={gp:['"amenity"="doctors"','"healthcare"="doctor"','"amenity"="clinic"','"healthcare"="clinic"','"amenity"="health_centre"','"healthcare"="centre"','"office"="medical"'],hospital:['"amenity"="hospital"','"healthcare"="hospital"','"amenity"="clinic"','"healthcare"="clinic"'],specialist:['"amenity"="doctors"','"healthcare"="doctor"','"healthcare"="specialist"','"office"="medical"'],pharmacy:['"amenity"="pharmacy"','"healthcare"="pharmacy"','"shop"="chemist"'],dentist:['"amenity"="dentist"','"healthcare"="dentist"'],physio:['"healthcare"="physiotherapist"','"healthcare:speciality"="physiotherapy"'],speech:['"healthcare"="speech_therapist"'],ot:['"healthcare"="occupational_therapist"'],optom:['"healthcare"="optometrist"','"shop"="optician"'],dietician:['"healthcare"="dietitian"','"healthcare"="nutritionist"'],psych:['"healthcare"="psychotherapist"','"healthcare"="psychologist"','"healthcare"="mental_health"'],occ:['"healthcare"="occupational_health"','"amenity"="doctors"','"healthcare"="doctor"'],vet:['"amenity"="veterinary"','"healthcare"="veterinary"','"shop"="pet;veterinary"'],govclinic:['"amenity"="clinic"','"healthcare"="clinic"','"amenity"="health_centre"','"healthcare"="centre"','"healthcare"="community_health_worker"'],chiro:['"healthcare"="chiropractor"','"office"="chiropractor"'],podiatrist:['"healthcare"="podiatrist"','"healthcare:speciality"="podiatry"','"shop"="chiropody"'],massage:['"shop"="massage"','"leisure"="spa"','"healthcare"="massage_therapist"'],wellness:['"shop"="beauty"','"leisure"="spa"','"shop"="cosmetics"']};
-const GMAPS_TERMS={gp:'GP doctor',hospital:'hospital clinic',specialist:'specialist doctor',pharmacy:'pharmacy',dentist:'dentist',physio:'physiotherapist',speech:'speech therapist',ot:'occupational therapist',optom:'optometrist',dietician:'dietician',psych:'psychologist',occ:'occupational health doctor',vet:'veterinarian vet clinic',govclinic:'government clinic OR community health centre',chiro:'chiropractor',podiatrist:'podiatrist',massage:'massage therapist',wellness:'wellness aesthetic clinic'};
+const CARE_QUERIES={gp:['"amenity"="doctors"','"healthcare"="doctor"','"amenity"="clinic"','"healthcare"="clinic"','"amenity"="health_centre"','"healthcare"="centre"','"office"="medical"'],hospital:['"amenity"="hospital"','"healthcare"="hospital"','"amenity"="clinic"','"healthcare"="clinic"'],specialist:['"amenity"="doctors"','"healthcare"="doctor"','"healthcare"="specialist"','"office"="medical"'],pharmacy:['"amenity"="pharmacy"','"healthcare"="pharmacy"','"shop"="chemist"'],dentist:['"amenity"="dentist"','"healthcare"="dentist"'],physio:['"healthcare"="physiotherapist"','"healthcare:speciality"="physiotherapy"'],speech:['"healthcare"="speech_therapist"'],ot:['"healthcare"="occupational_therapist"'],optom:['"healthcare"="optometrist"','"shop"="optician"'],dietician:['"healthcare"="dietitian"','"healthcare"="nutritionist"'],psych:['"healthcare"="psychotherapist"','"healthcare"="psychologist"','"healthcare"="mental_health"'],occ:['"healthcare"="occupational_health"','"amenity"="doctors"','"healthcare"="doctor"'],vet:['"amenity"="veterinary"','"healthcare"="veterinary"','"shop"="pet;veterinary"'],govclinic:['"amenity"="clinic"','"healthcare"="clinic"','"amenity"="health_centre"','"healthcare"="centre"','"healthcare"="community_health_worker"'],chiro:['"healthcare"="chiropractor"','"office"="chiropractor"'],podiatrist:['"healthcare"="podiatrist"','"healthcare:speciality"="podiatry"','"shop"="chiropody"'],massage:['"shop"="massage"','"leisure"="spa"','"healthcare"="massage_therapist"'],wellness:['"shop"="beauty"','"leisure"="spa"','"shop"="cosmetics"'],gym:['"leisure"="fitness_centre"','"leisure"="sports_centre"','"sport"="fitness"','"club"="sport"'],crossfit:['"sport"="crossfit"','"leisure"="fitness_centre"'],bio:['"healthcare"="biokineticist"','"healthcare"="physiotherapist"','"leisure"="fitness_centre"']};
+const GMAPS_TERMS={gp:'GP doctor',hospital:'hospital clinic',specialist:'specialist doctor',pharmacy:'pharmacy',dentist:'dentist',physio:'physiotherapist',speech:'speech therapist',ot:'occupational therapist',optom:'optometrist',dietician:'dietician',psych:'psychologist',occ:'occupational health doctor',vet:'veterinarian vet clinic',govclinic:'government clinic OR community health centre',chiro:'chiropractor',podiatrist:'podiatrist',massage:'massage therapist',wellness:'wellness aesthetic clinic',gym:'gym fitness centre',crossfit:'CrossFit gym',bio:'biokineticist'};
 // ─── Specialist Speciality Picker ──────────────────────────────────
 const SPECIALITIES=[
 ['❤️','Cardiologist','heart specialist cardiologist'],
@@ -1802,6 +2140,62 @@ function importBackup(input){
   };
   reader.readAsText(input.files[0]);
   input.value='';
+}
+// ─── Wipe everything (with double confirmation) ────────────────────
+function wipeAllData(){
+  if(!confirm('⚠️ Are you SURE you want to permanently delete ALL your data from this phone?\n\nThis erases your profile, family, pets, records, photos and diary. It cannot be undone.'))return;
+  if(!confirm('Last check — this really cannot be undone.\n\nTap OK only if you have a backup or truly want to erase everything.'))return;
+  const keys=Store.keys().filter(k=>k.indexOf('hos_')===0||k.indexOf('meds_taken_')===0);
+  keys.forEach(k=>Store.remove(k));
+  Store.set('hos_app_version',APP_VERSION);
+  alert('✅ All your data has been erased from this phone. The app will now reload.');
+  setTimeout(()=>location.reload(),600);
+}
+// ─── Customize: show / hide optional features ──────────────────────
+const FEATURES=[
+  {id:'preop',label:'📋 Pre-Op Questionnaire'},
+  {id:'pets',label:'🐾 My Pets'},
+  {id:'pregnancy',label:'🤰 Bump to Baby Diary'},
+  {id:'bmi',label:'⚖️ BMI Calculator'},
+  {id:'bp',label:'❤️ Blood Pressure Log'},
+  {id:'sugar',label:'🍬 Blood Sugar Log'},
+  {id:'vacc',label:'💉 Vaccination Record'},
+  {id:'condguide',label:'📖 Health Conditions Guide'},
+  {id:'mental',label:'🧠 Mental Health Check-in'},
+  {id:'records',label:'📁 My Health Records'},
+  {id:'funeral',label:'🕊️ Funeral & Memorial Services'}
+];
+function getHiddenFeatures(){return safeParse(Store.get('hos_hidden'),{});}
+function setHiddenFeatures(h){Store.set('hos_hidden',JSON.stringify(h));}
+function applyFeatureVisibility(){
+  const hidden=getHiddenFeatures();
+  FEATURES.forEach(f=>{
+    document.querySelectorAll('[data-feature="'+f.id+'"]').forEach(el=>{el.style.display=hidden[f.id]?'none':'';});
+  });
+}
+function toggleFeature(id){
+  const hidden=getHiddenFeatures();
+  hidden[id]=!hidden[id];
+  setHiddenFeatures(hidden);
+  applyFeatureVisibility();
+  renderCustomize();
+}
+function renderCustomize(){
+  const el=document.getElementById('customize-list');if(!el)return;
+  const hidden=getHiddenFeatures();
+  el.innerHTML=FEATURES.map(f=>{
+    const on=!hidden[f.id];
+    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:11px 2px;border-bottom:1px solid #f1f5f9;">'
+      +'<span style="font-size:14px;color:#1e293b;">'+f.label+'</span>'
+      +'<button onclick="toggleFeature(\''+f.id+'\')" aria-label="Toggle '+f.id+'" style="cursor:pointer;border:none;border-radius:999px;width:52px;height:30px;position:relative;transition:background .2s;background:'+(on?'#22c55e':'#cbd5e1')+';">'
+      +'<span style="position:absolute;top:3px;left:'+(on?'25px':'3px')+';width:24px;height:24px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,0.3);"></span></button>'
+      +'</div>';
+  }).join('');
+}
+function resetFeatures(){
+  setHiddenFeatures({});
+  applyFeatureVisibility();
+  renderCustomize();
 }
 </script>
 <script>
@@ -2109,6 +2503,77 @@ function confirmCardEntry(){
   showAlert('profile-alert','✅ Card details imported — check them, then tap Save Profile.');
 }
 
+// ─── Medication box photo: read name & dose from a photo ──────────
+function scanMedBox(input){
+  if(!input||!input.files||!input.files[0])return;
+  const file=input.files[0];
+  const reader=new FileReader();
+  reader.onload=async ev=>{
+    const body=document.getElementById('scan-body');
+    body.innerHTML='<img class="ocr-preview" src="'+ev.target.result+'">'
+      +'<div class="ocr-progress-bar" id="medscan-status"><span class="spinner-dark"></span>Reading the box…</div>'
+      +'<div class="ocr-field"><label>Medication Name</label><input type="text" id="medscan-name" placeholder="e.g. Atorvastatin"></div>'
+      +'<div class="ocr-field"><label>Dose / Strength</label><input type="text" id="medscan-dose" placeholder="e.g. 20 mg"></div>'
+      +'<button class="btn btn-primary" style="margin-top:10px;" onclick="confirmMedPhotoEntry()">✅ Add to My Medications</button>'
+      +'<button class="modal-close-btn" onclick="closeModal(\'modal-scan\')">Cancel</button>';
+    const title=document.querySelector('#modal-scan .modal-title');if(title)title.textContent='📸 Photo of Medicine Box';
+    openModal('modal-scan');
+    await runMedOCR(ev.target.result);
+  };
+  reader.readAsDataURL(file);
+  input.value='';
+}
+async function runMedOCR(dataUrl){
+  const status=document.getElementById('medscan-status');
+  try{
+    if(!window.Tesseract)await new Promise((res,rej)=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';sc.onload=res;sc.onerror=rej;document.head.appendChild(sc);});
+    const {data:{text}}=await Tesseract.recognize(dataUrl,'eng');
+    const parsed=parseMedText(text);
+    if(status)status.innerHTML=(parsed.name||parsed.dose)?'✅ Details found — check and correct below:':'⚠️ Could not read the box clearly — type the name below.';
+    const set=(id,v)=>{const el=document.getElementById(id);if(el&&v)el.value=v;};
+    set('medscan-name',parsed.name);set('medscan-dose',parsed.dose);
+  }catch(err){if(status)status.innerHTML='⚠️ Could not read the box — please type it in below.';}
+}
+function parseMedText(text){
+  const result={name:'',dose:''};
+  // Dose: number + unit (mg, ml, mcg, g, IU)
+  const doseMatch=text.match(/(\d+(?:[.,]\d+)?)\s*(mg|mcg|µg|ml|iu|units?|g)\b/i);
+  if(doseMatch)result.dose=doseMatch[1].replace(',','.')+' '+doseMatch[2].toLowerCase();
+  // Name: pick the most title-like line, skipping packaging words
+  const skip=['tablet','tablets','capsule','capsules','caps','syrup','suspension','solution','cream','ointment','gel','drops','injection','oral','film','coated','sugar','each','contains','store','below','keep','out','reach','of children','children','schedule','reg','no.','exp','batch','lot','dosage','directions','use','only','prescription','warning','pharmacist','pharmacy','made in','www','.co.za','.com'];
+  const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
+  let best='';let bestScore=0;
+  for(const l of lines.slice(0,15)){
+    const letters=l.replace(/[^A-Za-z]/g,'').length;
+    if(letters<4||l.length>40)continue;
+    const lw=l.toLowerCase();
+    if(skip.some(w=>lw.includes(w)))continue;
+    let score=letters;
+    if(/^[A-Z][A-Za-z\- ]+$/.test(l))score+=10;               // clean word(s)
+    if(l===l.toUpperCase()&&letters>5)score+=8;                // brand names are often ALL CAPS
+    if(doseMatch&&l.includes(doseMatch[0]))score+=6;           // line containing the dose
+    if(score>bestScore){bestScore=score;best=l;}
+  }
+  // Strip the dose out of the name line if it crept in
+  result.name=best.replace(/(\d+(?:[.,]\d+)?)\s*(mg|mcg|µg|ml|iu|units?|g)\b/ig,'').replace(/\s{2,}/g,' ').trim();
+  return result;
+}
+function confirmMedPhotoEntry(){
+  const g=id=>{const el=document.getElementById(id);return el?el.value.trim():'';};
+  const name=g('medscan-name'),dose=g('medscan-dose');
+  if(!name){showAlert('profile-alert','⚠️ Please type the medication name before adding.','error');return;}
+  if(!medItems.some(it=>it.name.toLowerCase()===name.toLowerCase())){
+    medItems.push({name:name,dose:dose,freq:''});
+  }else if(dose){
+    const it=medItems.find(it=>it.name.toLowerCase()===name.toLowerCase());if(it&&!it.dose)it.dose=dose;
+  }
+  renderMedTags();
+  const hidden=document.getElementById('p-meds');if(hidden)hidden.value=medItemsToHidden(medItems);
+  closeModal('modal-scan');
+  switchTab('profile',document.querySelector('[data-tab="profile"]'));
+  showAlert('profile-alert','✅ '+name+(dose?' ('+dose+')':'')+' added — remember to tap Save Profile.');
+}
+
 // ─── Profile Photo ────────────────────────────────────────────────
 function savePhoto(input){
   if(!input.files||!input.files[0])return;
@@ -2197,11 +2662,13 @@ function renderBP(){
   if(!log.length){el.innerHTML='<p style="color:#94a3b8;font-size:13px;">No readings yet.</p>';return;}
   el.innerHTML=log.map((r,i)=>{
     const sv=parseInt(r.sys),dv=parseInt(r.dia);
-    let cls='bp-normal',cat='✓ Normal';
-    if(sv>=180||dv>=110){cls='bp-high';cat='🔴 Very high — see a doctor';}
-    else if(sv>=140||dv>=90){cls='bp-high';cat='⬆ High (Stage 2)';}
-    else if(sv>=130||dv>=80){cls='bp-elevated';cat='⚠ Raised (Stage 1)';}
-    else if(sv>=120){cls='bp-elevated';cat='⚠ Elevated';}
+    // Classified per SA Hypertension Society / European (ESC) guidelines
+    let cls='bp-normal',cat='✅ Optimal';
+    if(sv>=180||dv>=110){cls='bp-high';cat='🔴 Very high — see a doctor now';}
+    else if(sv>=160||dv>=100){cls='bp-high';cat='⬆ High (Stage 2)';}
+    else if(sv>=140||dv>=90){cls='bp-high';cat='⬆ High (Stage 1)';}
+    else if(sv>=130||dv>=85){cls='bp-elevated';cat='⚠ High-normal';}
+    else if(sv>=120||dv>=80){cls='bp-normal';cat='✓ Normal';}
     return '<div class="bp-row '+cls+'"><span class="bp-val">'+sv+'/'+dv+'</span><span style="font-size:12px;">'+cat+'</span><span class="bp-date">'+(r.date||'')+'</span><button onclick="deleteBP('+i+')" style="background:none;border:none;cursor:pointer;font-size:14px;">🗑️</button></div>';
   }).join('');
 }
@@ -2484,6 +2951,19 @@ function renderPregnancy(){
   renderPregnancyBabyPhoto();
 }
 function fmtPregDate(d){return d?new Date(d).toLocaleDateString('en-ZA'):'';}
+function clearPregnancyDiary(){
+  if(!confirm('⚠️ Delete the ENTIRE Bump to Baby diary?\n\nAll entries, clinic visits and photos will be permanently erased. This cannot be undone.'))return;
+  Store.remove('hos_pregnancy');
+  renderPregnancy();
+  alert('✅ Your Bump to Baby diary has been cleared.');
+}
+function clearPreopForm(){
+  if(!confirm('⚠️ Clear the whole Pre-Op questionnaire?\n\nEvery field will be emptied. This cannot be undone.'))return;
+  const scr=document.getElementById('screen-preop');
+  if(scr){scr.querySelectorAll('input, textarea').forEach(el=>{if(el.type==='file')el.value='';else el.value='';});scr.querySelectorAll('select').forEach(el=>{el.selectedIndex=0;});}
+  if(typeof autoFillPreop==='function'){try{autoFillPreop();}catch(e){}}
+  alert('✅ The Pre-Op questionnaire has been cleared. Your name, allergies and medications are re-filled from your profile.');
+}
 function savePregnancyBasics(){
   const p=getPregnancy();
   p.childrenCount=(document.getElementById('preg-children-count')||{}).value||'';
@@ -2646,30 +3126,69 @@ function printPregnancy(){
   const win=window.open('','_blank');
   if(!win){alert('⚠️ Your browser blocked the print window. Please allow pop-ups for this page and try again.');return;}
   const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  let html='<html><head><title>Bump to Baby Diary</title><style>body{font-family:sans-serif;font-size:14px;padding:24px;max-width:700px;margin:0 auto;line-height:1.7;color:#1e293b;}h1{font-size:22px;}h2{font-size:15px;margin-top:22px;border-bottom:1px solid #e2e8f0;padding-bottom:4px;}img{max-width:260px;border-radius:10px;margin:8px 8px 8px 0;border:1px solid #e2e8f0;}.entry{margin-bottom:8px;}@media print{body{padding:10px;}}</style></head><body>';
-  html+='<h1>🤰 Bump to Baby Diary</h1>';
-  html+='<p><strong>Children already at home:</strong> '+esc(p.childrenCount||'—')+(p.childrenNotes?' ('+esc(p.childrenNotes)+')':'')+'</p>';
-  html+='<p><strong>Due Date:</strong> '+esc(fmtPregDate(p.dueDate)||'Not recorded')+'</p>';
-  html+='<p><strong>First Kick Date:</strong> '+esc(fmtPregDate(p.firstKick)||'Not recorded')+'</p>';
-  html+='<p><strong>Baby Name Ideas:</strong> '+esc(p.babyNames||'—')+'</p>';
-  html+='<h2>💭 How She\'s Been Feeling</h2>';
-  html+=(p.feelings&&p.feelings.length)?[...p.feelings].reverse().map(f=>'<div class="entry">• <strong>'+esc(fmtPregDate(f.date)||'No date')+':</strong> '+esc(f.text)+'</div>').join(''):'<p>No entries yet.</p>';
-  html+='<h2>🏥 Clinic / Doctor Visits</h2>';
-  html+=(p.clinicLog&&p.clinicLog.length)?[...p.clinicLog].reverse().map(c=>'<div class="entry">• <strong>'+esc(fmtPregDate(c.date)||'No date')+':</strong> '+esc(c.text)+'</div>').join(''):'<p>No visits logged yet.</p>';
-  if(p.firstUltrasound){html+='<h2>🖼️ First Ultrasound</h2><img src="'+p.firstUltrasound+'">';}
-  if(p.followUps&&p.followUps.length){html+='<h2>🖼️ Follow-Up Ultrasounds</h2>'+p.followUps.map(ph=>'<img src="'+ph+'">').join('');}
-  if(p.babyFinalName||p.babyDob||p.babyWeight||p.babyPhoto){
-    html+='<h2>👶 Baby Has Arrived!</h2>';
-    if(p.babyFinalName)html+='<p><strong>Name:</strong> '+esc(p.babyFinalName)+'</p>';
-    if(p.babyDob)html+='<p><strong>Date of Birth:</strong> '+esc(fmtPregDate(p.babyDob))+'</p>';
-    if(p.babyWeight)html+='<p><strong>Birth Weight:</strong> '+esc(p.babyWeight)+'</p>';
-    if(p.babyPhoto)html+='<img src="'+p.babyPhoto+'">';
+  const title=p.babyFinalName?esc(p.babyFinalName):(p.babyNames?esc(p.babyNames.split(',')[0].trim()):'Our Little One');
+  const css=`
+    *{box-sizing:border-box;}
+    body{font-family:Georgia,'Times New Roman',serif;color:#4a3b47;margin:0;background:#fff;}
+    .page{max-width:720px;margin:0 auto;padding:34px 40px;}
+    .cover{text-align:center;padding:70px 40px 60px;border:3px double #e6b8c6;border-radius:22px;margin:26px;background:linear-gradient(160deg,#fff7fa,#fdf0f4);}
+    .cover .hearts{font-size:30px;letter-spacing:6px;color:#e59ab0;}
+    .cover h1{font-family:'Segoe Script','Brush Script MT',cursive;font-size:44px;color:#c76b86;margin:18px 0 6px;font-weight:normal;}
+    .cover .sub{font-size:16px;color:#9a7f8b;font-style:italic;margin-bottom:26px;}
+    .cover .name{font-size:30px;color:#5c4550;margin:14px 0;}
+    .cover .meta{font-size:15px;color:#7a6470;line-height:1.9;margin-top:20px;}
+    h2{font-family:'Segoe Script','Brush Script MT',cursive;font-size:26px;color:#c76b86;font-weight:normal;margin:34px 0 6px;text-align:center;}
+    .divider{text-align:center;color:#e59ab0;font-size:15px;letter-spacing:4px;margin-bottom:16px;}
+    .entry{background:#fdf6f9;border-left:4px solid #eec2d0;border-radius:8px;padding:10px 14px;margin:0 0 10px;font-size:15px;line-height:1.6;}
+    .entry .d{color:#c76b86;font-weight:bold;}
+    .photos{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:10px;}
+    .frame{background:#fff;padding:10px 10px 16px;border:1px solid #f0d9e2;border-radius:10px;box-shadow:0 3px 10px rgba(199,107,134,0.15);text-align:center;}
+    .frame img{display:block;max-width:300px;max-height:320px;border-radius:6px;}
+    .frame .cap{font-size:12px;color:#9a7f8b;font-style:italic;margin-top:8px;}
+    .arrived{background:linear-gradient(160deg,#fff7fa,#fdeef3);border:2px solid #eec2d0;border-radius:16px;padding:22px 26px;text-align:center;margin-top:14px;}
+    .arrived .bn{font-family:'Segoe Script','Brush Script MT',cursive;font-size:34px;color:#c76b86;}
+    .arrived p{margin:6px 0;font-size:16px;}
+    .foot{text-align:center;color:#b79aa6;font-size:12px;margin:40px 0 10px;font-style:italic;}
+    @media print{.cover{margin:0;}.page{padding:16px 24px;}.frame{break-inside:avoid;}h2{break-after:avoid;}}
+  `;
+  let html='<html><head><meta charset="UTF-8"><title>'+title+' — Bump to Baby Album</title><style>'+css+'</style></head><body>';
+  // Cover
+  html+='<div class="cover"><div class="hearts">♥ ♥ ♥</div><h1>Bump to Baby</h1><div class="sub">a keepsake of our journey to you</div>';
+  html+='<div class="name">'+title+'</div>';
+  html+='<div class="meta">';
+  if(p.dueDate)html+='Due Date · '+esc(fmtPregDate(p.dueDate))+'<br>';
+  if(p.firstKick)html+='First Kick · '+esc(fmtPregDate(p.firstKick))+'<br>';
+  if(p.babyNames)html+='Names we loved · '+esc(p.babyNames)+'<br>';
+  if(p.childrenCount)html+='Big brothers / sisters · '+esc(p.childrenCount)+(p.childrenNotes?' ('+esc(p.childrenNotes)+')':'')+'<br>';
+  html+='</div></div>';
+  html+='<div class="page">';
+  // Feelings
+  html+='<h2>How I’ve Been Feeling</h2><div class="divider">• ♥ •</div>';
+  html+=(p.feelings&&p.feelings.length)?[...p.feelings].reverse().map(f=>'<div class="entry"><span class="d">'+esc(fmtPregDate(f.date)||'')+'</span> — '+esc(f.text)+'</div>').join(''):'<div class="entry" style="text-align:center;color:#b79aa6;">No entries yet.</div>';
+  // Clinic visits
+  html+='<h2>Clinic &amp; Doctor Visits</h2><div class="divider">• ♥ •</div>';
+  html+=(p.clinicLog&&p.clinicLog.length)?[...p.clinicLog].reverse().map(c=>'<div class="entry"><span class="d">'+esc(fmtPregDate(c.date)||'')+'</span> — '+esc(c.text)+'</div>').join(''):'<div class="entry" style="text-align:center;color:#b79aa6;">No visits logged yet.</div>';
+  // Ultrasounds
+  if(p.firstUltrasound||(p.followUps&&p.followUps.length)){
+    html+='<h2>Our First Peek</h2><div class="divider">• ♥ •</div><div class="photos">';
+    if(p.firstUltrasound)html+='<div class="frame"><img src="'+p.firstUltrasound+'"><div class="cap">First ultrasound</div></div>';
+    if(p.followUps&&p.followUps.length)p.followUps.forEach((ph,i)=>{html+='<div class="frame"><img src="'+ph+'"><div class="cap">Scan '+(i+2)+'</div></div>';});
+    html+='</div>';
   }
-  html+='<p style="margin-top:24px;color:#94a3b8;font-size:12px;">— From My Health One Stop —</p>';
-  html+='</body></html>';
+  // Arrival
+  if(p.babyFinalName||p.babyDob||p.babyWeight||p.babyPhoto){
+    html+='<h2>Welcome to the World</h2><div class="divider">• ♥ •</div><div class="arrived">';
+    if(p.babyPhoto)html+='<div class="frame" style="display:inline-block;margin-bottom:14px;"><img src="'+p.babyPhoto+'"></div><br>';
+    if(p.babyFinalName)html+='<div class="bn">'+esc(p.babyFinalName)+'</div>';
+    if(p.babyDob)html+='<p>Born · '+esc(fmtPregDate(p.babyDob))+'</p>';
+    if(p.babyWeight)html+='<p>Weighing · '+esc(p.babyWeight)+'</p>';
+    html+='</div>';
+  }
+  html+='<div class="foot">Made with love in My Health One Stop 💛</div>';
+  html+='</div></body></html>';
   win.document.write(html);
   win.document.close();
-  setTimeout(()=>win.print(),300);
+  setTimeout(()=>win.print(),400);
 }
 </script>
 <script>
@@ -2678,6 +3197,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   // Remove yesterday's (and older) daily medication-tracker keys so they don't pile up
   const _todayMedKey='meds_taken_'+new Date().toDateString();
   Store.keys().forEach(k=>{if(k.indexOf('meds_taken_')===0&&k!==_todayMedKey)Store.remove(k);});
+  const _vEl=document.getElementById('app-version-label');if(_vEl)_vEl.textContent='Version '+APP_VERSION;
   populateSchemes();
   loadProfile();
   if(typeof renderPmbChecker==='function')renderPmbChecker();
@@ -2694,6 +3214,8 @@ window.addEventListener('DOMContentLoaded',()=>{
   try{localStorage.setItem('__test__','1');localStorage.removeItem('__test__');}
   catch(e){setTimeout(()=>{addChatBubble('⚠️ <strong>Private browsing mode detected.</strong> Your data will not be saved between sessions. For full functionality, use a regular browser window.','ai');},1200);}
   document.querySelectorAll('.tab-btn').forEach(t=>{t.addEventListener('click',function(){const tab=this.getAttribute('data-tab');if(tab==='care'&&!window._userLat)detectLocation();});});
+  checkAppVersion();
+  applyFeatureVisibility();
 });
 </script>
 
@@ -3270,12 +3792,74 @@ function renderPets(){
 }
 
 function findNearestVet(){searchNearby('vet','Vet / Animal Clinic','🐾');}
+
+// ─── Hospital / Specialist Pre-Authorisation helper ────────────────
+const PREAUTH={
+'Discovery Health':{phone:'0860 99 88 77',note:'Authorise at least 48 hours before a planned admission. Emergencies: within 24 hours or the first working day after. You can also authorise online at www.discovery.co.za once logged in.'},
+'Bonitas':{phone:'0860 002 108',note:'Dedicated hospital authorisation line. You can also email hospital@bonitas.co.za.'},
+'GEMS':{phone:'0860 00 4367',note:'Have your ICD-10 code and tariff code ready — GEMS asks for both.'},
+'Momentum Health':{phone:'0860 117 859',note:'You can also email member@momentumhealth.co.za.'},
+'Medihelp':{phone:'0860 200 678',note:'Speak to Medihelp’s pre-authorisation consultants.'},
+'Bestmed':{phone:'0860 002 378',note:'Bestmed also has a pre-authorisation checklist on www.bestmed.co.za.'},
+'Fedhealth':{phone:'0860 002 153',note:'Lines open Mon–Thu 08:30–17:00, Fri 09:00–17:00.'},
+'Medshield':{phone:'0861 100 220',note:''},
+'Polmed':{phone:'0860 104 111',note:''},
+'Sizwe Hosmed':{phone:'0860 101 176',note:'You can also email authorisations@sizwehosmed.co.za.'},
+'Keyhealth':{phone:'0860 671 050',note:''},
+'Bankmed':{phone:'0800 226 5633',note:'0800 BANKMED — Mon–Fri 08:00–20:00, Sat 08:00–13:00.'},
+'Profmed':{phone:'',note:'Profmed asks for authorisation at least 7 days before planned treatment — request it via profmed.co.za/pre-authorisation or the number on your membership card.'},
+'Namibia Health Plan (NHP)':{phone:'061 285 5400',note:'Namibia — NHP call centre. You can also apply for hospital pre-authorisation in the NHP mobile app.'},
+'PSEMAS (Namibia)':{phone:'',note:'Pre-authorisation is required for private hospital admission. Phone Methealth Namibia Administrators on the number on your membership card.'}
+};
+function initPreauth(){
+  const sel=document.getElementById('preauth-scheme');if(!sel)return;
+  Object.keys(PREAUTH).forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=k;sel.appendChild(o);});
+  const oth=document.createElement('option');oth.value='other';oth.textContent='Other / my scheme is not listed';sel.appendChild(oth);
+  // Auto-select the scheme saved in the user's profile
+  const prof=document.getElementById('p-aid-scheme');
+  if(prof&&prof.value){
+    const pv=prof.value.toLowerCase();
+    const match=Object.keys(PREAUTH).find(k=>pv.includes(k.toLowerCase())||k.toLowerCase().includes(pv));
+    if(match){sel.value=match;renderPreauth();}
+  }
+}
+function renderPreauth(){
+  const sel=document.getElementById('preauth-scheme');const out=document.getElementById('preauth-result');
+  if(!sel||!out)return;
+  const v=sel.value;
+  if(!v){out.innerHTML='';return;}
+  if(v==='other'){
+    out.innerHTML='<div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:12px 14px;font-size:13px;color:#334155;line-height:1.7;">Phone the <strong>number on the back of your membership card</strong> and say you need <strong>"hospital pre-authorisation"</strong>. Every scheme has this department — they will guide you through it.</div>';
+    return;
+  }
+  const d=PREAUTH[v];if(!d)return;
+  let html='<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:12px 14px;">';
+  html+='<div style="font-size:13px;font-weight:700;color:#166534;margin-bottom:8px;">'+v+' — Pre-Authorisation</div>';
+  if(d.phone){
+    html+='<a href="tel:'+d.phone.replace(/\s+/g,'')+'" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#16a34a;color:#fff;text-decoration:none;padding:13px;border-radius:10px;font-size:15px;font-weight:700;margin-bottom:8px;">📞 Call '+d.phone+'</a>';
+  }
+  if(d.note)html+='<div style="font-size:12px;color:#334155;line-height:1.7;">'+d.note+'</div>';
+  html+='</div>';
+  out.innerHTML=html;
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',()=>setTimeout(initPreauth,400));}else{setTimeout(initPreauth,400);}
+
+// ─── Offline support: register the service worker ──────────────────
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js').catch(function(){/* offline support unavailable — app still works normally */});
+  });
+}
 </script>
 
+<!-- Static description for search engines and users without JavaScript -->
+<div style="text-align:center;padding:10px 20px 0;font-size:11px;color:#94a3b8;font-family:'Poppins',sans-serif;max-width:640px;margin:0 auto;line-height:1.6;">
+  <strong>MyHealthOneStop</strong> is a free health app for South Africa and Namibia, built by a doctor. Find a GP, specialist, dentist, physiotherapist, pharmacy, gym or hospital near you; check what your medical aid covers (PMBs); get your scheme's hospital pre-authorisation number and checklist; keep a virtual health card with an emergency QR code; photograph a medicine box to record your medication; track blood pressure, blood sugar and vaccinations; and find blood donation centres. Works offline once loaded — your information stays on your own phone.
+</div>
 <!-- Copyright footer — subtle but present for IP protection -->
 <div style="text-align:center;padding:12px 16px 4px;font-size:10px;color:#cbd5e1;font-family:'Poppins',sans-serif;">
   © 2026 Dr JA Geldenhuys · My Health One Stop · All rights reserved<br>
-  <span id="app-version" style="font-size:10px;color:#cbd5e1;">Version 2026.07.10</span>
+  <span id="app-version" style="font-size:10px;color:#cbd5e1;">Version 2026.07.16</span>
 </div>
 
 </body>
