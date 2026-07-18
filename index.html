@@ -459,6 +459,14 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
         <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
       </select>
     </div>
+    <div class="form-group"><label>Organ Donor Status</label>
+      <select id="p-organ-donor">
+        <option value="">— Select —</option>
+        <option value="yes">Registered organ donor</option>
+        <option value="no">Not a donor</option>
+      </select>
+      <p style="font-size:11px;color:#94a3b8;margin-top:4px;line-height:1.5;">If registered, it shows on your health card and emergency screen. See <strong>More → Organ Donation</strong> to register — it's free.</p>
+    </div>
     <div class="form-group"><label>Previous Operations <span style="font-size:11px;color:#94a3b8;font-weight:400;">(with year, if known)</span></label>
       <textarea id="p-prevops" rows="2" style="resize:vertical;" placeholder="e.g. Appendix 2015, Caesarean 2020 — or None"></textarea>
     </div>
@@ -882,6 +890,18 @@ body{font-family:'Poppins',sans-serif;background:#f0f4ff;color:#1e293b;min-heigh
   </div>
 
   <!-- Funeral & Memorial Services -->
+  <div class="card" data-feature="organdonation" style="border-left:4px solid #16a34a;">
+    <div class="card-title">🎗️ Organ Donation — Give the Gift of Life</div>
+    <p style="font-size:13px;color:#334155;margin-bottom:10px;line-height:1.7;">One organ donor can save up to <strong>7 lives</strong>, and tissue donation can help up to 50 more. Registration is <strong>completely free</strong>, takes 2 minutes, and costs your family nothing.</p>
+    <div style="background:#fef3c7;border:1.5px solid #fbbf24;border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:12px;color:#92400e;line-height:1.7;">⚠️ <strong>The most important step: tell your family.</strong> In practice your family's consent decides at the time — registering AND telling them your wishes is what truly makes you a donor.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;" data-saonly="1">
+      <a href="https://odf.org.za" target="_blank" rel="noopener" class="service-btn"><div class="svc-icon">🎗️</div><div class="svc-text"><div class="svc-name">Register at the Organ Donor Foundation</div><div class="svc-sub">odf.org.za — free online registration, donor card &amp; stickers posted to you</div></div><div class="svc-arrow">›</div></a>
+      <a href="tel:0800226611" class="service-btn"><div class="svc-icon">📞</div><div class="svc-text"><div class="svc-name">Call the ODF toll-free: 0800 22 66 11</div><div class="svc-sub">Questions, registration, or reporting a potential donor (also after hours)</div></div><div class="svc-arrow">›</div></a>
+    </div>
+    <p style="font-size:12px;color:#64748b;margin-top:12px;line-height:1.6;">💡 Once registered, set <strong>"Registered organ donor"</strong> under Profile → Medical Information — it will show on your health card and emergency screen where paramedics look.</p>
+    <p style="font-size:11px;color:#94a3b8;margin-top:8px;line-height:1.5;">Almost anyone can register regardless of age or health — doctors assess suitability at the time. Your medical care always comes first; donation is only ever considered after death has been declared.</p>
+  </div>
+
   <div class="card" data-feature="funeral">
     <div class="card-title">🕊️ Funeral &amp; Memorial Services</div>
     <p style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6;">Information and contacts to help a family during a difficult time — cover options, arranging a service, and finding help nearby.</p>
@@ -1840,6 +1860,7 @@ function saveProfile(){
     address:document.getElementById('p-address').value.trim(),
     aidScheme:document.getElementById('p-aid-scheme').value,
     aidNum:document.getElementById('p-aid-num').value.trim(),
+    organDonor:document.getElementById('p-organ-donor')?document.getElementById('p-organ-donor').value:'',
     aidRole:document.getElementById('p-aid-role')?document.getElementById('p-aid-role').value:'main',
     aidMainName:document.getElementById('p-aid-mainname')?document.getElementById('p-aid-mainname').value.trim():'',
     aidDepCode:document.getElementById('p-aid-depcode')?document.getElementById('p-aid-depcode').value.trim():'',
@@ -1874,6 +1895,7 @@ function loadProfile(){
   document.getElementById('p-address').value=p.address||'';
   document.getElementById('p-aid-scheme').value=p.aidScheme||'';
   document.getElementById('p-aid-num').value=p.aidNum||'';
+  if(document.getElementById('p-organ-donor')){document.getElementById('p-organ-donor').value=p.organDonor||'';}
   if(document.getElementById('p-aid-role')){document.getElementById('p-aid-role').value=p.aidRole||'main';}
   if(document.getElementById('p-aid-mainname')){document.getElementById('p-aid-mainname').value=p.aidMainName||'';}
   if(document.getElementById('p-aid-depcode')){document.getElementById('p-aid-depcode').value=p.aidDepCode||'';}
@@ -1948,7 +1970,7 @@ function renderHealthCard(){
     }).join('');
     depsOnCardHtml='<div class="card"><div class="card-title">👨‍👩‍👧 Family on this Card</div>'+mainRow+depRows+'<p style="font-size:11px;color:#94a3b8;margin-top:4px;line-height:1.5;">Dependant codes are on your medical aid card. Add or edit them under Profile → My Family / Dependants.</p></div>';
   }
-  container.innerHTML='<div class="health-card">'+photoOnCard+'<div class="card-chip">💳</div><div class="card-name">'+escHtml(p.name||'—')+'</div><div class="card-id">'+(p.country==='South Africa'?'SA ID':'ID')+': '+escHtml(p.said||'—')+'</div><div class="card-row"><div class="card-field"><label>DATE OF BIRTH</label><div class="val">'+dobFmt+'</div></div><div class="card-field"><label>BLOOD TYPE</label><div class="val">'+escHtml(p.blood||'?')+'</div></div>'+(p.aidScheme?'<div class="card-field"><label>MEDICAL AID</label><div class="val">'+escHtml(p.aidScheme)+'</div></div>':'')+(p.aidNum?'<div class="card-field"><label>MEMBER NO</label><div class="val">'+escHtml(p.aidNum)+'</div></div>':'')+(p.aidRole==='dependant'?'<div class="card-field"><label>DEP CODE</label><div class="val">'+escHtml(p.aidDepCode||'—')+'</div></div>':'')+'</div>'+(p.aidRole==='dependant'&&p.aidMainName?'<div style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.85);">Main member: <strong>'+escHtml(p.aidMainName)+'</strong></div>':'')+'</div>'+depsOnCardHtml+trackerHtml+coverageHtml+'<div class="card"><div class="card-title">🚨 Medical Alerts</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:0 0 8px;">Allergies</div><div>'+allergyHtml+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Chronic Conditions</div><div>'+condHtml+'</div>'+(p.meds?'<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Medications</div><p style="font-size:13px;color:#444;">'+escHtml(p.meds)+'</p>':'')+'</div><div class="card"><div class="card-title">📱 My QR Code</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Healthcare providers can scan this for your key medical info.</p><div class="qr-container"><div id="qrcode"></div><div class="qr-label">Scan to view patient info</div></div></div><div class="card"><div class="card-title">📤 Share My Details</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Send your medical summary to a family member, carer, or old age home via WhatsApp or email.</p><button class="btn btn-primary" onclick="shareMyDetails()">📤 Share My Details</button></div>';
+  container.innerHTML='<div class="health-card">'+photoOnCard+'<div class="card-chip">💳</div><div class="card-name">'+escHtml(p.name||'—')+'</div><div class="card-id">'+(p.country==='South Africa'?'SA ID':'ID')+': '+escHtml(p.said||'—')+'</div><div class="card-row"><div class="card-field"><label>DATE OF BIRTH</label><div class="val">'+dobFmt+'</div></div><div class="card-field"><label>BLOOD TYPE</label><div class="val">'+escHtml(p.blood||'?')+'</div></div>'+(p.aidScheme?'<div class="card-field"><label>MEDICAL AID</label><div class="val">'+escHtml(p.aidScheme)+'</div></div>':'')+(p.aidNum?'<div class="card-field"><label>MEMBER NO</label><div class="val">'+escHtml(p.aidNum)+'</div></div>':'')+(p.aidRole==='dependant'?'<div class="card-field"><label>DEP CODE</label><div class="val">'+escHtml(p.aidDepCode||'—')+'</div></div>':'')+'</div>'+(p.aidRole==='dependant'&&p.aidMainName?'<div style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.85);">Main member: <strong>'+escHtml(p.aidMainName)+'</strong></div>':'')+(p.organDonor==='yes'?'<div style="margin-top:8px;display:inline-block;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.55);border-radius:8px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:0.5px;">🎗️ REGISTERED ORGAN DONOR</div>':'')+'</div>'+depsOnCardHtml+trackerHtml+coverageHtml+'<div class="card"><div class="card-title">🚨 Medical Alerts</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:0 0 8px;">Allergies</div><div>'+allergyHtml+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Chronic Conditions</div><div>'+condHtml+'</div>'+(p.meds?'<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin:14px 0 8px;">Medications</div><p style="font-size:13px;color:#444;">'+escHtml(p.meds)+'</p>':'')+'</div><div class="card"><div class="card-title">📱 My QR Code</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Healthcare providers can scan this for your key medical info.</p><div class="qr-container"><div id="qrcode"></div><div class="qr-label">Scan to view patient info</div></div></div><div class="card"><div class="card-title">📤 Share My Details</div><p style="font-size:13px;color:#64748b;margin-bottom:12px;">Send your medical summary to a family member, carer, or old age home via WhatsApp or email.</p><button class="btn btn-primary" onclick="shareMyDetails()">📤 Share My Details</button></div>';
   const qrData=JSON.stringify({name:p.name,said:p.said,dob:p.dob,blood:p.blood,allergies:p.allergies,conditions:p.conditions,aid:p.aidScheme,aidNum:p.aidNum,ec:p.ecName+' '+p.ecNum});
   setTimeout(()=>{const el=document.getElementById('qrcode');if(el&&typeof QRCode!=='undefined'){el.innerHTML='';try{new QRCode(el,{text:qrData,width:200,height:200,colorDark:'#1e3a8a',colorLight:'#ffffff'});}catch(e){el.innerHTML='<div style="font-size:12px;color:#991b1b;padding:10px;text-align:center;">⚠️ Could not generate the QR code. Tap Save Profile again — if it keeps failing, try removing some text from Allergies/Conditions, as a very long list can be too much data for the QR code.</div>';}}},200);
 }
@@ -1982,7 +2004,7 @@ function renderEmergency(){
   const p=safeParse(raw,{});
   const photoB64=Store.get('hos_photo')||'';
   const photoHtml=photoB64?'<div style="display:flex;justify-content:center;margin-bottom:14px;"><div class="em-photo-circle"><img src="'+photoB64+'" alt="Patient photo"></div></div>':'';
-  c.innerHTML=photoHtml+'<div class="info-grid"><div class="info-box"><div class="lbl">Patient Name</div><div class="val">'+escHtml(p.name||'—')+'</div></div><div class="info-box"><div class="lbl">Blood Type</div><div class="val" style="color:#dc2626;font-size:18px;">'+escHtml(p.blood||'?')+'</div></div></div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;margin:10px 0 6px;">🚫 Allergies</div><div>'+(p.allergies?p.allergies.split(',').map(a=>'<span class="tag tag-red">'+escHtml(a.trim())+'</span>').join(''):'<span style="color:#94a3b8;font-size:13px">None</span>')+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;margin:14px 0 6px;">💊 Medications</div><p style="font-size:13px;color:#444;">'+escHtml(p.meds||'None recorded')+'</p>'+(p.ecName?'<div class="emergency-item" style="margin-top:12px;"><div class="em-icon">👤</div><div class="em-info"><div class="em-name">'+escHtml(p.ecName)+(p.ecRel?' ('+escHtml(p.ecRel)+')':'')+'</div><div class="em-num">'+escHtml(p.ecNum||'No number')+'</div></div>'+(p.ecNum?'<a href="tel:'+escHtml(p.ecNum.replace(/\s/g,''))+'" class="em-call-btn" onclick="handleEmergencyCall(\''+escHtml(p.ecNum.replace(/\s/g,''))+'\',event)">📞 Call</a>':'')+'</div>':'');
+  c.innerHTML=photoHtml+'<div class="info-grid"><div class="info-box"><div class="lbl">Patient Name</div><div class="val">'+escHtml(p.name||'—')+'</div></div><div class="info-box"><div class="lbl">Blood Type</div><div class="val" style="color:#dc2626;font-size:18px;">'+escHtml(p.blood||'?')+'</div></div></div>'+(p.organDonor==='yes'?'<div style="margin:10px 0 0;background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:9px 13px;font-size:13px;font-weight:700;color:#166534;">🎗️ REGISTERED ORGAN DONOR</div>':'')+'<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;margin:10px 0 6px;">🚫 Allergies</div><div>'+(p.allergies?p.allergies.split(',').map(a=>'<span class="tag tag-red">'+escHtml(a.trim())+'</span>').join(''):'<span style="color:#94a3b8;font-size:13px">None</span>')+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#94a3b8;margin:14px 0 6px;">💊 Medications</div><p style="font-size:13px;color:#444;">'+escHtml(p.meds||'None recorded')+'</p>'+(p.ecName?'<div class="emergency-item" style="margin-top:12px;"><div class="em-icon">👤</div><div class="em-info"><div class="em-name">'+escHtml(p.ecName)+(p.ecRel?' ('+escHtml(p.ecRel)+')':'')+'</div><div class="em-num">'+escHtml(p.ecNum||'No number')+'</div></div>'+(p.ecNum?'<a href="tel:'+escHtml(p.ecNum.replace(/\s/g,''))+'" class="em-call-btn" onclick="handleEmergencyCall(\''+escHtml(p.ecNum.replace(/\s/g,''))+'\',event)">📞 Call</a>':'')+'</div>':'');
   const famRaw=Store.get('hos_dependants');const family=safeParse(famRaw,[]);
   const famCard=document.getElementById('family-emergency-card');const famContent=document.getElementById('family-emergency-content');
   if(family.length&&famCard&&famContent){famCard.style.display='block';famContent.innerHTML=family.map(dep=>{const age=dep.dob?calcAge(dep.dob):'';return '<div class="dep-card"><div class="dep-name">'+escHtml(dep.name||'—')+(dep.sex?' ('+dep.sex+')':'')+(age?' · Age '+age:'')+'</div><div class="dep-detail">🩸 Blood: '+(dep.blood||'?')+(dep.allergies?' · 🚫 Allergies: '+escHtml(dep.allergies):'')+'</div>'+(dep.conditions?'<div class="dep-detail">🏥 Conditions: '+escHtml(dep.conditions)+'</div>':'')+(dep.meds?'<div class="dep-detail">💊 Meds: '+escHtml(dep.meds)+'</div>':'')+'</div>';}).join('');}
@@ -3841,7 +3863,7 @@ if('serviceWorker' in navigator){
 <!-- Copyright footer — subtle but present for IP protection -->
 <div style="text-align:center;padding:12px 16px 4px;font-size:10px;color:#cbd5e1;font-family:'Poppins',sans-serif;">
   © 2026 Dr JA Geldenhuys · My Health One Stop · All rights reserved<br>
-  <span id="app-version" style="font-size:10px;color:#cbd5e1;">Version 2026.07.21</span>
+  <span id="app-version" style="font-size:10px;color:#cbd5e1;">Version 2026.07.22</span>
 </div>
 
 </body>
